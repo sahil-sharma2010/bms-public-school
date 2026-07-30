@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examination | BMS SR. SEC. SCHOOL</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --primary: #0F4C81; --gold: #F4B400; --bg-color: #F8FAFC; --text-muted: #64748b; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); overflow-x: hidden; scroll-behavior: smooth;}
+        .premium-nav { background: #fff; padding: 12px 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05); }
+        
+        .school-logo-text h4 { margin: 0; font-weight: 800; font-size: 20px; color: var(--primary); }
+        .school-logo-text p { margin: 0; font-weight: 500; font-size: 13px; color: #333; }
+        a { text-decoration: none; } .premium-section { padding: 90px 0; position: relative; z-index: 2;}
+        
+        /* BACKGROUND WATERMARK LOGO */
+        .watermark-bg { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 55vw; max-width: 650px; min-width: 300px; opacity: 0.06; filter: grayscale(100%); z-index: 0; pointer-events: none; }
+
+        .inner-hero { position: relative; height: 45vh; display: flex; align-items: center; justify-content: center; text-align: center; background-image: url('assets/home-bg.jpg.png'); background-size: cover; background-position: center; background-attachment: fixed; margin-top: 0px; z-index: 2;}
+        .inner-hero::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(15,76,129,0.9), rgba(15,76,129,0.7)); z-index: 1; }
+        .inner-hero-content { position: relative; z-index: 2; color: #fff; padding-top: 60px; }
+        .inner-hero h1 { color: var(--gold); font-size: 3.5rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.3); margin-bottom: 10px; font-weight: 800;}
+        .inner-hero p { font-size: 1.1rem; font-weight: 500; opacity: 0.9; max-width: 800px; margin: 0 auto; line-height: 1.6;}
+
+        /* PREMIUM BACK BUTTON */
+        .btn-premium-back { background: var(--primary); color: #fff; font-weight: 700; padding: 15px 40px; border-radius: 50px; font-size: 1.1rem; border: 2px solid transparent; transition: all 0.4s ease; box-shadow: 0 10px 25px rgba(15, 76, 129, 0.2); display: inline-flex; align-items: center; gap: 12px; text-decoration: none; position: relative; z-index: 2;}
+        .btn-premium-back:hover { background: #fff; color: var(--gold) !important; border-color: var(--gold); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(244, 180, 0, 0.3); }
+        .btn-premium-back i { transition: transform 0.3s ease; }
+        .btn-premium-back:hover i { transform: translateX(-5px); }
+
+        .btn-ripple { position: relative; overflow: hidden; }
+        .btn-ripple .ripple { position: absolute; background: rgba(255, 255, 255, 0.5); border-radius: 50%; transform: scale(0); animation: ripple-anim 0.6s linear; pointer-events: none; }
+        @keyframes ripple-anim { to { transform: scale(4); opacity: 0; } }
+
+        /* Timeline CSS */
+        .premium-timeline { position: relative; max-width: 900px; margin: 0 auto; padding: 40px 0; }
+        .premium-timeline::after { content: ''; position: absolute; width: 4px; background: rgba(15, 76, 129, 0.15); top: 0; bottom: 0; left: 50%; margin-left: -2px; border-radius: 4px; }
+        .timeline-item { padding: 20px 40px; position: relative; background: inherit; width: 50%; z-index: 2;}
+        .timeline-item.left { left: 0; }
+        .timeline-item.right { left: 50%; }
+        .timeline-item::after { content: '\f19d'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; width: 40px; height: 40px; right: -20px; background: var(--gold); color: #fff; border: 4px solid #fff; top: 30px; border-radius: 50%; z-index: 1; display:flex; align-items:center; justify-content:center; font-size: 16px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .timeline-item.right::after { left: -20px; }
+        .timeline-content { padding: 30px; background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.4s; position: relative; border-bottom: 4px solid var(--gold); cursor: default; }
+        .timeline-content:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(15,76,129,0.15); }
+        @media screen and (max-width: 768px) {
+            .premium-timeline::after { left: 30px; }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 15px; }
+            .timeline-item.right { left: 0; }
+            .timeline-item.left::after, .timeline-item.right::after { left: 10px; }
+        }
+
+        /* Glass Cards */
+        .glass-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.6); border-radius: 20px; padding: 40px; box-shadow: 0 15px 35px rgba(15,76,129,0.08); transition: 0.4s; height: 100%; position: relative; overflow: hidden;}
+        .glass-card:hover { transform: translateY(-10px); box-shadow: 0 20px 45px rgba(15,76,129,0.15); }
+        .glass-card ul { padding-left: 1.2rem; }
+        .glass-card ul li { margin-bottom: 12px; color: var(--text-muted); font-size: 15px; line-height: 1.6;}
+        
+        /* Info Cards */
+        .info-card { background: linear-gradient(135deg, var(--primary), #1a66a8); color: #fff; border-radius: 20px; padding: 40px; text-align: center; box-shadow: 0 15px 35px rgba(15,76,129,0.2); position: relative; overflow: hidden; z-index: 2; height: 100%;}
+        .info-card-light { background: #fff; color: var(--text-color); border-radius: 20px; padding: 40px; text-align: center; box-shadow: 0 15px 35px rgba(15,76,129,0.1); position: relative; overflow: hidden; z-index: 2; height: 100%; border-top: 5px solid var(--gold);}
+        
+        .hover-lift { transition: 0.3s; position: relative; z-index: 2;}
+        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(15,76,129,0.1) !important; }
+
+        .custom-cursor { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; }
+        .custom-cursor-follower { width: 40px; height: 40px; border: 2px solid var(--primary); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: transform 0.2s ease; }
+        .page-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--primary); z-index: 10000; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        .loader-spinner { width: 60px; height: 60px; border: 4px solid rgba(255,255,255,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s infinite linear; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .premium-footer { background: var(--primary); color: white; padding-top: 60px; margin-top: 50px; position: relative; z-index: 2;}
+        
+        .image-wrapper img { width: 100%; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); transition: 0.5s; object-fit: cover; }
+        .image-wrapper:hover img { transform: scale(1.03); }
+    </style>
+</head>
+<body>
+    <div class="page-loader" id="loader"><div class="loader-spinner"></div></div>
+    <div class="custom-cursor"></div><div class="custom-cursor-follower"></div>
+
+    <!-- BACKGROUND WATERMARK LOGO -->
+    <img src="Screenshot 2026-07-30 160633_2.jpg" alt="BMS Watermark Logo" class="watermark-bg">
+
+    <nav class="navbar navbar-expand-lg premium-nav fixed-top" id="navbar">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <!-- Premium School Icon -->
+                <i class="fa-solid fa-school text-gold fs-1 me-3"></i>
+                <div class="school-logo-text d-none d-sm-block"><h4>BMS SR. SEC. SCHOOL</h4><p>BASS, HISAR</p></div>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link text-dark fw-bold px-3" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark fw-bold px-3" href="curriculum.html">Curriculum</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark fw-bold px-3" href="examination.html" style="color:var(--gold)!important;">Examination</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark fw-bold px-3" href="co-curricular.html">Co-Curricular</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="inner-hero">
+        <div class="inner-hero-content px-3" data-aos="fade-up">
+            <h1>Examination System</h1>
+            <p>A structured and transparent assessment system designed to evaluate every student's academic progress and overall development.</p>
+        </div>
+    </section>
+
+    <!-- TIMING & ARRANGEMENT SECTION -->
+    <section class="premium-section" style="background: transparent;">
+        <div class="container">
+            <div class="row g-5 justify-content-center">
+                <!-- Timing -->
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="info-card btn-ripple">
+                        <i class="fa-regular fa-clock fs-1 text-gold mb-3"></i>
+                        <h2 class="fw-bold mb-4 text-white">Examination Time</h2>
+                        <ul class="list-unstyled text-start mx-auto" style="max-width: 85%;">
+                            <li class="mb-3 d-flex align-items-start text-white">
+                                <i class="fa-solid fa-check-circle text-gold me-3 mt-1 fs-5"></i>
+                                <span style="font-size: 1.1rem; opacity: 0.9;">Examinations generally begin at 09:00 AM or 10:00 AM according to the school schedule.</span>
+                            </li>
+                            <li class="d-flex align-items-start text-white">
+                                <i class="fa-solid fa-check-circle text-gold me-3 mt-1 fs-5"></i>
+                                <span style="font-size: 1.1rem; opacity: 0.9;">All examinations conclude at 12:00 PM.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Arrangement -->
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="info-card-light btn-ripple">
+                        <i class="fa-solid fa-chalkboard-user fs-1 text-primary mb-3"></i>
+                        <h2 class="fw-bold mb-4" style="color: var(--primary);">Examination Environment</h2>
+                        <ul class="list-unstyled text-start mx-auto" style="max-width: 85%;">
+                            <li class="mb-3 d-flex align-items-start">
+                                <i class="fa-solid fa-building text-gold me-3 mt-1 fs-5"></i>
+                                <span class="text-muted" style="font-size: 1.1rem;">Every class is allotted a separate examination room.</span>
+                            </li>
+                            <li class="mb-3 d-flex align-items-start">
+                                <i class="fa-solid fa-users text-gold me-3 mt-1 fs-5"></i>
+                                <span class="text-muted" style="font-size: 1.1rem;">Two teachers are assigned to supervise each examination room.</span>
+                            </li>
+                            <li class="d-flex align-items-start">
+                                <i class="fa-solid fa-scale-balanced text-gold me-3 mt-1 fs-5"></i>
+                                <span class="text-muted" style="font-size: 1.1rem;">Students are expected to maintain strict discipline throughout the examination.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXAM PATTERN TIMELINE -->
+    <section class="premium-section" style="background: rgba(255,255,255,0.7); backdrop-filter: blur(5px);">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h5 class="text-gold fw-bold text-uppercase">Assessment Cycle</h5>
+                <h2 class="display-5 fw-bold" style="color: var(--primary);">Major Examinations</h2>
+            </div>
+            
+            <div class="premium-timeline">
+                <div class="timeline-item left" data-aos="fade-right">
+                    <div class="timeline-content btn-ripple">
+                        <h4 style="color: var(--primary);">📅 Half-Yearly Examination</h4>
+                        <ul class="mt-3 mb-0 ps-3 text-muted" style="font-size: 15px;">
+                            <li class="mb-2">The Half-Yearly Examination is conducted every year in September.</li>
+                            <li>It evaluates the syllabus covered during the first academic session.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item right" data-aos="fade-left">
+                    <div class="timeline-content btn-ripple">
+                        <h4 style="color: var(--primary);">📚 Final Examination</h4>
+                        <ul class="mt-3 mb-0 ps-3 text-muted" style="font-size: 15px;">
+                            <li class="mb-2">The Final Examination is conducted after completion of the full syllabus.</li>
+                            <li>Students are rigorously assessed on all prescribed subjects.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOARD VS NON-BOARD PREPARATION -->
+    <section class="premium-section" style="background: transparent;">
+        <div class="container">
+            <div class="row g-5 align-items-stretch">
+                
+                <!-- Board Classes -->
+                <div class="col-lg-7" data-aos="zoom-in">
+                    <div class="glass-card btn-ripple">
+                        <div class="d-flex align-items-center mb-4">
+                            <i class="fa-solid fa-graduation-cap fs-1 text-gold me-3"></i>
+                            <h3 class="fw-bold m-0" style="color: var(--primary);">Board Class Preparation <br><small class="text-muted" style="font-size:16px;">(Class X & XII)</small></h3>
+                        </div>
+                        <p class="text-muted fw-bold mb-3">🎓 Special Academic Support</p>
+                        <ul>
+                            <li>Special offline classes are conducted during the Summer Holidays.</li>
+                            <li>These classes usually continue for approximately 10 to 15 days.</li>
+                            <li>After completion of every chapter, chapter-wise tests are conducted.</li>
+                            <li>Regular practice tests continue throughout the academic session.</li>
+                            <li>Approximately 2–3 months before the Board Examination, intensive subject-wise revision tests and model papers are conducted.</li>
+                            <li>Special academic attention is given to Class X and Class XII students to ensure excellent board examination performance.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Non-Board Classes & Images -->
+                <div class="col-lg-5">
+                    <div class="row g-4 h-100">
+                        <div class="col-12" data-aos="fade-left" data-aos-delay="100">
+                            <div class="glass-card p-4 btn-ripple" style="border-left: 5px solid var(--primary);">
+                                <h4 class="fw-bold mb-3" style="color: var(--primary);"><i class="fa-solid fa-book-open-reader text-gold me-2"></i> Non-Board Classes</h4>
+                                <p class="text-muted fw-bold mb-2" style="font-size:14px;">📖 Academic Assessment</p>
+                                <ul>
+                                    <li>For all non-board classes, the Half-Yearly Examination is conducted in September.</li>
+                                    <li>After syllabus completion, regular class tests are conducted to strengthen preparation.</li>
+                                    <li>Teachers frequently ask oral and written questions during classroom teaching to assess understanding.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-12" data-aos="fade-left" data-aos-delay="200">
+                            <div class="image-wrapper h-100">
+                                <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=800&q=80" alt="Classroom Environment" style="height: 100%; min-height: 200px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PERFORMANCE MONITORING -->
+    <section class="premium-section" style="background: rgba(255,255,255,0.85); border-top: 1px solid rgba(0,0,0,0.05);">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-9 text-center" data-aos="fade-up">
+                    <i class="fa-solid fa-chart-line fs-1 text-gold mb-3"></i>
+                    <h2 class="fw-bold mb-4" style="color: var(--primary);">Student Performance Monitoring</h2>
+                    
+                    <div class="row g-4 mt-2">
+                        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                            <div class="hover-lift bg-white p-4 rounded shadow-sm h-100 border-bottom border-primary border-3">
+                                <i class="fa-solid fa-magnifying-glass-chart fs-2 text-primary mb-3"></i>
+                                <h5 class="fw-bold">Performance Review</h5>
+                                <p class="text-muted" style="font-size:14px;">Teachers continuously monitor every student's academic performance.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                            <div class="hover-lift bg-white p-4 rounded shadow-sm h-100 border-bottom border-gold border-3">
+                                <i class="fa-solid fa-hands-holding-child fs-2 text-gold mb-3"></i>
+                                <h5 class="fw-bold">Special Guidance</h5>
+                                <p class="text-muted" style="font-size:14px;">Students requiring additional support receive special guidance.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                            <div class="hover-lift bg-white p-4 rounded shadow-sm h-100 border-bottom border-primary border-3">
+                                <i class="fa-solid fa-comments fs-2 text-primary mb-3"></i>
+                                <h5 class="fw-bold">Parent Communication</h5>
+                                <p class="text-muted" style="font-size:14px;">If a student's academic performance is consistently below expectations, parents are informed and appropriate guidance is provided to improve learning outcomes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PREMIUM RETURN TO HOME BUTTON (Bottom of page) -->
+    <section class="py-5 mt-4 text-center position-relative" style="z-index: 2;" data-aos="fade-up">
+        <a href="index.html" class="btn-premium-back btn-ripple">
+            <i class="fa-solid fa-arrow-left"></i> Return to Home
+        </a>
+    </section>
+
+    <footer class="premium-footer pb-3 text-center">
+        <p class="text-light opacity-50 mb-0">&copy; 2026 BMS Sr. Sec. School, Bass (Hisar). All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 500); }, 1000);
+            AOS.init({ duration: 800, once: false, mirror: true });
+
+            const cursor = document.querySelector('.custom-cursor');
+            const follower = document.querySelector('.custom-cursor-follower');
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.transform = `translate3d(${e.clientX - 4}px, ${e.clientY - 4}px, 0)`;
+                setTimeout(() => { follower.style.transform = `translate3d(${e.clientX - 20}px, ${e.clientY - 20}px, 0)`; }, 50);
+            });
+            document.querySelectorAll('a, button, .hover-lift, .timeline-content, .btn-ripple').forEach(el => {
+                el.addEventListener('mouseenter', () => follower.style.transform += ' scale(1.5)');
+                el.addEventListener('mouseleave', () => follower.style.transform = follower.style.transform.replace(' scale(1.5)', ''));
+            });
+
+            document.querySelectorAll('.btn-ripple').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    let x = e.clientX - e.target.getBoundingClientRect().left;
+                    let y = e.clientY - e.target.getBoundingClientRect().top;
+                    let ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    ripple.style.left = `${x}px`; ripple.style.top = `${y}px`;
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

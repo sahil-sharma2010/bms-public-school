@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curriculum | BMS SR. SEC. SCHOOL</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --primary: #0F4C81; --gold: #F4B400; --bg-color: #F8FAFC; --text-muted: #64748b; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); overflow-x: hidden; scroll-behavior: smooth;}
+        .premium-nav { background: #fff; padding: 12px 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05); }
+        
+        .school-logo-text h4 { margin: 0; font-weight: 800; font-size: 20px; color: var(--primary); }
+        .school-logo-text p { margin: 0; font-weight: 500; font-size: 13px; color: #333; }
+        a { text-decoration: none; } .premium-section { padding: 90px 0; position: relative; z-index: 2; }
+        
+        /* =========================================
+           BACKGROUND WATERMARK LOGO
+           ========================================= */
+        .watermark-bg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 55vw;
+            max-width: 650px;
+            min-width: 300px;
+            opacity: 0.06; /* 6% light opacity */
+            filter: grayscale(100%); /* Black and white effect */
+            z-index: 0;
+            pointer-events: none; /* Allows clicking through it */
+        }
+
+        .inner-hero { position: relative; height: 45vh; display: flex; align-items: center; justify-content: center; text-align: center; background-image: url('assets/home-bg.jpg.png'); background-size: cover; background-position: center; background-attachment: fixed; margin-top: 0px; z-index: 2;}
+        .inner-hero::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(15,76,129,0.9), rgba(15,76,129,0.7)); z-index: 1; }
+        .inner-hero-content { position: relative; z-index: 2; color: #fff; padding-top: 60px; }
+        .inner-hero h1 { color: var(--gold); font-size: 3.5rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.3); margin-bottom: 10px; font-weight: 800;}
+        .inner-hero p { font-size: 1.2rem; font-weight: 500; opacity: 0.9; }
+
+        /* =========================================
+           PREMIUM BACK BUTTON (Bottom)
+           ========================================= */
+        .btn-premium-back {
+            background: var(--primary);
+            color: #fff;
+            font-weight: 700;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            border: 2px solid transparent;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 25px rgba(15, 76, 129, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            position: relative;
+            z-index: 2;
+        }
+        .btn-premium-back:hover {
+            background: #fff;
+            color: var(--gold) !important;
+            border-color: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(244, 180, 0, 0.3);
+        }
+        .btn-premium-back i { transition: transform 0.3s ease; }
+        .btn-premium-back:hover i { transform: translateX(-5px); }
+
+        .premium-facility-card { background: #fff; border-radius: 15px; padding: 30px 20px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.04); border: 1px solid rgba(15,76,129,0.05); height: 100%; transition: all 0.4s ease; position: relative; z-index: 1; overflow: hidden; }
+        .premium-facility-card::after { content: ''; position: absolute; top: -100%; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary), #1a66a8); transition: all 0.5s ease; z-index: -1; border-radius: 15px 15px 0 0; }
+        .premium-facility-card:hover::after { top: 0; border-radius: 0; }
+        .premium-facility-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(15,76,129,0.15); }
+        .fac-icon { font-size: 40px; color: var(--gold); margin-bottom: 20px; transition: 0.4s ease; }
+        .premium-facility-card:hover .fac-icon { transform: scale(1.2) translateY(-5px); color: #fff; }
+        .premium-facility-card h4 { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 10px; transition: 0.4s ease; }
+        .premium-facility-card p { font-size: 14px; color: var(--text-muted); margin: 0; line-height: 1.5; transition: 0.4s ease; }
+        .premium-facility-card:hover h4, .premium-facility-card:hover p { color: #fff; }
+        
+        .hover-lift { transition: 0.3s; position: relative; z-index: 2; }
+        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(15,76,129,0.1) !important; }
+
+        .btn-ripple { position: relative; overflow: hidden; }
+        .btn-ripple .ripple { position: absolute; background: rgba(255, 255, 255, 0.5); border-radius: 50%; transform: scale(0); animation: ripple-anim 0.6s linear; pointer-events: none; }
+        @keyframes ripple-anim { to { transform: scale(4); opacity: 0; } }
+
+        /* Cursor */
+        .custom-cursor { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; }
+        .custom-cursor-follower { width: 40px; height: 40px; border: 2px solid var(--primary); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: transform 0.2s ease; }
+        .page-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--primary); z-index: 10000; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        .loader-spinner { width: 60px; height: 60px; border: 4px solid rgba(255,255,255,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s infinite linear; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .premium-footer { background: var(--primary); color: white; padding-top: 60px; margin-top: 50px; position: relative; z-index: 2;}
+    </style>
+</head>
+<body>
+    <div class="page-loader" id="loader"><div class="loader-spinner"></div></div>
+    <div class="custom-cursor"></div><div class="custom-cursor-follower"></div>
+
+    <!-- BACKGROUND WATERMARK LOGO -->
+    <img src="Screenshot 2026-07-30 160633_2.jpg" alt="BMS Watermark Logo" class="watermark-bg">
+
+    <nav class="navbar navbar-expand-lg premium-nav fixed-top" id="navbar">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <!-- Reverted back to FontAwesome School Icon -->
+                <i class="fa-solid fa-school text-gold fs-1 me-3"></i>
+                <div class="school-logo-text d-none d-sm-block">
+                    <h4>BMS SR. SEC. SCHOOL</h4>
+                    <p>BASS, HISAR</p>
+                </div>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link text-dark fw-bold px-3" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark fw-bold px-3" href="curriculum.html" style="color:var(--gold)!important;">Curriculum</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark fw-bold px-3" href="examination.html">Examination</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark fw-bold px-3" href="co-curricular.html">Co-Curricular</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="inner-hero">
+        <div class="inner-hero-content" data-aos="fade-up">
+            <h1>Academic Curriculum</h1>
+            <p>Building Strong Foundations for Every Student</p>
+        </div>
+    </section>
+
+    <!-- CLASSES AVAILABLE SECTION -->
+    <section class="premium-section" style="background: transparent;">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h5 class="text-gold fw-bold text-uppercase">Our Programs</h5>
+                <h2 class="display-5 fw-bold" style="color: var(--primary);">Classes Available</h2>
+            </div>
+            
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-2 col-md-4 col-sm-6" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="premium-facility-card btn-ripple">
+                        <i class="fa-solid fa-child-reaching fac-icon"></i>
+                        <h4>LKG</h4>
+                        <p>Early foundation</p>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="premium-facility-card btn-ripple">
+                        <i class="fa-solid fa-shapes fac-icon"></i>
+                        <h4>UKG</h4>
+                        <p>Playful learning</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="premium-facility-card btn-ripple">
+                        <i class="fa-solid fa-book-open fac-icon"></i>
+                        <h4>Class I to X</h4>
+                        <p>Core academic syllabus</p>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="premium-facility-card btn-ripple">
+                        <i class="fa-solid fa-microscope fac-icon"></i>
+                        <h4>Class XI</h4>
+                        <p>Stream selection</p>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="premium-facility-card btn-ripple">
+                        <i class="fa-solid fa-graduation-cap fac-icon"></i>
+                        <h4>Class XII</h4>
+                        <p>Board preparations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STREAMS SECTION -->
+    <section class="premium-section" style="background: rgba(255,255,255,0.7); backdrop-filter: blur(5px);">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h5 class="text-gold fw-bold text-uppercase">Senior Secondary</h5>
+                <h2 class="display-5 fw-bold" style="color: var(--primary);">Available Streams</h2>
+            </div>
+
+            <div class="row g-5">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div style="background: #fff; padding: 40px; border-radius: 20px; border-top: 5px solid var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.05); height: 100%;">
+                        <div class="d-flex align-items-center mb-4">
+                            <i class="fa-solid fa-flask text-primary fs-1 me-3"></i>
+                            <h3 class="fw-bold m-0" style="color: var(--primary);">Science Stream</h3>
+                        </div>
+                        <p class="text-muted mb-4">Aimed at students pursuing careers in engineering, medicine, research, and technology.</p>
+                        
+                        <div class="d-flex align-items-start mb-3 bg-light p-3 rounded shadow-sm hover-lift btn-ripple">
+                            <i class="fa-solid fa-stethoscope text-gold fs-3 me-3 mt-1"></i>
+                            <div>
+                                <h5 class="fw-bold" style="color: var(--primary);">Medical</h5>
+                                <p class="mb-0 text-muted" style="font-size:14px;">Physics, Chemistry, Biology, English, Optional Subject.</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start bg-light p-3 rounded shadow-sm hover-lift btn-ripple">
+                            <i class="fa-solid fa-calculator text-gold fs-3 me-3 mt-1"></i>
+                            <div>
+                                <h5 class="fw-bold" style="color: var(--primary);">Non-Medical</h5>
+                                <p class="mb-0 text-muted" style="font-size:14px;">Physics, Chemistry, Mathematics, English, Optional Subject.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div style="background: #fff; padding: 40px; border-radius: 20px; border-top: 5px solid var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.05); height: 100%;">
+                        <div class="d-flex align-items-center mb-4">
+                            <i class="fa-solid fa-palette text-gold fs-1 me-3"></i>
+                            <h3 class="fw-bold m-0" style="color: var(--primary);">Arts Stream</h3>
+                        </div>
+                        <p class="text-muted mb-4">Aimed at students pursuing careers in civil services, humanities, law, and literature.</p>
+                        
+                        <div class="d-flex align-items-start mb-3 bg-light p-3 rounded shadow-sm hover-lift btn-ripple">
+                            <i class="fa-solid fa-square-root-variable text-primary fs-3 me-3 mt-1"></i>
+                            <div>
+                                <h5 class="fw-bold" style="color: var(--primary);">Arts with Mathematics</h5>
+                                <p class="mb-0 text-muted" style="font-size:14px;">History/Pol Science, Geography, Mathematics, English, Hindi.</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start bg-light p-3 rounded shadow-sm hover-lift btn-ripple">
+                            <i class="fa-solid fa-globe text-primary fs-3 me-3 mt-1"></i>
+                            <div>
+                                <h5 class="fw-bold" style="color: var(--primary);">Arts without Mathematics</h5>
+                                <p class="mb-0 text-muted" style="font-size:14px;">History, Political Science, Geography, English, Hindi.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PREMIUM RETURN TO HOME BUTTON (Bottom of page) -->
+    <section class="py-5 mt-4 text-center position-relative" style="z-index: 2;" data-aos="fade-up">
+        <a href="index.html" class="btn-premium-back btn-ripple">
+            <i class="fa-solid fa-arrow-left"></i> Return to Home
+        </a>
+    </section>
+
+    <footer class="premium-footer pb-3 text-center">
+        <p class="text-light opacity-50 mb-0">&copy; 2026 BMS Sr. Sec. School, Bass (Hisar). All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 500); }, 1000);
+            AOS.init({ duration: 800, once: false, mirror: true });
+            
+            const cursor = document.querySelector('.custom-cursor');
+            const follower = document.querySelector('.custom-cursor-follower');
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.transform = `translate3d(${e.clientX - 4}px, ${e.clientY - 4}px, 0)`;
+                setTimeout(() => { follower.style.transform = `translate3d(${e.clientX - 20}px, ${e.clientY - 20}px, 0)`; }, 50);
+            });
+            document.querySelectorAll('a, button, .hover-lift, .premium-facility-card, .btn-ripple').forEach(el => {
+                el.addEventListener('mouseenter', () => follower.style.transform += ' scale(1.5)');
+                el.addEventListener('mouseleave', () => follower.style.transform = follower.style.transform.replace(' scale(1.5)', ''));
+            });
+
+            document.querySelectorAll('.btn-ripple').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    let x = e.clientX - e.target.getBoundingClientRect().left;
+                    let y = e.clientY - e.target.getBoundingClientRect().top;
+                    let ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    ripple.style.left = `${x}px`; ripple.style.top = `${y}px`;
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

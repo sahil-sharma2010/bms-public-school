@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | BMS SR. SEC. SCHOOL</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --primary: #0F4C81; --gold: #F4B400; --bg-color: #F8FAFC; --text-muted: #64748b; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); overflow-x: hidden; scroll-behavior: smooth;}
+        .premium-nav { background: #fff; padding: 12px 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05); }
+        .school-logo-text h4 { margin: 0; font-weight: 800; font-size: 20px; color: var(--primary); }
+        .school-logo-text p { margin: 0; font-weight: 500; font-size: 13px; color: #333; }
+        a { text-decoration: none; } .premium-section { padding: 90px 0; position: relative; z-index: 2;}
+        
+        .watermark-bg { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 55vw; max-width: 650px; min-width: 300px; opacity: 0.06; filter: grayscale(100%); z-index: 0; pointer-events: none; }
+
+        .inner-hero { position: relative; height: 45vh; display: flex; align-items: center; justify-content: center; text-align: center; background-image: url('assets/home-bg.jpg.png'); background-size: cover; background-position: center; background-attachment: fixed; margin-top: 0px; z-index: 2;}
+        .inner-hero::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(15,76,129,0.9), rgba(15,76,129,0.7)); z-index: 1; }
+        .inner-hero-content { position: relative; z-index: 2; color: #fff; padding-top: 60px; }
+        .inner-hero h1 { color: var(--gold); font-size: 3.5rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.3); margin-bottom: 10px; font-weight: 800;}
+        .inner-hero p { font-size: 1.1rem; font-weight: 500; opacity: 0.9; max-width: 800px; margin: 0 auto; line-height: 1.6;}
+
+        .btn-premium-back { background: var(--primary); color: #fff; font-weight: 700; padding: 15px 40px; border-radius: 50px; font-size: 1.1rem; border: 2px solid transparent; transition: all 0.4s ease; box-shadow: 0 10px 25px rgba(15, 76, 129, 0.2); display: inline-flex; align-items: center; gap: 12px; text-decoration: none; position: relative; z-index: 2;}
+        .btn-premium-back:hover { background: #fff; color: var(--gold) !important; border-color: var(--gold); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(244, 180, 0, 0.3); }
+        .btn-premium-back i { transition: transform 0.3s ease; }
+        .btn-premium-back:hover i { transform: translateX(-5px); }
+
+        .btn-ripple { position: relative; overflow: hidden; }
+        .btn-ripple .ripple { position: absolute; background: rgba(255, 255, 255, 0.5); border-radius: 50%; transform: scale(0); animation: ripple-anim 0.6s linear; pointer-events: none; }
+        @keyframes ripple-anim { to { transform: scale(4); opacity: 0; } }
+
+        /* Gallery CSS */
+        .gallery-card { position: relative; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); cursor: pointer; aspect-ratio: 4/3; }
+        .gallery-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,76,129,0.9) 0%, rgba(15,76,129,0.2) 100%); opacity: 0; transition: 0.4s ease; display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; color: #fff; }
+        .gallery-card:hover img { transform: scale(1.1); }
+        .gallery-card:hover .gallery-overlay { opacity: 1; }
+        .gallery-overlay h4 { font-weight: 700; font-size: 1.2rem; margin: 0; transform: translateY(20px); transition: 0.4s ease; color: var(--gold); }
+        .gallery-card:hover .gallery-overlay h4 { transform: translateY(0); }
+        .gallery-overlay i { font-size: 2rem; margin-bottom: 10px; opacity: 0.8; }
+
+        .hover-lift { transition: 0.3s; position: relative; z-index: 2;}
+        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(15,76,129,0.1) !important; }
+
+        .custom-cursor { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; }
+        .custom-cursor-follower { width: 40px; height: 40px; border: 2px solid var(--primary); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: transform 0.2s ease; }
+        .page-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--primary); z-index: 10000; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        .loader-spinner { width: 60px; height: 60px; border: 4px solid rgba(255,255,255,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s infinite linear; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .premium-footer { background: var(--primary); color: white; padding-top: 60px; margin-top: 50px; position: relative; z-index: 2;}
+    </style>
+</head>
+<body>
+    <div class="page-loader" id="loader"><div class="loader-spinner"></div></div>
+    <div class="custom-cursor"></div><div class="custom-cursor-follower"></div>
+
+    <!-- BACKGROUND WATERMARK LOGO -->
+    <img src="Screenshot 2026-07-30 160633_2.jpg" alt="BMS Watermark Logo" class="watermark-bg">
+
+    <nav class="navbar navbar-expand-lg premium-nav fixed-top" id="navbar">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <i class="fa-solid fa-school text-gold fs-1 me-3"></i>
+                <div class="school-logo-text d-none d-sm-block"><h4>BMS SR. SEC. SCHOOL</h4><p>BASS, HISAR</p></div>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link text-dark fw-bold px-3" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark fw-bold px-3" href="gallery.html" style="color:var(--gold)!important;">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark fw-bold px-3" href="achievements.html">Achievements</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark fw-bold px-3" href="admissions.html">Admissions</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="inner-hero">
+        <div class="inner-hero-content px-3" data-aos="fade-up">
+            <h1>Gallery</h1>
+            <p>Capturing Every Beautiful Moment at BMS</p>
+        </div>
+    </section>
+
+    <!-- CAMPUS OVERVIEW -->
+    <section class="premium-section" style="background: rgba(255,255,255,0.7); backdrop-filter: blur(5px);">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
+                        <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80" alt="Campus" class="img-fluid" style="transition: 0.5s;">
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <h5 class="text-gold fw-bold text-uppercase mb-2">Campus Overview</h5>
+                    <h2 class="display-6 fw-bold mb-4" style="color: var(--primary);">Vibrant Learning Environment</h2>
+                    <p class="text-muted" style="font-size: 1.1rem; line-height: 1.8;">Our campus provides a safe, clean and inspiring learning environment where students grow academically, socially and personally. Explore the moments that make our school a second home for our students.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY CATEGORIES -->
+    <section class="premium-section" style="background: transparent;">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h5 class="text-gold fw-bold text-uppercase">Memories</h5>
+                <h2 class="display-5 fw-bold" style="color: var(--primary);">Explore Our Gallery</h2>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Gallery Item 1 -->
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+                    <a href="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=80" class="glightbox gallery-card d-block">
+                        <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80" alt="Campus">
+                        <div class="gallery-overlay">
+                            <i class="fa-solid fa-building"></i>
+                            <h4>Campus</h4>
+                        </div>
+                    </a>
+                </div>
+                <!-- Gallery Item 2 -->
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="150">
+                    <a href="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80" class="glightbox gallery-card d-block">
+                        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80" alt="Classrooms">
+                        <div class="gallery-overlay">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                            <h4>Classrooms</h4>
+                        </div>
+                    </a>
+                </div>
+                <!-- Gallery Item 3 -->
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                    <a href="https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=1200&q=80" class="glightbox gallery-card d-block">
+                        <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=600&q=80" alt="Sports">
+                        <div class="gallery-overlay">
+                            <i class="fa-solid fa-volleyball"></i>
+                            <h4>Sports</h4>
+                        </div>
+                    </a>
+                </div>
+                <!-- Gallery Item 4 -->
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="250">
+                    <a href="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80" class="glightbox gallery-card d-block">
+                        <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=600&q=80" alt="Annual Function">
+                        <div class="gallery-overlay">
+                            <i class="fa-solid fa-masks-theater"></i>
+                            <h4>Annual Function</h4>
+                        </div>
+                    </a>
+                </div>
+                <!-- Gallery Item 5 -->
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+                    <a href="https://images.unsplash.com/photo-1532375810709-75b1d31d929c?auto=format&fit=crop&w=1200&q=80" class="glightbox gallery-card d-block">
+                        <img src="https://images.unsplash.com/photo-1532375810709-75b1d31d929c?auto=format&fit=crop&w=600&q=80" alt="Independence Day">
+                        <div class="gallery-overlay">
+                            <i class="fa-solid fa-flag"></i>
+                            <h4>Independence Day Celebration</h4>
+                        </div>
+                    </a>
+                </div>
+                <!-- Gallery Item 6 -->
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="350">
+                    <a href="https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&w=1200&q=80" class="glightbox gallery-card d-block">
+                        <img src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&w=600&q=80" alt="Republic Day">
+                        <div class="gallery-overlay">
+                            <i class="fa-solid fa-star"></i>
+                            <h4>Republic Day Celebration</h4>
+                        </div>
+                    </a>
+                </div>
+                <!-- Gallery Item 7 -->
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="400">
+                    <a href="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=1200&q=80" class="glightbox gallery-card d-block">
+                        <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=600&q=80" alt="Teachers Day">
+                        <div class="gallery-overlay">
+                            <i class="fa-solid fa-user-tie"></i>
+                            <h4>Teachers' Day Celebration</h4>
+                        </div>
+                    </a>
+                </div>
+                <!-- Gallery Item 8 -->
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="450">
+                    <a href="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80" class="glightbox gallery-card d-block">
+                        <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=600&q=80" alt="Science Experiments">
+                        <div class="gallery-overlay">
+                            <i class="fa-solid fa-flask"></i>
+                            <h4>Science Experiments</h4>
+                        </div>
+                    </a>
+                </div>
+                <!-- Gallery Item 9 -->
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="500">
+                    <a href="https://images.unsplash.com/photo-1460518451285-8f24aa5aeb71?auto=format&fit=crop&w=1200&q=80" class="glightbox gallery-card d-block">
+                        <img src="https://images.unsplash.com/photo-1460518451285-8f24aa5aeb71?auto=format&fit=crop&w=600&q=80" alt="Art & Cultural">
+                        <div class="gallery-overlay">
+                            <i class="fa-solid fa-palette"></i>
+                            <h4>Art & Cultural Activities</h4>
+                        </div>
+                    </a>
+                </div>
+                <!-- Gallery Item 10 -->
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="550">
+                    <a href="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1200&q=80" class="glightbox gallery-card d-block">
+                        <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=600&q=80" alt="Library">
+                        <div class="gallery-overlay">
+                            <i class="fa-solid fa-book"></i>
+                            <h4>Library</h4>
+                        </div>
+                    </a>
+                </div>
+                <!-- Gallery Item 11 -->
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="600">
+                    <a href="https://images.unsplash.com/photo-1557223562-6c77ef16210f?auto=format&fit=crop&w=1200&q=80" class="glightbox gallery-card d-block">
+                        <img src="https://images.unsplash.com/photo-1557223562-6c77ef16210f?auto=format&fit=crop&w=600&q=80" alt="School Transport">
+                        <div class="gallery-overlay">
+                            <i class="fa-solid fa-bus"></i>
+                            <h4>School Transport</h4>
+                        </div>
+                    </a>
+                </div>
+                <!-- Gallery Item 12 -->
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="650">
+                    <a href="https://images.unsplash.com/photo-1587329310686-91414b8e3cb7?auto=format&fit=crop&w=1200&q=80" class="glightbox gallery-card d-block">
+                        <img src="https://images.unsplash.com/photo-1587329310686-91414b8e3cb7?auto=format&fit=crop&w=600&q=80" alt="Playground">
+                        <div class="gallery-overlay">
+                            <i class="fa-solid fa-futbol"></i>
+                            <h4>Playground</h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PREMIUM RETURN TO HOME BUTTON -->
+    <section class="py-5 text-center position-relative" style="z-index: 2;" data-aos="fade-up">
+        <a href="index.html" class="btn-premium-back btn-ripple">
+            <i class="fa-solid fa-arrow-left"></i> Return to Home
+        </a>
+    </section>
+
+    <footer class="premium-footer pb-3 text-center">
+        <p class="text-light opacity-50 mb-0">&copy; 2026 BMS Sr. Sec. School, Bass (Hisar). All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 500); }, 1000);
+            AOS.init({ duration: 800, once: false, mirror: true });
+            
+            const lightbox = GLightbox({ selector: '.glightbox', touchNavigation: true, loop: true, zoomable: true });
+
+            const cursor = document.querySelector('.custom-cursor');
+            const follower = document.querySelector('.custom-cursor-follower');
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.transform = `translate3d(${e.clientX - 4}px, ${e.clientY - 4}px, 0)`;
+                setTimeout(() => { follower.style.transform = `translate3d(${e.clientX - 20}px, ${e.clientY - 20}px, 0)`; }, 50);
+            });
+            document.querySelectorAll('a, button, .hover-lift, .gallery-card, .btn-ripple').forEach(el => {
+                el.addEventListener('mouseenter', () => follower.style.transform += ' scale(1.5)');
+                el.addEventListener('mouseleave', () => follower.style.transform = follower.style.transform.replace(' scale(1.5)', ''));
+            });
+
+            document.querySelectorAll('.btn-ripple').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    let x = e.clientX - e.target.getBoundingClientRect().left;
+                    let y = e.clientY - e.target.getBoundingClientRect().top;
+                    let ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    ripple.style.left = `${x}px`; ripple.style.top = `${y}px`;
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
