@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Our Management | BMS SR. SEC. SCHOOL</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #041B3B;    
+            --gold: #F4B400;       
+            --bg-color: #F8FAFC;
+        }
+
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: #333;}
+        
+        /* Premium Header Space */
+        .page-header { background: var(--primary); padding: 120px 0 60px 0; text-align: center; color: white;}
+        .page-header h1 { font-weight: 800; font-size: 40px; color: var(--gold);}
+        
+        /* Management Cards */
+        .premium-section { padding: 80px 0; }
+        .management-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.4s ease; text-align: center; border-bottom: 4px solid var(--primary); height: 100%;}
+        .management-card:hover { transform: translateY(-10px); border-bottom-color: var(--gold);}
+        .management-img-box { width: 100%; height: 300px; background: #e9ecef; display: flex; align-items: center; justify-content: center; overflow: hidden; border-bottom: 1px solid rgba(0,0,0,0.05);}
+        .management-img-box i { font-size: 80px; color: #adb5bd; } 
+        .management-info { padding: 30px 20px; }
+        .management-info h4 { font-weight: 700; color: var(--primary); margin-bottom: 5px; font-size: 22px;}
+        .management-info p { color: var(--gold); font-weight: 600; text-transform: uppercase; font-size: 14px; margin-bottom: 15px; letter-spacing: 1px;}
+        .management-info span { color: #64748b; font-size: 15px; line-height: 1.6; display: block;}
+
+        .btn-outline-gold { background: transparent; color: var(--primary); border: 2px solid var(--primary); font-weight: 600; padding: 12px 30px; border-radius: 6px; transition: all 0.3s; text-decoration: none;}
+        .btn-outline-gold:hover { background-color: var(--primary); color: #fff; }
+    </style>
+</head>
+<body>
+
+    <!-- Simple Navbar Back Button -->
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm fixed-top py-3">
+        <div class="container-fluid px-lg-5">
+            <a class="navbar-brand text-primary fw-bold" href="index.html">
+                <i class="fa-solid fa-arrow-left me-2"></i> Back to Home
+            </a>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1>Our Management Team</h1>
+            <p class="mt-2 text-light opacity-75">The guiding force behind the success of BMS Sr. Sec. School.</p>
+        </div>
+    </div>
+
+    <!-- Management Members -->
+    <section class="premium-section">
+        <div class="container">
+            <div class="row g-5 justify-content-center">
+                
+                <!-- Chairman -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="management-card">
+                        <div class="management-img-box">
+                            <i class="fa-solid fa-user-tie"></i>
+                            <!-- Replace with actual image: <img src="assets/chairman.jpg" style="width:100%; height:100%; object-fit:cover;"> -->
+                        </div>
+                        <div class="management-info">
+                            <h4>Name of Chairman</h4>
+                            <p>Chairman</p>
+                            <span>Providing strategic direction and vision to make BMS an institute of excellence and strong moral values.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Director -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="management-card">
+                        <div class="management-img-box">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <div class="management-info">
+                            <h4>Name of Director</h4>
+                            <p>Director</p>
+                            <span>Ensuring modern infrastructure, smooth administration and maintaining the highest educational standards.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Principal -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="management-card">
+                        <div class="management-img-box">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <div class="management-info">
+                            <h4>Name of Principal</h4>
+                            <p>Principal</p>
+                            <span>Leading the academic framework, fostering student development and guiding the faculty to perfection.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vice Principal -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="management-card">
+                        <div class="management-img-box">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <div class="management-info">
+                            <h4>Name of Vice Principal</h4>
+                            <p>Vice Principal</p>
+                            <span>Supporting academic operations, managing student discipline, and ensuring a healthy learning environment.</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Management Team Member -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="management-card">
+                        <div class="management-img-box">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div class="management-info">
+                            <h4>Name Here</h4>
+                            <p>Management Team</p>
+                            <span>Working consistently to deliver a seamless educational experience for our students.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="text-center mt-5 pt-4">
+                <a href="index.html" class="btn-outline-gold"><i class="fa-solid fa-house me-2"></i> Return to Home Page</a>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
