@@ -5,26 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BMS SR. SEC. SCHOOL, BASS (HISAR) | Excellence in Education</title>
     
-    <!-- SEO & Meta Tags -->
     <meta name="description" content="BMS SR. SEC. SCHOOL, Bass (Hisar) - Knowledge • Discipline • Excellence. A premier Senior Secondary School.">
     
-    <!-- CDNs (ALL OLD FUNCTIONS RETAINED) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
     
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
     
     <style>
-        /* =========================================
-           VARIABLES & THEME (Blue, White, Golden)
-           ========================================= */
         :root {
-            --primary: #0c2348;    /* Deep Premium Navy Blue */
-            --gold: #f4b400;       /* Golden Accent */
+            --primary: #0c2348;
+            --gold: #f4b400;
             --gold-glow: rgba(244, 180, 0, 0.4);
             --bg-color: #fafafa;   
             --bg-theme: #FFFFFF;
@@ -50,9 +44,6 @@
         .premium-section { padding: 90px 0; }
         a { text-decoration: none; }
 
-        /* =========================================
-           HEADER LAYOUT (1400px Max-width, 90px Height)
-           ========================================= */
         .premium-nav { 
             background: transparent; 
             height: 90px;
@@ -89,8 +80,8 @@
             background: transparent !important;
         }
         .nav-logo-img { 
-            width: 75px !important; 
-            height: 75px !important; 
+            width: 70px !important; 
+            height: 70px !important; 
             object-fit: contain; 
             background: transparent !important; 
             border: none !important;
@@ -133,6 +124,9 @@
             align-items: center;
         }
         
+        .navbar-nav { gap: 5px; }
+        .nav-item { white-space: nowrap; }
+
         .nav-hover { 
             position: relative; 
             color: #fff !important; 
@@ -190,13 +184,16 @@
         @media (min-width: 1400px) {
             .school-logo-text h4 { font-size: 38px; }
             .school-logo-text p { font-size: 18px; }
-            .nav-hover { margin: 0 20px; font-size: 14px; }
+            .nav-hover { margin: 0 12px; font-size: 14px; }
+            .navbar-nav { gap: 10px; }
         }
         @media (min-width: 992px) and (max-width: 1399px) {
-            .school-logo-text h4 { font-size: 26px; }
-            .school-logo-text p { font-size: 14px; }
-            .nav-hover { margin: 0 12px; font-size: 13px; }
-            .header-container { padding: 0 20px; }
+            .school-logo-text h4 { font-size: 24px; }
+            .school-logo-text p { font-size: 13px; }
+            .nav-logo-img { width: 55px !important; height: 55px !important; }
+            .nav-hover { margin: 0 6px; font-size: 12px; padding: 8px 4px !important; }
+            .header-container { padding: 0 15px; }
+            .navbar-nav { gap: 0px; }
         }
         
         @media (min-width: 992px) {
@@ -208,9 +205,6 @@
         .navbar-toggler { border-color: rgba(255,255,255,0.5); padding: 8px 12px; }
         .premium-nav.scrolled .navbar-toggler { border-color: rgba(0,0,0,0.1); }
 
-        /* =========================================
-           BUTTONS & RIPPLE
-           ========================================= */
         .btn-gold { background-color: var(--gold); color: #000; font-weight: 700; border: none; padding: 14px 35px; border-radius: 6px; transition: all 0.3s; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; box-shadow: 0 5px 15px rgba(244, 180, 0, 0.2);}
         .btn-gold:hover { background-color: #fff; color: var(--gold); transform: translateY(-3px); box-shadow: 0 10px 25px rgba(255,255,255,0.2); }
         
@@ -220,28 +214,6 @@
         .hover-lift { transition: 0.3s; }
         .hover-lift:hover { transform: translateY(-4px); }
 
-        .btn-admission-closed {
-            background-color: var(--primary);
-            color: #fff;
-            border: 2px solid var(--gold);
-            font-weight: 700;
-            padding: 14px 35px;
-            border-radius: 6px;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            cursor: default; 
-            user-select: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            white-space: nowrap;
-        }
-
-        /* =========================================
-           HERO SECTION
-           ========================================= */
         .hero-premium { 
             position: relative; 
             width: 100%;
@@ -257,60 +229,76 @@
         .hero-welcome-script { font-family: 'Great Vibes', cursive; color: var(--gold); font-size: 3rem; margin-bottom: -5px; font-weight: 400; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
         .hero-main-title { font-size: 4.5rem; font-weight: 800; letter-spacing: -1px; line-height: 1.1; color: #fff; margin-bottom: 25px;}
         
-        .hero-location-badge { 
-            display: inline-flex; align-items: center; background: var(--gold); color: #000; font-weight: 800; padding: 8px 20px; border-radius: 5px; font-size: 0.95rem; margin-bottom: 25px; letter-spacing: 1px; text-transform: uppercase; 
-        }
-        .hero-location-badge i { margin-right: 8px; font-size: 1.1rem; }
-
         .hero-tagline-text { font-size: 1.3rem; font-weight: 700; margin-bottom: 15px; color: #fff; letter-spacing: 0.5px; }
         .hero-desc-text { font-size: 1.05rem; max-width: 480px; line-height: 1.6; color: rgba(255,255,255,0.7); margin-bottom: 35px; }
 
         .hero-building-container { position: relative; display: flex; justify-content: flex-end; align-items: center; }
         .hero-building-img { width: 100%; max-width: 900px; height: auto; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); object-fit: cover; border: 2px solid rgba(255,255,255,0.05); }
 
-        .admissions-closed-badge {
-            background: rgba(4, 27, 59, 0.85);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--gold);
-            padding: 12px 25px;
-            border-radius: 8px;
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            margin-bottom: 30px;
+        /* =========================================
+           LATEST UPDATES SECTION (NEW)
+           ========================================= */
+        .updates-container {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            gap: 20px;
+            padding-bottom: 20px;
+            scrollbar-width: none; /* Firefox */
         }
-        .admissions-closed-icon { font-size: 24px; color: var(--gold); }
-        .admissions-closed-text h6 { margin: 0; color: #fff; font-weight: 700; font-size: 16px; letter-spacing: 0.5px; text-transform: uppercase;}
-        .admissions-closed-text p { margin: 0; color: rgba(255,255,255,0.7); font-size: 13px; }
+        .updates-container::-webkit-scrollbar { display: none; } /* Chrome */
+        
+        .update-card {
+            min-width: 300px;
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+            border: 1px solid rgba(12, 35, 72, 0.05);
+            border-left: 4px solid var(--gold);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: 0.3s;
+        }
+        .update-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(12, 35, 72, 0.1); border-left-color: var(--primary); }
+        .update-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .update-icon { width: 40px; height: 40px; background: rgba(244, 180, 0, 0.15); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        .update-header h5 { margin: 0; font-size: 16px; font-weight: 800; color: var(--primary); }
+        .update-body p { font-size: 14px; color: var(--text-muted); margin: 0; font-weight: 500;}
+        .update-footer { margin-top: 15px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #888; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 10px;}
+        .update-badge { font-weight: 600; color: var(--gold); background: rgba(244, 180, 0, 0.1); padding: 4px 10px; border-radius: 50px; }
 
         /* =========================================
-           WHY CHOOSE BMS (NEW 9 PREMIUM CARDS GRID)
+           PREMIUM GRID CARDS (Why Choose & Facilities)
            ========================================= */
-        .why-choose-grid-card {
-            background: #fff;
+        .premium-grid-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(15, 76, 129, 0.08);
             border-radius: 16px;
             padding: 35px 25px;
             text-align: center;
             box-shadow: 0 8px 25px rgba(0,0,0,0.04);
-            border: 1px solid rgba(12, 35, 72, 0.05);
-            border-bottom: 4px solid var(--gold);
             height: 100%;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             z-index: 1;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
+            border-bottom: 4px solid var(--gold);
         }
-        .why-choose-grid-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(12, 35, 72, 0.1);
+        .premium-grid-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px var(--gold-glow);
             border-bottom-color: var(--primary);
         }
-        .wc-grid-icon-wrapper {
-            width: 70px;
-            height: 70px;
+        .grid-icon-wrapper {
+            width: 75px;
+            height: 75px;
             background: rgba(244, 180, 0, 0.15);
             border-radius: 50%;
             display: flex;
@@ -318,42 +306,19 @@
             justify-content: center;
             margin-bottom: 20px;
             transition: all 0.4s ease;
+            border: 2px solid transparent;
             flex-shrink: 0;
         }
-        .wc-grid-icon-wrapper i {
-            font-size: 28px;
-            color: var(--primary);
-            transition: all 0.4s ease;
-        }
-        .why-choose-grid-card:hover .wc-grid-icon-wrapper {
+        .grid-icon { font-size: 30px; color: var(--primary); transition: all 0.4s ease; margin: 0;}
+        .premium-grid-card:hover .grid-icon-wrapper {
             background: var(--primary);
-            box-shadow: 0 10px 20px rgba(12, 35, 72, 0.2);
+            border-color: rgba(255,255,255,0.8);
+            box-shadow: 0 5px 15px rgba(12, 35, 72, 0.3);
         }
-        .why-choose-grid-card:hover .wc-grid-icon-wrapper i {
-            color: var(--gold);
-            transform: scale(1.1);
-        }
-        .why-choose-grid-card h4 {
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 12px;
-            line-height: 1.3;
-        }
-        .why-choose-grid-card p {
-            font-size: 14.5px;
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin: 0;
-            font-weight: 500;
-        }
+        .premium-grid-card:hover .grid-icon { color: var(--gold); transform: scale(1.1); }
+        .premium-grid-card h4 { font-size: 17px; font-weight: 800; color: var(--primary); margin-bottom: 12px; transition: 0.4s ease; line-height: 1.3;}
+        .premium-grid-card p { font-size: 14.5px; color: var(--text-muted); margin: 0; line-height: 1.6; font-weight: 500; transition: 0.4s ease; }
 
-        /* (Old CSS kept safely to ensure no functions break) */
-        .why-choose-list-item, .premium-image-card { display: none; }
-
-        /* =========================================
-           FACILITIES (16 CARDS)
-           ========================================= */
         .premium-facility-card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -376,9 +341,7 @@
             box-shadow: 0 15px 35px var(--gold-glow);
             border-color: var(--gold);
         }
-        .fac-icon-wrapper {
-            width: 75px; height: 75px; background: rgba(244, 180, 0, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; transition: all 0.4s ease; border: 2px solid transparent; flex-shrink: 0;
-        }
+        .fac-icon-wrapper { width: 75px; height: 75px; background: rgba(244, 180, 0, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; transition: all 0.4s ease; border: 2px solid transparent; flex-shrink: 0;}
         .fac-icon { font-size: 32px; color: var(--gold); transition: all 0.4s ease; margin: 0;}
         .premium-facility-card:hover .fac-icon-wrapper { background: var(--gold); border-color: rgba(255,255,255,0.8); box-shadow: 0 5px 15px rgba(244, 180, 0, 0.4); }
         .premium-facility-card:hover .fac-icon { color: var(--primary); transform: scale(1.1); }
@@ -386,7 +349,7 @@
         .premium-facility-card p { font-size: 14px; color: var(--text-muted); margin: 0; line-height: 1.6; transition: 0.4s ease; }
 
         /* =========================================
-           OTHER SECTIONS (Management, Contact, etc.)
+           OTHER SECTIONS
            ========================================= */
         .about-image-wrapper { position: relative; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: transform 0.5s ease; animation: floatAnim 6s ease-in-out infinite; }
         .about-image-wrapper img { width: 100%; height: auto; border-radius: 15px; border: 5px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
@@ -445,9 +408,6 @@
         .footer-links a { color: rgba(255,255,255,0.7); transition: all 0.3s; display: block; padding: 6px 0; text-decoration: none;}
         .footer-links a:hover { color: var(--gold); padding-left: 8px; }
 
-        /* =========================================
-           MOBILE RESPONSIVE OPTIMIZATION
-           ========================================= */
         @media (max-width: 991px) {
             .navbar-collapse {
                 background: #ffffff;
@@ -461,12 +421,11 @@
                 top: 100%;
                 z-index: 1050;
             }
-            .nav-hover { color: var(--primary) !important; padding: 12px 10px; display: block; border-bottom: 1px solid rgba(0,0,0,0.05); margin: 0; }
+            .navbar-nav { gap: 0px; }
+            .nav-item { white-space: normal; }
+            .nav-hover { color: var(--primary) !important; padding: 12px 10px !important; display: block; border-bottom: 1px solid rgba(0,0,0,0.05); margin: 0; font-size: 14px; }
             .premium-nav .dropdown-menu { border: none; box-shadow: none; background: rgba(12, 35, 72, 0.03); padding-left: 15px; margin-top: 0px !important;}
             .premium-nav .dropdown-item { color: var(--primary) !important; }
-            
-            .school-logo-text h4 { font-size: 24px; }
-            .school-logo-text p { font-size: 14px; }
             
             .hero-premium { flex-direction: column; text-align: center; padding-top: 130px; padding-bottom: 50px; min-height: auto;}
             .hero-building-container { margin-top: 40px; justify-content: center; }
@@ -482,12 +441,9 @@
             .hero-main-title { font-size: 2.8rem; }
             .hero-welcome-script { font-size: 2.2rem; }
             .hero-content-wrapper .d-flex { flex-direction: column; width: 100%; gap: 15px !important; margin-top: 20px;}
-            .hero-content-wrapper .btn-gold, .hero-content-wrapper .btn-admission-closed { width: 100%; text-align: center; justify-content: center;}
-            .school-logo-text h4 { font-size: 20px; }
-            .nav-logo-img { width: 60px !important; height: 60px !important; }
+            .hero-content-wrapper .btn-gold { width: 100%; text-align: center; justify-content: center;}
             .header-container { padding: 0 15px; }
             .contact-info-card { padding: 30px 20px; }
-            .admissions-closed-badge { flex-direction: column; text-align: center; gap: 5px;}
         }
     </style>
 </head>
@@ -512,7 +468,7 @@
             </button>
             
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto nav-scrollspy">
+                <ul class="navbar-nav ms-auto nav-scrollspy">
                     <li class="nav-item"><a class="nav-link nav-hover active-link scroll-link" href="index.html#home">HOME</a></li>
                     
                     <li class="nav-item dropdown">
@@ -555,37 +511,15 @@
             <div class="row align-items-center w-100 m-0">
                 <div class="col-lg-6 col-12 text-lg-start text-center" data-aos="fade-right" data-aos-duration="1200">
                     <div class="hero-welcome-script">Welcome to</div>
-                    
-                    <div class="d-flex align-items-center justify-content-center justify-content-lg-start mb-4 mt-2">
-                        <img src="assets/logo.png" alt="BMS Logo" style="width:70px; height:70px; object-fit:contain; margin-right:15px;" class="d-none d-md-block">
-                        <h1 class="hero-main-title mb-0">BMS SR. SEC.<br>SCHOOL</h1>
-                    </div>
-                    
-                    <div class="hero-location-badge">
-                        <i class="fa-solid fa-location-dot"></i> BASS, HISAR
-                    </div>
-                    
-                    <h3 class="hero-tagline-text">Knowledge • Discipline • Excellence</h3>
-                    
+                    <h1 class="hero-main-title">BMS SR. SEC.<br>SCHOOL</h1>
+                    <div class="hero-tagline-text mt-3">Knowledge • Discipline • Excellence</div>
                     <p class="hero-desc-text mx-auto mx-lg-0">
                         We are committed to providing quality education, strong values and holistic development for every student.
                     </p>
-
-                    <div class="admissions-closed-badge">
-                        <div class="admissions-closed-icon"><i class="fa-solid fa-lock"></i></div>
-                        <div class="admissions-closed-text text-start">
-                            <h6>Admissions Closed</h6>
-                            <p>Current Session Closed</p>
-                        </div>
-                    </div>
-                    
                     <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
                         <a href="#why-choose" class="btn-gold btn-ripple scroll-link hover-lift">
                             <i class="fa-solid fa-building-columns me-2"></i> Explore Campus
                         </a>
-                        <div class="btn-admission-closed">
-                            <i class="fa-solid fa-lock me-2"></i> Admission Closed
-                        </div>
                     </div>
                 </div>
 
@@ -596,102 +530,168 @@
         </div>
     </section>
 
-    <!-- 3. WHY CHOOSE BMS (NEW 9 PREMIUM FEATURE CARDS GRID) -->
+    <!-- NEW SECTION: LATEST UPDATES -->
+    <section id="latest-updates" class="premium-section bg-color scroll-section" style="padding: 60px 0;">
+        <div class="container" style="max-width: 1400px;">
+            <div class="d-flex align-items-center mb-4" data-aos="fade-right">
+                <h4 class="fw-bold" style="color: var(--primary); margin:0;"><i class="fa-solid fa-bolt text-gold me-2"></i> Latest Updates</h4>
+                <div style="flex-grow: 1; height: 1px; background: rgba(12,35,72,0.1); margin-left: 20px;"></div>
+            </div>
+            
+            <div class="updates-container" data-aos="fade-up" data-aos-delay="100">
+                <!-- Update 1 -->
+                <div class="update-card">
+                    <div class="update-header">
+                        <div class="update-icon"><i class="fa-solid fa-bullhorn"></i></div>
+                        <h5>Important Notice</h5>
+                    </div>
+                    <div class="update-body">
+                        <p>Winter Vacations have been announced from 25th Dec to 5th Jan.</p>
+                    </div>
+                    <div class="update-footer">
+                        <span class="update-badge">Published 2 hours ago</span>
+                        <span>31 July 2026</span>
+                    </div>
+                </div>
+
+                <!-- Update 2 -->
+                <div class="update-card">
+                    <div class="update-header">
+                        <div class="update-icon"><i class="fa-solid fa-calendar-star"></i></div>
+                        <h5>Upcoming Holiday</h5>
+                    </div>
+                    <div class="update-body">
+                        <p>School will remain closed on Independence Day (15 August).</p>
+                    </div>
+                    <div class="update-footer">
+                        <span class="update-badge">Published Today</span>
+                        <span>31 July 2026</span>
+                    </div>
+                </div>
+
+                <!-- Update 3 -->
+                <div class="update-card">
+                    <div class="update-header">
+                        <div class="update-icon"><i class="fa-solid fa-medal"></i></div>
+                        <h5>Board Results</h5>
+                    </div>
+                    <div class="update-body">
+                        <p>Class 12th Board Results 2026 have been published.</p>
+                    </div>
+                    <div class="update-footer">
+                        <span class="update-badge">Yesterday</span>
+                        <span>30 July 2026</span>
+                    </div>
+                </div>
+
+                <!-- Update 4 -->
+                <div class="update-card">
+                    <div class="update-header">
+                        <div class="update-icon"><i class="fa-solid fa-image"></i></div>
+                        <h5>Gallery Upload</h5>
+                    </div>
+                    <div class="update-body">
+                        <p>New photos from Annual Sports Meet have been added.</p>
+                    </div>
+                    <div class="update-footer">
+                        <span class="update-badge">Published 3 hours ago</span>
+                        <span>31 July 2026</span>
+                    </div>
+                </div>
+                
+                <!-- Update 5 -->
+                <div class="update-card">
+                    <div class="update-header">
+                        <div class="update-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+                        <h5>Teacher Update</h5>
+                    </div>
+                    <div class="update-body">
+                        <p>New Physics HOD appointed for senior secondary classes.</p>
+                    </div>
+                    <div class="update-footer">
+                        <span class="update-badge">Yesterday</span>
+                        <span>30 July 2026</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. WHY CHOOSE BMS -->
     <section id="why-choose" class="premium-section bg-theme scroll-section">
         <div class="container" style="max-width: 1400px;">
             <div class="text-center mb-5" data-aos="fade-up">
                 <h5 class="text-gold fw-bold text-uppercase">Discover Excellence</h5>
-                <h2 class="display-5 fw-bold d-flex align-items-center justify-content-center">
-                    <img src="assets/logo.png" alt="BMS Logo" style="width:55px; height:55px; object-fit:contain; margin-right:15px;" class="d-none d-sm-block">
-                    WHY CHOOSE BMS?
-                </h2>
+                <h2 class="display-5 fw-bold">WHY CHOOSE BMS?</h2>
                 <p class="text-muted mt-3 mx-auto" style="font-size: 1.1rem; line-height: 1.6; max-width: 800px;">
                     Empowering Students with Excellence in Education, Strong Values, and Holistic Development.
                 </p>
             </div>
             
             <div class="row g-4 justify-content-center">
-                <!-- Card 1 -->
                 <div class="col-lg-4 col-md-6 col-sm-12" data-aos="fade-up" data-aos-delay="50">
-                    <div class="why-choose-grid-card">
-                        <div class="wc-grid-icon-wrapper"><i class="fa-solid fa-book-open"></i></div>
+                    <div class="premium-grid-card btn-ripple">
+                        <div class="grid-icon-wrapper"><i class="fa-solid fa-book-open grid-icon"></i></div>
                         <h4>Quality Education</h4>
-                        <p>Providing high-quality education through experienced teachers, concept-based learning, and modern teaching methods.</p>
+                        <p>Providing high-quality education through experienced teachers, concept-based learning and modern teaching methods.</p>
                     </div>
                 </div>
-
-                <!-- Card 2 -->
                 <div class="col-lg-4 col-md-6 col-sm-12" data-aos="fade-up" data-aos-delay="100">
-                    <div class="why-choose-grid-card">
-                        <div class="wc-grid-icon-wrapper"><i class="fa-solid fa-chalkboard-user"></i></div>
+                    <div class="premium-grid-card btn-ripple">
+                        <div class="grid-icon-wrapper"><i class="fa-solid fa-chalkboard-user grid-icon"></i></div>
                         <h4>Experienced Faculty</h4>
-                        <p>Dedicated, qualified, and passionate teachers committed to guiding every student toward academic success.</p>
+                        <p>Dedicated, qualified and passionate teachers committed to every student's success.</p>
                     </div>
                 </div>
-
-                <!-- Card 3 -->
                 <div class="col-lg-4 col-md-6 col-sm-12" data-aos="fade-up" data-aos-delay="150">
-                    <div class="why-choose-grid-card">
-                        <div class="wc-grid-icon-wrapper"><i class="fa-solid fa-scale-balanced"></i></div>
+                    <div class="premium-grid-card btn-ripple">
+                        <div class="grid-icon-wrapper"><i class="fa-solid fa-scale-balanced grid-icon"></i></div>
                         <h4>Discipline & Moral Values</h4>
-                        <p>Building responsible, confident, and disciplined students with strong moral and ethical values.</p>
+                        <p>Building disciplined, responsible and confident students with strong moral values.</p>
                     </div>
                 </div>
-
-                <!-- Card 4 -->
-                <div class="col-lg-4 col-md-6 col-sm-12" data-aos="fade-up" data-aos-delay="200">
-                    <div class="why-choose-grid-card">
-                        <div class="wc-grid-icon-wrapper"><i class="fa-solid fa-medal"></i></div>
+                <div class="col-lg-4 col-md-6 col-sm-12" data-aos="fade-up" data-aos-delay="50">
+                    <div class="premium-grid-card btn-ripple">
+                        <div class="grid-icon-wrapper"><i class="fa-solid fa-medal grid-icon"></i></div>
                         <h4>Academic Excellence</h4>
-                        <p>Regular assessments, comprehensive board exam preparation, and a consistent record of academic achievement.</p>
+                        <p>Regular assessments, board exam preparation and excellent academic performance.</p>
                     </div>
                 </div>
-
-                <!-- Card 5 -->
-                <div class="col-lg-4 col-md-6 col-sm-12" data-aos="fade-up" data-aos-delay="50">
-                    <div class="why-choose-grid-card">
-                        <div class="wc-grid-icon-wrapper"><i class="fa-solid fa-volleyball"></i></div>
-                        <h4>Sports & Co-Curricular</h4>
-                        <p>Encouraging students to participate in sports, cultural events, competitions, annual functions, and creative activities.</p>
-                    </div>
-                </div>
-
-                <!-- Card 6 -->
                 <div class="col-lg-4 col-md-6 col-sm-12" data-aos="fade-up" data-aos-delay="100">
-                    <div class="why-choose-grid-card">
-                        <div class="wc-grid-icon-wrapper"><i class="fa-solid fa-shield-halved"></i></div>
-                        <h4>Safe & Secure Campus</h4>
-                        <p>A secure learning environment with CCTV surveillance, fire safety systems, and student-friendly security measures.</p>
+                    <div class="premium-grid-card btn-ripple">
+                        <div class="grid-icon-wrapper"><i class="fa-solid fa-volleyball grid-icon"></i></div>
+                        <h4>Sports & Co-Curricular</h4>
+                        <p>Encouraging sports, cultural events, annual functions and competitions.</p>
                     </div>
                 </div>
-
-                <!-- Card 7 -->
                 <div class="col-lg-4 col-md-6 col-sm-12" data-aos="fade-up" data-aos-delay="150">
-                    <div class="why-choose-grid-card">
-                        <div class="wc-grid-icon-wrapper"><i class="fa-solid fa-bus"></i></div>
-                        <h4>Transport Facility</h4>
-                        <p>Safe, reliable, and well-managed school transportation with experienced drivers and support staff.</p>
+                    <div class="premium-grid-card btn-ripple">
+                        <div class="grid-icon-wrapper"><i class="fa-solid fa-shield-halved grid-icon"></i></div>
+                        <h4>Safe & Secure Campus</h4>
+                        <p>Safe learning environment with CCTV surveillance and student-friendly security.</p>
                     </div>
                 </div>
-
-                <!-- Card 8 -->
-                <div class="col-lg-4 col-md-6 col-sm-12" data-aos="fade-up" data-aos-delay="200">
-                    <div class="why-choose-grid-card">
-                        <div class="wc-grid-icon-wrapper"><i class="fa-solid fa-leaf"></i></div>
-                        <h4>Clean & Green Campus</h4>
-                        <p>A clean, eco-friendly, and beautifully maintained campus that promotes healthy learning.</p>
-                    </div>
-                </div>
-
-                <!-- Card 9 -->
                 <div class="col-lg-4 col-md-6 col-sm-12" data-aos="fade-up" data-aos-delay="50">
-                    <div class="why-choose-grid-card">
-                        <div class="wc-grid-icon-wrapper"><i class="fa-solid fa-users"></i></div>
-                        <h4>Parent Communication</h4>
-                        <p>Regular parent-teacher meetings, academic progress updates, and continuous communication for student development.</p>
+                    <div class="premium-grid-card btn-ripple">
+                        <div class="grid-icon-wrapper"><i class="fa-solid fa-bus grid-icon"></i></div>
+                        <h4>Transport Facility</h4>
+                        <p>Safe and reliable school transport with experienced drivers.</p>
                     </div>
                 </div>
-
+                <div class="col-lg-4 col-md-6 col-sm-12" data-aos="fade-up" data-aos-delay="100">
+                    <div class="premium-grid-card btn-ripple">
+                        <div class="grid-icon-wrapper"><i class="fa-solid fa-leaf grid-icon"></i></div>
+                        <h4>Clean & Green Campus</h4>
+                        <p>A hygienic, eco-friendly and beautiful campus for better learning.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12" data-aos="fade-up" data-aos-delay="150">
+                    <div class="premium-grid-card btn-ripple">
+                        <div class="grid-icon-wrapper"><i class="fa-solid fa-users grid-icon"></i></div>
+                        <h4>Parent Communication</h4>
+                        <p>Regular parent-teacher interaction and academic progress updates.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -718,7 +718,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
                     <div class="management-card">
                         <div class="management-img-box">
@@ -734,7 +733,7 @@
             </div>
             
             <div class="text-center mt-5" data-aos="fade-up">
-                <a href="management.html" class="btn-outline-gold text-primary border-primary hover-lift">Meet All Management Team <i class="fa-solid fa-arrow-right ms-2"></i></a>
+                <a href="management.html" class="btn-outline-gold text-primary border-primary hover-lift" style="padding: 14px 35px; border-radius:6px; display:inline-block;">Meet All Management Team <i class="fa-solid fa-arrow-right ms-2"></i></a>
             </div>
         </div>
     </section>
@@ -766,10 +765,7 @@
             <div class="row align-items-center g-5">
                 <div class="col-lg-6 about-text" data-aos="fade-right">
                     <h5 class="text-gold fw-bold text-uppercase mb-2">Our Legacy</h5>
-                    <h2 class="display-6 fw-bold mb-4 d-flex align-items-center">
-                        <img src="assets/logo.png" alt="BMS Logo" style="width:60px; height:60px; object-fit:contain; margin-right:15px;" class="d-none d-sm-block">
-                        History of BMS SR. SEC. SCHOOL
-                    </h2>
+                    <h2 class="display-6 fw-bold mb-4">History of BMS SR. SEC. SCHOOL</h2>
                     <p>BMS SR. SEC. SCHOOL, Bass (Hisar) is a reputed Senior Secondary School committed to providing quality education with strong moral values, discipline and character building. Since its establishment, the school has continuously worked towards developing confident, responsible and knowledgeable students who are prepared for future challenges.</p>
                     <p>The school offers a healthy learning environment where academics, sports, cultural activities and personality development are given equal importance. Our experienced teachers focus on individual attention, innovative teaching methods and practical learning so that every child can achieve academic excellence.</p>
                 </div>
@@ -782,15 +778,12 @@
         </div>
     </section>
 
-    <!-- 7. FACILITIES SECTION (16 CARDS LAYOUT) -->
+    <!-- 7. FACILITIES SECTION -->
     <section id="facilities" class="premium-section bg-theme scroll-section">
         <div class="container" style="max-width: 1400px;">
             <div class="text-center mb-5" data-aos="fade-up">
-                <h5 class="text-gold fw-bold text-uppercase">Our Facilities</h5>
-                <h2 class="display-5 fw-bold d-flex align-items-center justify-content-center">
-                    <img src="assets/logo.png" alt="BMS Logo" style="width:55px; height:55px; object-fit:contain; margin-right:15px;" class="d-none d-sm-block">
-                    OUR FACILITIES
-                </h2>
+                <h5 class="text-gold fw-bold text-uppercase">Campus Overview</h5>
+                <h2 class="display-5 fw-bold">OUR FACILITIES</h2>
                 <p class="text-muted mt-3 mx-auto" style="font-size: 1.1rem; line-height: 1.6; max-width: 800px;">
                     We provide a safe, modern and inspiring environment for every student through advanced learning facilities and a secure campus.
                 </p>
@@ -800,11 +793,10 @@
                 <div class="col-lg-3 col-md-6 col-sm-12 col-12" data-aos="fade-up" data-aos-delay="50">
                     <div class="premium-facility-card btn-ripple">
                         <div class="fac-icon-wrapper"><i class="fa-solid fa-chalkboard-user fac-icon"></i></div>
-                        <h4>Fresh Classrooms</h4>
+                        <h4>Fresh & Clean Classrooms</h4>
                         <p>Clean, airy and comfortable classrooms that create a positive learning environment.</p>
                     </div>
                 </div>
-                
                 <div class="col-lg-3 col-md-6 col-sm-12 col-12" data-aos="fade-up" data-aos-delay="100">
                     <div class="premium-facility-card btn-ripple">
                         <div class="fac-icon-wrapper"><i class="fa-solid fa-computer fac-icon"></i></div>
@@ -812,7 +804,6 @@
                         <p>Latest desktop computers with internet facility.</p>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6 col-sm-12 col-12" data-aos="fade-up" data-aos-delay="150">
                     <div class="premium-facility-card btn-ripple">
                         <div class="fac-icon-wrapper"><i class="fa-solid fa-flask fac-icon"></i></div>
@@ -820,7 +811,6 @@
                         <p>Physics, Chemistry and Biology practical laboratories.</p>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6 col-sm-12 col-12" data-aos="fade-up" data-aos-delay="200">
                     <div class="premium-facility-card btn-ripple">
                         <div class="fac-icon-wrapper"><i class="fa-solid fa-book fac-icon"></i></div>
@@ -828,7 +818,6 @@
                         <p>Large collection of academic books and reference materials.</p>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6 col-sm-12 col-12" data-aos="fade-up" data-aos-delay="50">
                     <div class="premium-facility-card btn-ripple">
                         <div class="fac-icon-wrapper"><i class="fa-solid fa-video fac-icon"></i></div>
@@ -836,7 +825,6 @@
                         <p>Entire campus monitored with CCTV for student safety.</p>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6 col-sm-12 col-12" data-aos="fade-up" data-aos-delay="100">
                     <div class="premium-facility-card btn-ripple">
                         <div class="fac-icon-wrapper"><i class="fa-solid fa-glass-water fac-icon"></i></div>
@@ -844,7 +832,6 @@
                         <p>RO purified drinking water available throughout campus.</p>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6 col-sm-12 col-12" data-aos="fade-up" data-aos-delay="150">
                     <div class="premium-facility-card btn-ripple">
                         <div class="fac-icon-wrapper"><i class="fa-solid fa-solar-panel fac-icon"></i></div>
@@ -852,39 +839,34 @@
                         <p>Eco-friendly solar powered campus.</p>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6 col-sm-12 col-12" data-aos="fade-up" data-aos-delay="200">
                     <div class="premium-facility-card btn-ripple">
                         <div class="fac-icon-wrapper"><i class="fa-solid fa-chair fac-icon"></i></div>
-                        <h4>Comfortable Furniture</h4>
+                        <h4>Comfortable Benches & Furniture</h4>
                         <p>Modern furniture designed for student comfort.</p>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6 col-sm-12 col-12" data-aos="fade-up" data-aos-delay="50">
                     <div class="premium-facility-card btn-ripple">
                         <div class="fac-icon-wrapper"><i class="fa-solid fa-fan fac-icon"></i></div>
-                        <h4>24×7 Fan & Ventilation</h4>
+                        <h4>24×7 Fan & Ventilation Facility</h4>
                         <p>Proper ventilation and cooling in every classroom.</p>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6 col-sm-12 col-12" data-aos="fade-up" data-aos-delay="100">
                     <div class="premium-facility-card btn-ripple">
                         <div class="fac-icon-wrapper"><i class="fa-solid fa-kit-medical fac-icon"></i></div>
-                        <h4>Medical First Aid Room</h4>
+                        <h4>Medical Emergency / First Aid Room</h4>
                         <p>Immediate medical assistance and first aid facility.</p>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6 col-sm-12 col-12" data-aos="fade-up" data-aos-delay="150">
                     <div class="premium-facility-card btn-ripple">
                         <div class="fac-icon-wrapper"><i class="fa-solid fa-bus fac-icon"></i></div>
-                        <h4>School Transport</h4>
-                        <p>Safe and reliable transport facility (School Vans).</p>
+                        <h4>School Transport (School Vans)</h4>
+                        <p>Safe and reliable transport facility.</p>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6 col-sm-12 col-12" data-aos="fade-up" data-aos-delay="200">
                     <div class="premium-facility-card btn-ripple">
                         <div class="fac-icon-wrapper"><i class="fa-solid fa-futbol fac-icon"></i></div>
@@ -892,31 +874,27 @@
                         <p>Large playground for outdoor games and activities.</p>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6 col-sm-12 col-12" data-aos="fade-up" data-aos-delay="50">
                     <div class="premium-facility-card btn-ripple">
                         <div class="fac-icon-wrapper"><i class="fa-solid fa-basketball fac-icon"></i></div>
-                        <h4>Sports & Outdoor Games</h4>
+                        <h4>Sports Equipment & Outdoor Games</h4>
                         <p>Cricket, Football, Volleyball, Kabaddi, Athletics and more.</p>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6 col-sm-12 col-12" data-aos="fade-up" data-aos-delay="100">
                     <div class="premium-facility-card btn-ripple">
                         <div class="fac-icon-wrapper"><i class="fa-solid fa-palette fac-icon"></i></div>
-                        <h4>Art & Music Room</h4>
+                        <h4>Art, Music & Cultural Activity Room</h4>
                         <p>Dedicated rooms for creativity and cultural development.</p>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6 col-sm-12 col-12" data-aos="fade-up" data-aos-delay="150">
                     <div class="premium-facility-card btn-ripple">
                         <div class="fac-icon-wrapper"><i class="fa-solid fa-leaf fac-icon"></i></div>
-                        <h4>Green & Eco-Friendly</h4>
+                        <h4>Clean, Green & Eco-Friendly Campus</h4>
                         <p>Beautiful gardens, greenery and clean surroundings.</p>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6 col-sm-12 col-12" data-aos="fade-up" data-aos-delay="200">
                     <div class="premium-facility-card btn-ripple">
                         <div class="fac-icon-wrapper"><i class="fa-solid fa-fire-extinguisher fac-icon"></i></div>
@@ -924,7 +902,6 @@
                         <p>Fire extinguishers and complete emergency safety system.</p>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
@@ -933,43 +910,28 @@
     <section id="contact-map" class="contact-premium-section scroll-section">
         <div class="contact-container">
             <div class="contact-grid">
-                
                 <div class="map-premium-card" data-aos="fade-up" data-aos-duration="1200">
                     <div class="map-header">
                         <i class="fa-solid fa-location-dot text-gold"></i> FIND US ON MAP
                     </div>
                     <div class="map-body">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2494.349364439881!2d76.19280758451056!3d29.106034210767614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391213719595f335%3A0x8ddae61cbbfde30a!2sBMS%20Public%20School!5e0!3m2!1sen!2sin!4v1785379233944!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-                        <div class="map-nav-btn">
-                            <i class="fa-solid fa-crosshairs"></i>
-                        </div>
+                        <div class="map-nav-btn"><i class="fa-solid fa-crosshairs"></i></div>
                     </div>
                 </div>
 
                 <div class="contact-info-card" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1200">
                     <i class="fa-solid fa-school watermark"></i>
-                    
                     <div class="contact-info-content">
                         <div class="contact-welcome-box">
-                            <div class="contact-welcome-icon">
-                                <i class="fa-regular fa-building"></i>
-                            </div>
+                            <div class="contact-welcome-icon"><i class="fa-regular fa-building"></i></div>
                             <h3 class="contact-welcome-text">Welcome to</h3>
-                            
-                            <div class="d-flex align-items-center justify-content-center mb-2 mt-3">
-                                <img src="assets/logo.png" alt="BMS Logo" style="width:65px; height:65px; object-fit:contain; margin-right:15px;" class="d-none d-sm-block">
-                                <h2 class="contact-welcome-title mb-0 text-start">BMS SR. SEC. SCHOOL,<br>BASS (HISAR)</h2>
-                            </div>
-                            
-                            <div class="contact-divider">
-                                <i class="fa-solid fa-seedling"></i>
-                            </div>
+                            <h2 class="contact-welcome-title mt-2">BMS SR. SEC. SCHOOL,<br>BASS (HISAR)</h2>
+                            <div class="contact-divider"><i class="fa-solid fa-seedling"></i></div>
                         </div>
 
                         <div class="info-box-premium">
-                            <div class="info-box-icon">
-                                <div class="info-box-icon-inner"><i class="fa-solid fa-location-dot"></i></div>
-                            </div>
+                            <div class="info-box-icon"><div class="info-box-icon-inner"><i class="fa-solid fa-location-dot"></i></div></div>
                             <div class="info-box-text">
                                 <h5>LOCATION</h5>
                                 <p>Village Bass, Hisar,<br>Haryana – 125042</p>
@@ -977,9 +939,7 @@
                         </div>
 
                         <div class="info-box-premium">
-                            <div class="info-box-icon">
-                                <div class="info-box-icon-inner"><i class="fa-regular fa-clock"></i></div>
-                            </div>
+                            <div class="info-box-icon"><div class="info-box-icon-inner"><i class="fa-regular fa-clock"></i></div></div>
                             <div class="info-box-text">
                                 <h5>SCHOOL TIMING</h5>
                                 <p>Monday – Saturday<br>8:00 AM – 2:30 PM</p>
@@ -987,9 +947,7 @@
                         </div>
 
                         <div class="info-box-premium">
-                            <div class="info-box-icon">
-                                <div class="info-box-icon-inner"><i class="fa-regular fa-calendar-xmark"></i></div>
-                            </div>
+                            <div class="info-box-icon"><div class="info-box-icon-inner"><i class="fa-regular fa-calendar-xmark"></i></div></div>
                             <div class="info-box-text">
                                 <h5>SUNDAY</h5>
                                 <p class="text-red">Holiday</p>
@@ -997,28 +955,20 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- FOOTER COMPLETELY UPDATED -->
+    <!-- FOOTER -->
     <footer class="premium-footer pb-3">
         <div class="container">
             <div class="row g-5 pb-4">
-                
                 <div class="col-lg-4 col-md-12 col-12">
-                    <div class="d-flex align-items-center mb-4">
-                        <img src="assets/logo.png" alt="BMS Logo" style="width:70px; height:70px; object-fit:contain; margin-right:15px;">
-                        <div>
-                            <h3 class="text-gold fw-bold mb-0 fs-4">BMS SR. SEC. SCHOOL</h3>
-                            <p class="text-light opacity-75 mb-0" style="font-size:15px;">Bass, Hisar</p>
-                        </div>
-                    </div>
+                    <h3 class="text-gold fw-bold mb-0 fs-4">BMS SR. SEC. SCHOOL</h3>
+                    <p class="text-light opacity-75 mb-4" style="font-size:15px;">Bass, Hisar</p>
                     <p class="text-gold fw-bold mb-3" style="letter-spacing: 0.5px;">Knowledge • Discipline • Excellence</p>
                     <p class="text-light opacity-75 mb-4" style="line-height: 1.7;">We are committed to providing quality education, strong values and holistic development for every student.</p>
                 </div>
-                
                 <div class="col-lg-2 col-md-4 col-sm-6 col-6">
                     <h5 class="text-gold fw-bold mb-4">About Us</h5>
                     <ul class="footer-links list-unstyled">
@@ -1030,7 +980,6 @@
                         <li><a href="index.html#facilities">Facilities</a></li>
                     </ul>
                 </div>
-                
                 <div class="col-lg-3 col-md-4 col-sm-6 col-6">
                     <h5 class="text-gold fw-bold mb-4">Academics & More</h5>
                     <ul class="footer-links list-unstyled">
@@ -1043,7 +992,6 @@
                         <li><a href="index.html#contact-map">Google Map</a></li>
                     </ul>
                 </div>
-
                 <div class="col-lg-3 col-md-4 col-sm-12 col-12">
                     <h5 class="text-gold fw-bold mb-4">Contact Details</h5>
                     <ul class="list-unstyled text-light opacity-75">
@@ -1080,12 +1028,12 @@
                 cursor.style.transform = `translate3d(${e.clientX - 4}px, ${e.clientY - 4}px, 0)`;
                 setTimeout(() => { follower.style.transform = `translate3d(${e.clientX - 20}px, ${e.clientY - 20}px, 0)`; }, 50);
             });
-            document.querySelectorAll('a, button, .btn-gold, .btn-outline-gold, .nav-link, .contact-card, .dropdown-item, .premium-stat-card, .premium-facility-card, .why-choose-grid-card, .management-card, .info-box-premium, .map-nav-btn').forEach(el => {
+            document.querySelectorAll('a, button, .btn-gold, .btn-outline-gold, .nav-link, .contact-card, .dropdown-item, .premium-grid-card, .premium-facility-card, .management-card, .info-box-premium, .map-nav-btn, .update-card').forEach(el => {
                 el.addEventListener('mouseenter', () => follower.style.transform += ' scale(1.5)');
                 el.addEventListener('mouseleave', () => follower.style.transform = follower.style.transform.replace(' scale(1.5)', ''));
             });
 
-            document.querySelectorAll('.btn-ripple, .premium-stat-card, .premium-facility-card').forEach(button => {
+            document.querySelectorAll('.btn-ripple, .premium-grid-card, .premium-facility-card').forEach(button => {
                 button.addEventListener('click', function(e) {
                     let x = e.clientX - e.target.getBoundingClientRect().left;
                     let y = e.clientY - e.target.getBoundingClientRect().top;
