@@ -23,10 +23,10 @@
            VARIABLES & THEME (Blue, White, Golden)
            ========================================= */
         :root {
-            --primary: #0F4C81;    /* Royal Blue */
-            --gold: #F4B400;       /* Golden */
+            --primary: #0c2348;    /* Deep Premium Navy Blue */
+            --gold: #f4b400;       /* Golden Accent */
             --gold-glow: rgba(244, 180, 0, 0.4);
-            --bg-color: #F8FAFC;
+            --bg-color: #fafafa;   /* Light Background */
             --bg-theme: #FFFFFF;
             --text-color: #333333;
             --text-muted: #64748b;
@@ -52,118 +52,183 @@
         a { text-decoration: none; }
 
         /* =========================================
-           TRANSPARENT GLASS NAVBAR (FIXED OVERLAP)
+           HEADER LAYOUT (1400px Max-width, 90px Height)
            ========================================= */
         .premium-nav { 
             background: transparent; 
-            padding: 18px 0; 
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
+            height: 90px;
+            display: flex;
+            align-items: center;
+            transition: background 0.4s ease, box-shadow 0.4s ease; 
             z-index: 1000; 
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 0; 
         }
         .premium-nav.scrolled { 
-            padding: 12px 0; 
             background: rgba(255, 255, 255, 0.98); 
             box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
             border-bottom: none;
         }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
         
-        /* Left Side: Brand Logo & Text Alignment (Perfectly Spaced) */
+        /* Left Side: Brand Logo (FIXED: NO WHITE BOX) & Typography */
         .school-brand-box { 
             display: flex; 
             flex-direction: row; 
             align-items: center; 
             text-decoration: none;
-            gap: 15px; /* Better spacing between logo and text */
+            gap: 15px; 
+            background: transparent !important;
         }
         .nav-logo-img { 
-            width: 65px; 
-            height: 65px; 
+            width: 75px !important; 
+            height: 75px !important; 
             object-fit: contain; 
-            background: transparent; 
-            transition: transform 0.4s, width 0.4s, height 0.4s;
+            background: transparent !important; 
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            transition: none; /* Logo size remains SAME */
         }
-        .premium-nav.scrolled .nav-logo-img { width: 55px; height: 55px; }
         
         .school-logo-text { 
             text-align: left; 
             display: flex;
             flex-direction: column;
             justify-content: center;
-            margin-top: 3px; /* Slightly lowered text for perfect alignment */
         }
         .school-logo-text h4 { 
-            margin: 0 0 3px 0; 
-            font-weight: 800; 
-            font-size: 21px; 
-            color: #fff; 
-            letter-spacing: 0.5px; 
-            transition: color 0.4s; 
-            white-space: nowrap; /* Prevents text breaking into two lines */
-        }
-        .premium-nav.scrolled .school-logo-text h4 { color: var(--primary); }
-        .school-logo-text p { 
             margin: 0; 
+            font-weight: 800; 
+            color: #fff; 
+            letter-spacing: 0px; 
+            line-height: 1.1;
+            white-space: nowrap; 
+            transition: color 0.4s; 
+        }
+        .premium-nav.scrolled .school-logo-text h4 { color: var(--primary); } 
+        
+        .school-logo-text p { 
+            margin: 2px 0 0 0; 
             font-weight: 500; 
-            font-size: 13px; 
-            color: rgba(255,255,255,0.8); 
+            color: rgba(255,255,255,0.7); /* 70% Opacity */
             letter-spacing: 1px; 
             text-transform: uppercase; 
             transition: color 0.4s; 
         }
         .premium-nav.scrolled .school-logo-text p { color: var(--text-muted); }
 
-        /* Centered Menu Styling with Premium Spacing */
+        /* Centered Menu Styling */
+        .navbar-collapse {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
         .nav-hover { 
             position: relative; 
             color: #fff !important; 
             font-weight: 600; 
-            margin: 0 16px; /* Increased spacing */
-            font-size: 14px; 
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             transition: color 0.4s;
+            display: flex;
+            align-items: center;
         }
         .premium-nav.scrolled .nav-hover { color: #333 !important; }
         
+        /* Golden Underline Hover */
         .nav-hover::before { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background-color: var(--gold); transition: width 0.3s ease; }
         .nav-hover:hover::before, .nav-hover.active-link::before { width: 100%; }
-        .dropdown-toggle.nav-hover::before { display: none !important; }
+        
+        /* Premium Dropdown Hover Logic & Exact Styling */
+        .dropdown-toggle::after { display: none !important; } /* Removes duplicate bootstrap arrow */
+        .premium-nav .dropdown-menu { 
+            background-color: var(--primary); 
+            border-radius: 12px; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            padding: 15px 0; 
+            min-width: 260px;
+            margin-top: 0px !important;
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .premium-nav .dropdown-item { 
+            padding: 12px 25px; 
+            font-weight: 500; 
+            color: #ffffff !important; 
+            font-size: 15px; 
+            transition: 0.3s; 
+            display: flex;
+            align-items: center;
+        }
+        .premium-nav .dropdown-item i {
+            color: var(--gold);
+            width: 25px;
+            font-size: 16px;
+            margin-right: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .premium-nav .dropdown-item:hover { 
+            background-color: rgba(244, 180, 0, 0.1); 
+            color: var(--gold) !important; 
+            padding-left: 30px;
+        }
+        .premium-nav .dropdown-item:hover i {
+            transform: scale(1.1);
+        }
+
+        /* Responsive Desktop Typography & Spacing */
+        @media (min-width: 1400px) {
+            .school-logo-text h4 { font-size: 38px; }
+            .school-logo-text p { font-size: 18px; }
+            .nav-hover { margin: 0 20px; font-size: 14px; }
+        }
+        @media (min-width: 992px) and (max-width: 1399px) {
+            .school-logo-text h4 { font-size: 26px; }
+            .school-logo-text p { font-size: 14px; }
+            .nav-hover { margin: 0 12px; font-size: 13px; }
+            .header-container { padding: 0 20px; }
+        }
+        
+        @media (min-width: 992px) {
+            .dropdown:hover .dropdown-menu { 
+                display: block; 
+                opacity: 1;
+                visibility: visible;
+                animation: fadeIn 0.3s ease; 
+            }
+            .nav-item.dropdown:hover .nav-hover { color: var(--gold) !important; }
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .navbar-toggler { border-color: rgba(255,255,255,0.5); padding: 8px 12px; }
         .premium-nav.scrolled .navbar-toggler { border-color: rgba(0,0,0,0.1); }
-        
-        .dropdown-menu { border-radius: 8px; box-shadow: 0 10px 30px rgba(15, 76, 129, 0.1); border: 1px solid rgba(15, 76, 129, 0.05); padding: 10px 0; z-index: 1050; }
-        .dropdown-item { padding: 8px 20px; font-weight: 500; color: #333 !important; font-size: 14px; transition: 0.3s; }
-        .dropdown-item:hover { background-color: rgba(15, 76, 129, 0.05); color: var(--primary) !important; padding-left: 25px;}
-
-        /* Modern Grid Centering to avoid Overlap */
-        @media (min-width: 1200px) {
-            .premium-nav .container-fluid {
-                display: grid;
-                grid-template-columns: 1fr auto 1fr;
-                align-items: center;
-            }
-            .premium-nav .navbar-brand { grid-column: 1; position: static; justify-self: start; }
-            .premium-nav .navbar-collapse { grid-column: 2; width: 100%; justify-content: center; }
-        }
-        @media (min-width: 992px) and (max-width: 1199px) {
-            /* Fallback flexbox for medium screens to avoid squeezing */
-            .premium-nav .navbar-brand { position: static; margin-right: 20px; }
-            .premium-nav .navbar-collapse { justify-content: flex-end; }
-        }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* =========================================
            BUTTONS & RIPPLE
            ========================================= */
-        .btn-gold { background-color: var(--gold); color: #000; font-weight: 700; border: none; padding: 14px 32px; border-radius: 50px; transition: all 0.3s; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;}
-        .btn-gold:hover { background-color: #fff; color: var(--gold); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255,255,255,0.2); }
+        .btn-gold { background-color: var(--gold); color: #000; font-weight: 700; border: none; padding: 14px 35px; border-radius: 6px; transition: all 0.3s; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; box-shadow: 0 5px 15px rgba(244, 180, 0, 0.2);}
+        .btn-gold:hover { background-color: #fff; color: var(--gold); transform: translateY(-3px); box-shadow: 0 10px 25px rgba(255,255,255,0.2); }
         
-        .btn-primary-custom { background: rgba(255,255,255,0.1); backdrop-filter: blur(5px); color: #fff; border: 1px solid rgba(255,255,255,0.3); font-weight: 600; padding: 14px 32px; border-radius: 50px; transition: all 0.3s; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;}
-        .btn-primary-custom:hover { background-color: var(--primary); transform: translateY(-3px); color: #fff; border-color: var(--primary); box-shadow: 0 8px 20px rgba(15,76,129,0.3); }
+        .btn-outline-gold { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); font-weight: 600; padding: 14px 35px; border-radius: 6px; transition: all 0.3s; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;}
+        .btn-outline-gold:hover { background-color: rgba(255,255,255,0.1); border-color: var(--gold); color: var(--gold); transform: translateY(-3px); }
 
         .btn-ripple { position: relative; overflow: hidden; }
         .btn-ripple .ripple { position: absolute; background: rgba(255, 255, 255, 0.5); border-radius: 50%; transform: scale(0); animation: ripple-anim 0.6s linear; pointer-events: none; }
@@ -173,35 +238,205 @@
         .hover-lift:hover { transform: translateY(-4px); }
 
         /* =========================================
-           HERO SECTION (CLEAN & PREMIUM)
+           HERO SECTION (FULL SCREEN, EXACT LAYOUT)
            ========================================= */
-        .hero-fullscreen { position: relative; min-height: 95vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        
-        /* Slow Background Zoom */
-        .hero-bg-img {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('assets/home-bg.jpg.png'); 
-            background-size: cover; background-position: center; background-repeat: no-repeat;
-            animation: slowZoom 25s infinite alternate linear; z-index: 0;
+        .hero-premium { 
+            position: relative; 
+            width: 100%;
+            min-height: 100vh; /* Occupies full first screen */
+            background: linear-gradient(135deg, #05162D, #0A2952, #0c2348); 
+            display: flex; 
+            align-items: center; 
+            padding-top: 90px; /* Space for Navbar */
+            padding-bottom: 0px; /* No white gap */
+            overflow: hidden;
         }
-        @keyframes slowZoom { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
         
-        /* Dark Overlay 35-40% */
-        .hero-bg-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.40); z-index: 1; }
-        #particles-js { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; }
+        .hero-content-wrapper { z-index: 3; position: relative; width: 100%; }
+
+        /* Left Side Text */
+        .hero-welcome-script { font-family: 'Great Vibes', cursive; color: var(--gold); font-size: 3rem; margin-bottom: -5px; font-weight: 400; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
+        .hero-main-title { font-size: 4.5rem; font-weight: 800; letter-spacing: -1px; line-height: 1.1; margin-bottom: 25px; color: #fff; }
         
-        .hero-content { z-index: 3; position: relative; color: white; padding-top: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center;}
+        .hero-location-badge { 
+            display: inline-flex;
+            align-items: center;
+            background: var(--gold); 
+            color: #000; 
+            font-weight: 800; 
+            padding: 8px 20px; 
+            border-radius: 5px; 
+            font-size: 0.95rem; 
+            margin-bottom: 25px; 
+            letter-spacing: 1px; 
+            text-transform: uppercase; 
+        }
+        .hero-location-badge i { margin-right: 8px; font-size: 1.1rem; }
+
+        .hero-tagline-text { font-size: 1.3rem; font-weight: 700; margin-bottom: 15px; color: #fff; letter-spacing: 0.5px; }
+        .hero-desc-text { font-size: 1.05rem; max-width: 480px; line-height: 1.6; color: rgba(255,255,255,0.7); margin-bottom: 35px; }
+
+        /* Right Side Image (Large & Fully Visible) */
+        .hero-building-container { position: relative; display: flex; justify-content: flex-end; align-items: center; }
+        .hero-building-img { 
+            width: 100%; 
+            max-width: 900px; 
+            height: auto; 
+            border-radius: 12px; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5); 
+            object-fit: cover;
+            border: 2px solid rgba(255,255,255,0.05);
+        }
 
         /* =========================================
-           CARDS & SECTIONS
+           CONTACT & GOOGLE MAP SECTION (NEW REDESIGN)
            ========================================= */
-        .stats-white-container { position: relative; background-color: var(--bg-color); padding: 40px 0 20px 0; z-index: 10; margin-top: -30px;}
-        .premium-stat-card { background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); padding: 30px 20px; text-align: center; transition: all 0.4s ease; border-bottom: 3px solid transparent;}
-        .premium-stat-card:hover { transform: translateY(-10px); border-bottom: 3px solid var(--primary); box-shadow: 0 15px 40px rgba(15,76,129,0.15); }
-        .premium-stat-card i { font-size: 35px; color: var(--primary); margin-bottom: 15px; }
-        .premium-stat-card h2 { font-weight: 800; color: #222; margin-bottom: 5px; font-size: 32px;}
-        .premium-stat-card p { margin: 0; font-size: 14px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;}
+        .contact-premium-section {
+            background-color: var(--bg-color);
+            padding: 80px 0;
+            width: 100%;
+        }
+        .contact-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 55fr 45fr; /* 55% Left, 45% Right Exact Proportions */
+            gap: 30px;
+            align-items: stretch;
+        }
 
+        /* LEFT CARD: MAP */
+        .map-premium-card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            animation: fadeUp 0.8s ease forwards;
+        }
+        .map-header {
+            background: var(--primary);
+            color: #fff;
+            padding: 20px 25px;
+            font-weight: 700;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+        .map-header i { color: var(--gold); margin-right: 12px; font-size: 20px; }
+        .map-body { flex-grow: 1; min-height: 450px; position: relative;}
+        .map-body iframe { width: 100%; height: 100%; position: absolute; top:0; left:0; border: none; }
+        .map-nav-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .map-nav-btn:hover { transform: scale(1.1); background: var(--gold); color: var(--primary); }
+
+        /* RIGHT CARD: CONTACT INFO */
+        .contact-info-card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeUp 0.8s ease forwards;
+            animation-delay: 0.2s;
+        }
+        /* Watermark Background */
+        .contact-info-card .watermark {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            font-size: 180px;
+            color: var(--primary);
+            opacity: 0.05;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .contact-info-content { position: relative; z-index: 1; }
+        
+        .contact-welcome-box { text-align: center; margin-bottom: 30px; }
+        .contact-welcome-icon { font-size: 32px; color: var(--gold); margin-bottom: 10px; }
+        .contact-welcome-text { font-family: 'Great Vibes', cursive; color: var(--gold); font-size: 32px; margin-bottom: 0;}
+        .contact-welcome-title { color: var(--primary); font-size: 28px; font-weight: 800; line-height: 1.3;}
+        
+        /* Golden Decorative Divider */
+        .contact-divider { display: flex; align-items: center; justify-content: center; margin: 20px 0; }
+        .contact-divider::before, .contact-divider::after { content: ''; height: 1.5px; width: 80px; background: rgba(244, 180, 0, 0.4); transition: width 0.5s;}
+        .contact-divider i { color: var(--gold); margin: 0 15px; font-size: 16px; }
+        .contact-info-card:hover .contact-divider::before, .contact-info-card:hover .contact-divider::after { width: 120px; }
+
+        /* Premium Info Boxes */
+        .info-box-premium {
+            background: #fff;
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 15px;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
+        }
+        .info-box-premium:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+        }
+        .info-box-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .info-box-icon-inner {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: 0.3s;
+        }
+        .info-box-premium:hover .info-box-icon-inner { transform: scale(1.1); }
+        
+        .info-box-text h5 { color: var(--primary); font-size: 15px; font-weight: 800; letter-spacing: 1px; margin-bottom: 5px; text-transform: uppercase;}
+        .info-box-text p { color: #555; font-size: 14.5px; margin: 0; line-height: 1.5; font-weight: 500;}
+        .text-red { color: #d93025 !important; font-weight: 700;}
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* =========================================
+           OTHER CARDS & SECTIONS
+           ========================================= */
         .why-choose-list-item { display: flex; align-items: flex-start; background: #fff; padding: 18px 20px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid rgba(15,76,129,0.05); transition: all 0.4s; position: relative; overflow: hidden; }
         .why-choose-list-item::before { content: ''; position: absolute; left: 0; top: 0; width: 4px; height: 100%; background: var(--gold); transition: width 0.3s ease; z-index: 0; }
         .why-choose-list-item:hover::before { width: 100%; background: var(--primary); }
@@ -227,15 +462,19 @@
         .premium-facility-card p { font-size: 14px; color: var(--text-muted); margin: 0; line-height: 1.5; transition: 0.4s ease; }
         .premium-facility-card:hover h4, .premium-facility-card:hover p { color: #fff; }
 
-        .about-image-wrapper { position: relative; border-radius: 15px; overflow: hidden; box-shadow: var(--card-shadow); transition: transform 0.5s ease; animation: floatAnim 6s ease-in-out infinite; }
+        .about-image-wrapper { position: relative; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: transform 0.5s ease; animation: floatAnim 6s ease-in-out infinite; }
         .about-image-wrapper img { width: 100%; height: auto; border-radius: 15px; border: 5px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
         @keyframes floatAnim { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(1deg); } 100% { transform: translateY(0px) rotate(0deg); } }
         
-        .vision-box { background: var(--bg-theme); padding: 40px; border-radius: 12px; box-shadow: var(--card-shadow); height: 100%; border-top: 4px solid var(--primary);}
-        .contact-card { background: #fff; border-radius: 12px; padding: 30px; text-align: center; box-shadow: var(--card-shadow); transition: transform 0.3s ease; height: 100%; border-bottom: 4px solid var(--gold);}
-        .contact-card:hover { transform: translateY(-5px); }
-        .map-container { border-radius: 12px; overflow: hidden; box-shadow: var(--card-shadow); height: 400px; width: 100%; }
-        .map-container iframe { width: 100%; height: 100%; border: none; }
+        /* Management Preview Cards */
+        .management-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.4s ease; text-align: center; border-bottom: 4px solid var(--primary); height: 100%;}
+        .management-card:hover { transform: translateY(-10px); border-bottom-color: var(--gold);}
+        .management-img-box { width: 100%; height: 250px; background: #e9ecef; display: flex; align-items: center; justify-content: center; overflow: hidden;}
+        .management-img-box i { font-size: 60px; color: #adb5bd; } 
+        .management-info { padding: 25px 20px; }
+        .management-info h4 { font-weight: 700; color: var(--primary); margin-bottom: 5px; font-size: 20px;}
+        .management-info p { color: var(--gold); font-weight: 600; text-transform: uppercase; font-size: 13px; margin-bottom: 15px; letter-spacing: 1px;}
+        .management-info span { color: var(--text-muted); font-size: 14px; line-height: 1.5; display: block;}
         
         /* Cursor & Loader */
         .custom-cursor { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; }
@@ -265,144 +504,136 @@
                 z-index: 1050;
             }
             .nav-hover { color: var(--primary) !important; padding: 12px 10px; display: block; border-bottom: 1px solid rgba(0,0,0,0.05); margin: 0; }
-            .dropdown-menu { border: none; box-shadow: none; background: rgba(15, 76, 129, 0.03); padding-left: 15px; }
+            .premium-nav .dropdown-menu { border: none; box-shadow: none; background: rgba(12, 35, 72, 0.03); padding-left: 15px; margin-top: 0px !important;}
+            .premium-nav .dropdown-item { color: var(--primary) !important; }
             
-            .navbar-brand { left: 1rem !important; position: relative !important;}
-            .school-logo-text h4 { font-size: 18px; }
+            .school-logo-text h4 { font-size: 24px; }
+            .school-logo-text p { font-size: 14px; }
             
+            .hero-premium { flex-direction: column; text-align: center; padding-top: 130px; padding-bottom: 50px; min-height: auto;}
+            .hero-building-container { margin-top: 40px; justify-content: center; }
+            
+            /* Map Contact Responsive */
+            .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+            .map-body { min-height: 400px; }
+
             .why-choose-img-wrapper { position: relative; top: 0; margin-top: 30px; }
-            .nav-logo-img { width: 50px; height: 50px; }
-            
             .custom-cursor, .custom-cursor-follower { display: none !important; }
             .premium-section { padding: 60px 0; }
         }
 
         @media (max-width: 576px) {
-            .hero-content .d-flex { flex-direction: column; width: 100%; gap: 15px !important;}
-            .hero-content .btn { width: 100%; text-align: center; justify-content: center;}
-            .premium-stat-card { padding: 20px 15px; }
-            .contact-card { padding: 20px; }
-            .school-logo-text h4 { font-size: 16px; }
+            .hero-main-title { font-size: 2.8rem; }
+            .hero-welcome-script { font-size: 2.2rem; }
+            .hero-content-wrapper .d-flex { flex-direction: column; width: 100%; gap: 15px !important; margin-top: 20px;}
+            .hero-content-wrapper .btn { width: 100%; text-align: center; justify-content: center;}
+            .school-logo-text h4 { font-size: 20px; }
+            .nav-logo-img { width: 60px !important; height: 60px !important; }
+            .header-container { padding: 0 15px; }
+            .contact-info-card { padding: 30px 20px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Page Loader -->
     <div class="page-loader" id="loader"><div class="loader-spinner"></div></div>
+    <!-- Custom Cursor -->
     <div class="custom-cursor"></div><div class="custom-cursor-follower"></div>
 
-    <!-- 1. FULLY RESPONSIVE & CENTERED TRANSPARENT NAVBAR (FIXED OVERLAP & ALIGNMENT) -->
+    <!-- 1. FULLY RESPONSIVE & EXACT CENTERED TRANSPARENT NAVBAR -->
     <nav class="navbar navbar-expand-lg premium-nav fixed-top" id="navbar">
-        <div class="container-fluid px-3 px-lg-5 position-relative">
-            <!-- Left Side: Official Logo & Text -->
+        <div class="header-container position-relative">
+            <!-- Left Side: Official BMS Logo & Text -->
             <a class="navbar-brand school-brand-box scroll-link" href="index.html#home">
-                <img src="Screenshot 2026-07-30 160633.jpg" alt="BMS Logo" class="nav-logo-img">
+                <img src="assets/logo.png" alt="BMS SR. SEC. SCHOOL Logo" class="nav-logo-img">
                 <div class="school-logo-text d-none d-sm-flex">
                     <h4>BMS SR. SEC. SCHOOL</h4>
                     <p>Bass, Hisar</p>
                 </div>
             </a>
             
-            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <i class="fa-solid fa-bars text-white" style="font-size:24px;" id="nav-toggle-icon"></i>
             </button>
             
-            <!-- Center: Menus (Perfectly Spaced, No Right Side Buttons) -->
+            <!-- Center: Menus (Hover Dropdown, No duplicate arrow) -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto nav-scrollspy">
                     <li class="nav-item"><a class="nav-link nav-hover active-link scroll-link" href="index.html#home">HOME</a></li>
                     
+                    <!-- Exact Styled Order for About Us Dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link nav-hover dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            ABOUT US <i class="fa-solid fa-caret-down ms-1" style="font-size:12px;"></i>
+                            ABOUT US
                         </a>
-                        <ul class="dropdown-menu mt-2" aria-labelledby="aboutDropdown">
-                            <li><a class="dropdown-item scroll-link" href="index.html#history">History</a></li>
-                            <li><a class="dropdown-item scroll-link" href="index.html#vision">Vision & Mission</a></li>
-                            <li><a class="dropdown-item scroll-link" href="index.html#principal">Principal's Message</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item scroll-link" href="index.html#facilities">Facilities</a></li>
+                        <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                            <li><a class="dropdown-item scroll-link" href="index.html#history"><i class="fa-solid fa-book-open"></i> History</a></li>
+                            <li><a class="dropdown-item scroll-link" href="index.html#vision"><i class="fa-solid fa-eye"></i> Vision & Mission</a></li>
+                            <li><a class="dropdown-item scroll-link" href="index.html#principal"><i class="fa-solid fa-user-tie"></i> Principal's Message</a></li>
+                            <li><a class="dropdown-item scroll-link" href="index.html#facilities"><i class="fa-solid fa-building"></i> Facilities</a></li>
+                            <li><a class="dropdown-item scroll-link" href="index.html#contact-map"><i class="fa-solid fa-phone"></i> Contact Us</a></li>
+                            <li><a class="dropdown-item scroll-link" href="index.html#contact-map"><i class="fa-solid fa-location-dot"></i> Google Map</a></li>
                         </ul>
                     </li>
 
                     <li class="nav-item dropdown">
                         <a class="nav-link nav-hover dropdown-toggle" href="#" id="academicsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            ACADEMICS <i class="fa-solid fa-caret-down ms-1" style="font-size:12px;"></i>
+                            ACADEMICS
                         </a>
-                        <ul class="dropdown-menu mt-2" aria-labelledby="academicsDropdown">
-                            <li><a class="dropdown-item" href="curriculum.html">Curriculum</a></li>
-                            <li><a class="dropdown-item" href="examination.html">Examination</a></li>
-                            <li><a class="dropdown-item" href="co-curricular.html">Co-Curricular Activities</a></li>
+                        <ul class="dropdown-menu" aria-labelledby="academicsDropdown">
+                            <li><a class="dropdown-item" href="curriculum.html"><i class="fa-solid fa-book"></i> Curriculum</a></li>
+                            <li><a class="dropdown-item" href="examination.html"><i class="fa-solid fa-pen-nib"></i> Examination</a></li>
+                            <li><a class="dropdown-item" href="co-curricular.html"><i class="fa-solid fa-palette"></i> Co-Curricular Activities</a></li>
                         </ul>
                     </li>
 
+                    <li class="nav-item"><a class="nav-link nav-hover" href="management.html">OUR MANAGEMENT</a></li>
                     <li class="nav-item"><a class="nav-link nav-hover" href="gallery.html">GALLERY</a></li>
-                    <li class="nav-item"><a class="nav-link nav-hover" href="achievements.html">ACHIEVEMENTS</a></li>
                     <li class="nav-item"><a class="nav-link nav-hover" href="admissions.html">ADMISSIONS</a></li>
-                    <li class="nav-item"><a class="nav-link nav-hover scroll-link" href="index.html#contact">CONTACT</a></li>
+                    <li class="nav-item"><a class="nav-link nav-hover scroll-link" href="index.html#contact-map">CONTACT</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- 2. RESPONSIVE HERO SECTION (Clean & Text-Free) -->
-    <section id="home">
-        <section class="hero-fullscreen">
-            <!-- Slow Zoom Background -->
-            <div class="hero-bg-img"></div>
-            <!-- 35-40% Overlay -->
-            <div class="hero-bg-overlay"></div>
-            <!-- Particles -->
-            <div id="particles-js"></div> 
-            
-            <div class="container hero-content px-3 px-lg-5 w-100 d-flex justify-content-center align-items-center">
-                <!-- Clean Hero: Only Buttons exist here, No overlapping text -->
-                <div class="d-flex flex-wrap justify-content-center gap-4 mt-5 pt-5" data-aos="fade-up" data-aos-duration="1200">
-                    <a href="#why-choose" class="btn-primary-custom btn-ripple scroll-link hover-lift">Explore Campus</a>
-                    <a href="admissions.html" class="btn-gold btn-ripple hover-lift">Admission Open</a>
+    <!-- 2. HERO SECTION (100VH) -->
+    <section id="home" class="hero-premium">
+        <div class="container hero-content-wrapper px-4 px-lg-5">
+            <div class="row align-items-center w-100 m-0">
+                <div class="col-lg-6 col-12 text-lg-start text-center" data-aos="fade-right" data-aos-duration="1200">
+                    <div class="hero-welcome-script">Welcome to</div>
+                    <h1 class="hero-main-title">BMS SR. SEC.<br>SCHOOL</h1>
+                    
+                    <div class="hero-location-badge">
+                        <i class="fa-solid fa-location-dot"></i> BASS, HISAR
+                    </div>
+                    
+                    <h3 class="hero-tagline-text">Knowledge • Discipline • Excellence</h3>
+                    
+                    <p class="hero-desc-text mx-auto mx-lg-0">
+                        We are committed to providing quality education, strong values and holistic development for every student.
+                    </p>
+                    
+                    <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start mt-4">
+                        <a href="#why-choose" class="btn-gold btn-ripple scroll-link hover-lift">
+                            <i class="fa-solid fa-building-columns me-2"></i> Explore Campus
+                        </a>
+                        <a href="admissions.html" class="btn-outline-gold btn-ripple hover-lift">
+                            <i class="fa-solid fa-user-graduate me-2"></i> Admission Open
+                        </a>
+                    </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- STATS CARDS -->
-        <div class="stats-white-container">
-            <div class="container">
-                <div class="row g-4">
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12" data-aos="fade-up" data-aos-delay="100">
-                        <div class="premium-stat-card btn-ripple">
-                            <i class="fa-solid fa-graduation-cap"></i>
-                            <h2><span class="counter" data-target="1500">0</span>+</h2>
-                            <p>Students</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12" data-aos="fade-up" data-aos-delay="200">
-                        <div class="premium-stat-card btn-ripple">
-                            <i class="fa-solid fa-user-tie"></i>
-                            <h2><span class="counter" data-target="80">0</span>+</h2>
-                            <p>Teachers</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12" data-aos="fade-up" data-aos-delay="300">
-                        <div class="premium-stat-card btn-ripple">
-                            <i class="fa-solid fa-book-open"></i>
-                            <h2><span class="counter" data-target="25">0</span>+</h2>
-                            <p>Years of Excellence</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12" data-aos="fade-up" data-aos-delay="400">
-                        <div class="premium-stat-card btn-ripple">
-                            <i class="fa-solid fa-trophy"></i>
-                            <h2><span class="counter" data-target="100">0</span>+</h2>
-                            <p>Awards Won</p>
-                        </div>
-                    </div>
+                <div class="col-lg-6 d-none d-lg-flex hero-building-container" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="200">
+                    <img src="assets/home-bg.jpg.png" alt="BMS School Building" class="hero-building-img float-element">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 1: WHY CHOOSE BMS -->
-    <section id="why-choose" class="premium-section bg-color scroll-section">
+    <!-- 3. WHY CHOOSE BMS -->
+    <section id="why-choose" class="premium-section bg-theme scroll-section">
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-6" data-aos="fade-right">
@@ -428,22 +659,6 @@
                         <div class="wc-icon"><i class="fa-solid fa-scale-balanced"></i></div>
                         <div class="wc-text"><h4>Strong Discipline</h4><p>Discipline, moral values aur respectful environment.</p></div>
                     </div>
-                    <div class="why-choose-list-item" data-aos="fade-up">
-                        <div class="wc-icon"><i class="fa-solid fa-handshake-angle"></i></div>
-                        <div class="wc-text"><h4>Parent Support</h4><p>Parents ki suggestions aur complaints par jaldi action liya jata hai.</p></div>
-                    </div>
-                    <div class="why-choose-list-item" data-aos="fade-up">
-                        <div class="wc-icon"><i class="fa-solid fa-file-signature"></i></div>
-                        <div class="wc-text"><h4>Easy Admission Process</h4><p>Simple aur transparent admission process.</p></div>
-                    </div>
-                    <div class="why-choose-list-item" data-aos="fade-up">
-                        <div class="wc-icon"><i class="fa-solid fa-trophy"></i></div>
-                        <div class="wc-text"><h4>Excellent Academic Results</h4><p>Har student ke overall performance par focus.</p></div>
-                    </div>
-                    <div class="why-choose-list-item" data-aos="fade-up">
-                        <div class="wc-icon"><i class="fa-solid fa-seedling"></i></div>
-                        <div class="wc-text"><h4>Personality Development</h4><p>Communication, confidence aur leadership skills ka development.</p></div>
-                    </div>
                 </div>
 
                 <div class="col-lg-6" data-aos="zoom-in" data-aos-duration="1500">
@@ -455,118 +670,73 @@
         </div>
     </section>
 
-    <!-- SECTION 2: OUR FACILITIES -->
-    <section id="facilities" class="premium-section bg-theme scroll-section">
+    <!-- 4. OUR MANAGEMENT (PREVIEW SECTION) -->
+    <section id="management-preview" class="premium-section bg-color scroll-section">
         <div class="container">
             <div class="text-center mb-5" data-aos="fade-up">
-                <h5 class="text-gold fw-bold text-uppercase">Our Facilities</h5>
-                <h2 class="display-5 fw-bold">World Class Campus Facilities</h2>
+                <h5 class="text-gold fw-bold text-uppercase">Leadership</h5>
+                <h2 class="display-5 fw-bold">Our Management</h2>
+                <p class="text-muted mt-3 max-w-700 mx-auto">The visionary leaders behind BMS Sr. Sec. School who are committed to shaping the future of education and guiding students towards excellence.</p>
             </div>
             
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12" data-aos="zoom-in" data-aos-delay="50">
-                    <div class="premium-facility-card btn-ripple">
-                        <i class="fa-solid fa-video fac-icon"></i>
-                        <h4>24×7 CCTV Security</h4>
-                        <p>Complete safety inside the campus.</p>
+            <div class="row justify-content-center g-4">
+                <!-- Chairman Card -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="management-card">
+                        <div class="management-img-box">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <div class="management-info">
+                            <h4>Name Here</h4>
+                            <p>Honorable Chairman</p>
+                            <span>Providing strategic direction and vision to make BMS an institute of excellence.</span>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="premium-facility-card btn-ripple">
-                        <i class="fa-solid fa-glass-water fac-icon"></i>
-                        <h4>Fresh Drinking Water</h4>
-                        <p>RO purified and cool drinking water.</p>
+
+                <!-- Director Card -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="management-card">
+                        <div class="management-img-box">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <div class="management-info">
+                            <h4>Name Here</h4>
+                            <p>Director</p>
+                            <span>Ensuring modern infrastructure, smooth administration and highest educational standards.</span>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12" data-aos="zoom-in" data-aos-delay="150">
-                    <div class="premium-facility-card btn-ripple">
-                        <i class="fa-solid fa-solar-panel fac-icon"></i>
-                        <h4>Solar Energy System</h4>
-                        <p>Eco-friendly green power supply.</p>
+            </div>
+            
+            <div class="text-center mt-5" data-aos="fade-up">
+                <a href="management.html" class="btn-outline-gold text-primary border-primary hover-lift">Meet All Management Team <i class="fa-solid fa-arrow-right ms-2"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. PRINCIPAL'S MESSAGE -->
+    <section id="principal" class="premium-section bg-theme scroll-section">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-5" data-aos="fade-right">
+                    <div class="about-image-wrapper border-0">
+                        <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80" alt="Principal" style="border:none;">
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="premium-facility-card btn-ripple">
-                        <i class="fa-solid fa-bus-simple fac-icon"></i>
-                        <h4>School Bus & Van</h4>
-                        <p>Safe transport covering all nearby areas.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12" data-aos="zoom-in" data-aos-delay="250">
-                    <div class="premium-facility-card btn-ripple">
-                        <i class="fa-solid fa-flask-vial fac-icon"></i>
-                        <h4>Science Practical Lab</h4>
-                        <p>Well-equipped labs for all science streams.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="premium-facility-card btn-ripple">
-                        <i class="fa-solid fa-computer fac-icon"></i>
-                        <h4>Computer Lab</h4>
-                        <p>High-tech systems for digital education.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12" data-aos="zoom-in" data-aos-delay="350">
-                    <div class="premium-facility-card btn-ripple">
-                        <i class="fa-solid fa-kit-medical fac-icon"></i>
-                        <h4>Medical First Aid</h4>
-                        <p>Immediate medical support available.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12" data-aos="zoom-in" data-aos-delay="400">
-                    <div class="premium-facility-card btn-ripple">
-                        <i class="fa-solid fa-futbol fac-icon"></i>
-                        <h4>Large Playground</h4>
-                        <p>Spacious areas for physical activities.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12" data-aos="zoom-in" data-aos-delay="450">
-                    <div class="premium-facility-card btn-ripple">
-                        <i class="fa-solid fa-chair fac-icon"></i>
-                        <h4>Comfortable Classes</h4>
-                        <p>Clean and highly comfortable seating.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12" data-aos="zoom-in" data-aos-delay="500">
-                    <div class="premium-facility-card btn-ripple">
-                        <i class="fa-solid fa-wind fac-icon"></i>
-                        <h4>Ventilated Classes</h4>
-                        <p>Fresh air and naturally lit environment.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12" data-aos="zoom-in" data-aos-delay="550">
-                    <div class="premium-facility-card btn-ripple">
-                        <i class="fa-solid fa-broom fac-icon"></i>
-                        <h4>Hygienic Campus</h4>
-                        <p>Strictly maintained cleanliness daily.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12" data-aos="zoom-in" data-aos-delay="600">
-                    <div class="premium-facility-card btn-ripple">
-                        <i class="fa-solid fa-book-open fac-icon"></i>
-                        <h4>Library</h4>
-                        <p>Vast collection of books and resources.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12" data-aos="zoom-in" data-aos-delay="650">
-                    <div class="premium-facility-card btn-ripple">
-                        <i class="fa-solid fa-plug-circle-bolt fac-icon"></i>
-                        <h4>Power Backup</h4>
-                        <p>24x7 electricity with full generators.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12" data-aos="zoom-in" data-aos-delay="700">
-                    <div class="premium-facility-card btn-ripple">
-                        <i class="fa-solid fa-chalkboard-user fac-icon"></i>
-                        <h4>Smart Learning</h4>
-                        <p>Projectors and smart boards installed.</p>
-                    </div>
+                <div class="col-lg-7" data-aos="fade-left">
+                    <h5 class="text-gold fw-bold text-uppercase mb-2">Message</h5>
+                    <h2 class="display-6 fw-bold mb-4">Principal's Desk</h2>
+                    <h5 class="text-primary fw-bold mb-4" style="font-style: italic;">"Education is the most powerful weapon which you can use to change the world."</h5>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-muted);">Welcome to BMS SR. SEC. SCHOOL. Our goal is to provide a nurturing environment where students can achieve academic excellence and develop strong moral character.</p>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-muted);">We believe in empowering every child with knowledge, discipline, and the skills needed to succeed in the modern world. Our dedicated faculty ensures that every student receives individual attention to realize their full potential.</p>
+                    <p style="font-size: 1.1rem; font-weight: bold; margin-top: 20px;">- Principal, BMS Sr. Sec. School</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ABOUT HISTORY -->
+    <!-- 6. HISTORY -->
     <section id="history" class="premium-section bg-color scroll-section">
         <div class="container">
             <div class="row align-items-center g-5">
@@ -575,9 +745,6 @@
                     <h2 class="display-6 fw-bold mb-4">History of BMS SR. SEC. SCHOOL, BASS (HISAR)</h2>
                     <p>BMS SR. SEC. SCHOOL, Bass (Hisar) is a reputed Senior Secondary School committed to providing quality education with strong moral values, discipline and character building. Since its establishment, the school has continuously worked towards developing confident, responsible and knowledgeable students who are prepared for future challenges.</p>
                     <p>The school offers a healthy learning environment where academics, sports, cultural activities and personality development are given equal importance. Our experienced teachers focus on individual attention, innovative teaching methods and practical learning so that every child can achieve academic excellence.</p>
-                    <div class="about-highlight mb-4">
-                        The spacious and green campus provides a safe, peaceful and inspiring atmosphere for learning. Along with modern educational facilities, the school encourages discipline, leadership, creativity and social responsibility.
-                    </div>
                 </div>
                 <div class="col-lg-6" data-aos="zoom-in-up">
                     <div class="about-image-wrapper">
@@ -588,116 +755,111 @@
         </div>
     </section>
 
-    <!-- VISION & MISSION -->
-    <section id="vision" class="premium-section bg-theme scroll-section">
+    <!-- 7. FACILITIES -->
+    <section id="facilities" class="premium-section bg-theme scroll-section">
         <div class="container">
             <div class="text-center mb-5" data-aos="fade-up">
-                <h2 class="display-5 fw-bold">Vision & Mission</h2>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-6 col-12" data-aos="fade-up" data-aos-delay="100">
-                    <div class="vision-box">
-                        <i class="fa-solid fa-eye"></i>
-                        <h3 class="fw-bold mb-3">Our Vision</h3>
-                        <p class="text-muted" style="font-size: 1.1rem; line-height: 1.8;">To be a center of excellence in education, shaping young minds into responsible, innovative, and compassionate global citizens who will lead tomorrow's world.</p>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-12" data-aos="fade-up" data-aos-delay="200">
-                    <div class="vision-box">
-                        <i class="fa-solid fa-bullseye"></i>
-                        <h3 class="fw-bold mb-3">Our Mission</h3>
-                        <p class="text-muted" style="font-size: 1.1rem; line-height: 1.8;">To provide quality education, foster holistic development, and instill strong moral values through a secure, engaging, and technology-driven learning environment.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PRINCIPAL'S MESSAGE -->
-    <section id="principal" class="premium-section bg-color scroll-section">
-        <div class="container">
-            <div class="row align-items-center g-5">
-                <div class="col-lg-5" data-aos="fade-right">
-                    <div class="about-image-wrapper border-0">
-                        <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80" alt="Principal" style="border:none;">
-                    </div>
-                </div>
-                <div class="col-lg-7" data-aos="fade-left">
-                    <h5 class="text-gold fw-bold text-uppercase mb-2">Leadership</h5>
-                    <h2 class="display-6 fw-bold mb-4">Principal's Message</h2>
-                    <h5 class="text-primary fw-bold mb-4" style="font-style: italic;">"Education is the most powerful weapon which you can use to change the world."</h5>
-                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-muted);">Welcome to BMS SR. SEC. SCHOOL. Our goal is to provide a nurturing environment where students can achieve academic excellence and develop strong moral character.</p>
-                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-muted);">We believe in empowering every child with knowledge, discipline, and the skills needed to succeed in the modern world. Our dedicated faculty ensures that every student receives individual attention to realize their full potential.</p>
-                    <p style="font-size: 1.1rem; font-weight: bold; margin-top: 20px;">- Principal, BMS Sr. Sec. School</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CONTACT US & MAP SECTION -->
-    <section id="contact" class="premium-section bg-theme scroll-section">
-        <div class="container">
-            <div class="text-center mb-5" data-aos="fade-up">
-                <h5 class="text-gold fw-bold text-uppercase">Get in Touch</h5>
-                <h2 class="display-5 fw-bold">Contact Us</h2>
+                <h5 class="text-gold fw-bold text-uppercase">Our Facilities</h5>
+                <h2 class="display-5 fw-bold">World Class Campus Facilities</h2>
             </div>
             
-            <div class="row g-4 mb-5">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12" data-aos="fade-up">
-                    <div class="contact-card">
-                        <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
-                        <h5 class="fw-bold">Email</h5>
-                        <p class="text-muted mb-0" style="word-break: break-all;">sahi*****ma9898@gmail.com</p>
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12" data-aos="zoom-in" data-aos-delay="50">
+                    <div class="premium-facility-card btn-ripple">
+                        <i class="fa-solid fa-video fac-icon"></i>
+                        <h4>24×7 CCTV Security</h4>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12" data-aos="fade-up">
-                    <div class="contact-card">
-                        <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
-                        <h5 class="fw-bold">Phone</h5>
-                        <p class="text-muted mb-0">7988****72</p>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="premium-facility-card btn-ripple">
+                        <i class="fa-solid fa-computer fac-icon"></i>
+                        <h4>Computer Lab</h4>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12" data-aos="fade-up">
-                    <div class="contact-card">
-                        <div class="contact-icon"><i class="fa-brands fa-youtube"></i></div>
-                        <h5 class="fw-bold">YouTube</h5>
-                        <p class="text-muted mb-0 fw-bold text-primary">Coming Soon</p>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12" data-aos="zoom-in" data-aos-delay="150">
+                    <div class="premium-facility-card btn-ripple">
+                        <i class="fa-solid fa-bus-simple fac-icon"></i>
+                        <h4>School Bus & Van</h4>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12" data-aos="fade-up">
-                    <div class="contact-card">
-                        <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
-                        <h5 class="fw-bold">Visit Campus</h5>
-                        <p class="text-muted mb-0">BMS SR. SEC. SCHOOL<br>Village Bass, Hisar</p>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="premium-facility-card btn-ripple">
+                        <i class="fa-solid fa-flask-vial fac-icon"></i>
+                        <h4>Science Lab</h4>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="row g-4 align-items-center mt-3">
-                <div class="col-lg-7 col-12" data-aos="fade-right">
-                    <div class="map-container">
+    <!-- 8. GOOGLE MAP & CONTACT SECTION (NEW EXACT PREMIUM LAYOUT) -->
+    <section id="contact-map" class="contact-premium-section scroll-section">
+        <div class="contact-container">
+            <div class="contact-grid">
+                
+                <!-- LEFT CARD: MAP -->
+                <div class="map-premium-card" data-aos="fade-up" data-aos-duration="1200">
+                    <div class="map-header">
+                        <i class="fa-solid fa-location-dot text-gold"></i> FIND US ON MAP
+                    </div>
+                    <div class="map-body">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2494.349364439881!2d76.19280758451056!3d29.106034210767614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391213719595f335%3A0x8ddae61cbbfde30a!2sBMS%20Public%20School!5e0!3m2!1sen!2sin!4v1785379233944!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                        <div class="map-nav-btn">
+                            <i class="fa-solid fa-crosshairs"></i>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-5 col-12" data-aos="fade-left">
-                    <div class="reach-us-box">
-                        <h3 class="fw-bold text-primary mb-4">Welcome to BMS SR. SEC. SCHOOL, BASS (HISAR)</h3>
-                        <ul class="list-unstyled">
-                            <li>
-                                <i class="fa-solid fa-building"></i>
-                                <span><strong>📍 Location:</strong><br>Village Bass, Hisar, Haryana – 125042</span>
-                            </li>
-                            <li>
-                                <i class="fa-solid fa-clock"></i>
-                                <span><strong>🕘 School Timing:</strong><br>Monday – Saturday<br>8:00 AM – 2:30 PM</span>
-                            </li>
-                            <li>
-                                <i class="fa-solid fa-calendar-xmark text-danger"></i>
-                                <span><strong>❌ Sunday – Holiday</strong></span>
-                            </li>
-                        </ul>
+
+                <!-- RIGHT CARD: CONTACT INFO -->
+                <div class="contact-info-card" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1200">
+                    <!-- School Watermark -->
+                    <i class="fa-solid fa-school watermark"></i>
+                    
+                    <div class="contact-info-content">
+                        <div class="contact-welcome-box">
+                            <div class="contact-welcome-icon">
+                                <i class="fa-regular fa-building"></i>
+                            </div>
+                            <h3 class="contact-welcome-text">Welcome to</h3>
+                            <h2 class="contact-welcome-title">BMS SR. SEC. SCHOOL,<br>BASS (HISAR)</h2>
+                            <div class="contact-divider">
+                                <i class="fa-solid fa-seedling"></i>
+                            </div>
+                        </div>
+
+                        <!-- 3 Premium Info Boxes -->
+                        <div class="info-box-premium">
+                            <div class="info-box-icon">
+                                <div class="info-box-icon-inner"><i class="fa-solid fa-location-dot"></i></div>
+                            </div>
+                            <div class="info-box-text">
+                                <h5>LOCATION</h5>
+                                <p>Village Bass, Hisar,<br>Haryana – 125042</p>
+                            </div>
+                        </div>
+
+                        <div class="info-box-premium">
+                            <div class="info-box-icon">
+                                <div class="info-box-icon-inner"><i class="fa-regular fa-clock"></i></div>
+                            </div>
+                            <div class="info-box-text">
+                                <h5>SCHOOL TIMING</h5>
+                                <p>Monday – Saturday<br>8:00 AM – 2:30 PM</p>
+                            </div>
+                        </div>
+
+                        <div class="info-box-premium">
+                            <div class="info-box-icon">
+                                <div class="info-box-icon-inner"><i class="fa-regular fa-calendar-xmark"></i></div>
+                            </div>
+                            <div class="info-box-text">
+                                <h5>SUNDAY</h5>
+                                <p class="text-red">Holiday</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -714,9 +876,9 @@
                     <h5 class="text-gold fw-bold mb-4">Quick Links</h5>
                     <ul class="footer-links list-unstyled">
                         <li><a href="#home" class="scroll-link">Home</a></li>
-                        <li><a href="#history" class="scroll-link">About Us</a></li>
+                        <li><a href="#why-choose" class="scroll-link">About Us</a></li>
                         <li><a href="#facilities" class="scroll-link">Facilities</a></li>
-                        <li><a href="#contact" class="scroll-link">Contact</a></li>
+                        <li><a href="#contact-map" class="scroll-link">Contact</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-4 col-md-6 col-12">
@@ -737,7 +899,6 @@
     <!-- Core Scripts (ALL OLD JS FUNCTIONS RETAINED 100%) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.css"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
@@ -751,22 +912,19 @@
             // 2. AOS Animations
             AOS.init({ duration: 800, once: false, mirror: true, offset: 50 });
 
-            // 3. GSAP Animations (Hero Buttons Fade Up)
-            gsap.from(".hero-content .d-flex", { duration: 1, y: 30, opacity: 0, ease: "power2.out", delay: 0.5 });
-
-            // 4. Custom Cursor (Disabled on Mobile via CSS)
+            // 3. Custom Cursor
             const cursor = document.querySelector('.custom-cursor');
             const follower = document.querySelector('.custom-cursor-follower');
             document.addEventListener('mousemove', (e) => {
                 cursor.style.transform = `translate3d(${e.clientX - 4}px, ${e.clientY - 4}px, 0)`;
                 setTimeout(() => { follower.style.transform = `translate3d(${e.clientX - 20}px, ${e.clientY - 20}px, 0)`; }, 50);
             });
-            document.querySelectorAll('a, button, .btn, .nav-link, .contact-card, .dropdown-item, .premium-stat-card, .premium-facility-card, .why-choose-list-item').forEach(el => {
+            document.querySelectorAll('a, button, .btn, .nav-link, .contact-card, .dropdown-item, .premium-stat-card, .premium-facility-card, .why-choose-list-item, .management-card, .info-box-premium, .map-nav-btn').forEach(el => {
                 el.addEventListener('mouseenter', () => follower.style.transform += ' scale(1.5)');
                 el.addEventListener('mouseleave', () => follower.style.transform = follower.style.transform.replace(' scale(1.5)', ''));
             });
 
-            // 5. Button Ripple Effect
+            // 4. Button Ripple Effect
             document.querySelectorAll('.btn-ripple, .premium-stat-card, .premium-facility-card').forEach(button => {
                 button.addEventListener('click', function(e) {
                     let x = e.clientX - e.target.getBoundingClientRect().left;
@@ -780,7 +938,7 @@
                 });
             });
 
-            // 6. Navbar Transparent to Solid Scroll Effect & Mobile Hamburger color fix
+            // 5. Navbar Transparent to Solid Scroll Effect
             const navbar = document.getElementById('navbar');
             const sections = document.querySelectorAll('section[id]');
             const navLinks = document.querySelectorAll('.nav-scrollspy .nav-link:not(.dropdown-toggle)');
@@ -818,7 +976,7 @@
                 });
             });
 
-            // Mobile Menu Click Fix (Auto Close when link clicked)
+            // Mobile Menu Click Fix
             document.querySelectorAll('.navbar-collapse .scroll-link:not(.dropdown-toggle)').forEach(link => {
                 link.addEventListener('click', () => {
                     const navbarCollapse = document.getElementById('navbarNav');
@@ -829,7 +987,7 @@
                 });
             });
 
-            // 7. Smooth Scroll Fix for ALL Dropdown & Menu Links
+            // 6. Smooth Scroll Fix for ALL Dropdown & Menu Links
             document.querySelectorAll('.scroll-link').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     const href = this.getAttribute('href');
@@ -849,41 +1007,7 @@
                 });
             });
 
-            // 8. Animated Counters
-            const counters = document.querySelectorAll('.counter');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if(entry.isIntersecting) {
-                        const counter = entry.target;
-                        const target = +counter.getAttribute('data-target');
-                        const updateCount = () => {
-                            const count = +counter.innerText;
-                            const inc = target / 50;
-                            if (count < target) {
-                                counter.innerText = Math.ceil(count + inc);
-                                setTimeout(updateCount, 30);
-                            } else { counter.innerText = target; }
-                        };
-                        updateCount();
-                    }
-                });
-            });
-            counters.forEach(counter => observer.observe(counter));
-
-            // 9. Particles.js 
-            if(document.getElementById('particles-js')) {
-                particlesJS('particles-js', {
-                    "particles": {
-                        "number": { "value": 35 }, "color": { "value": "#F4B400" }, "shape": { "type": "circle" },
-                        "opacity": { "value": 0.4 }, "size": { "value": 3 },
-                        "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.2, "width": 1 },
-                        "move": { "enable": true, "speed": 1.5 }
-                    },
-                    "interactivity": { "events": { "onhover": { "enable": true, "mode": "grab" } } }
-                });
-            }
-
-            // 10. Mouse Parallax Function
+            // 7. Mouse Parallax Function
             document.addEventListener("mousemove", parallax);
             function parallax(e) {
                 if(window.innerWidth > 991) { 
