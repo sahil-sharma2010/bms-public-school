@@ -5,166 +5,452 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Our Management | BMS SR. SEC. SCHOOL</title>
     
+    <meta name="description" content="Meet the Management Team, Chairman, Director, and Principal of BMS SR. SEC. SCHOOL, Bass (Hisar).">
+    
+    <!-- Libraries -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
     
     <style>
+        /* =========================================
+           GLOBAL VARIABLES & RESET
+           ========================================= */
         :root {
-            --primary: #0c2348;    
-            --gold: #F4B400;       
-            --bg-color: #F8FAFC;
+            --primary: #0c2348;
+            --gold: #f4b400;
+            --gold-glow: rgba(244, 180, 0, 0.4);
+            --bg-color: #f8f9fa;   
+            --bg-theme: #FFFFFF;
+            --text-color: #333333;
+            --text-muted: #64748b;
         }
 
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: #333; overflow-x: hidden;}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        .page-header { background: linear-gradient(135deg, #05162D, #0A2952, #0c2348); padding: 160px 0 80px 0; text-align: center; color: white;}
-        .page-header h1 { font-weight: 800; font-size: 45px; color: #fff;}
+        /* WHITE SPACE FIX: No body padding top, hero section handles it perfectly */
+        html, body { 
+            scroll-behavior: smooth; 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            overflow-x: hidden; 
+            width: 100%; 
+            max-width: 100vw; 
+            -webkit-font-smoothing: antialiased;
+        }
         
-        .premium-section { padding: 80px 0; }
-        
-        .management-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.4s ease; text-align: center; border-bottom: 4px solid var(--primary); height: 100%;}
-        .management-card:hover { transform: translateY(-10px); border-bottom-color: var(--gold); box-shadow: 0 15px 35px rgba(12, 35, 72, 0.1);}
-        .management-img-box { width: 100%; height: 300px; background: #e9ecef; display: flex; align-items: center; justify-content: center; overflow: hidden; border-bottom: 1px solid rgba(0,0,0,0.05);}
-        .management-img-box i { font-size: 80px; color: #adb5bd; transition: transform 0.4s ease;} 
-        .management-card:hover .management-img-box i { transform: scale(1.1); color: var(--primary);}
-        .management-info { padding: 30px 20px; }
-        .management-info h4 { font-weight: 800; color: var(--primary); margin-bottom: 5px; font-size: 22px;}
-        .management-info p { color: var(--gold); font-weight: 700; text-transform: uppercase; font-size: 14px; margin-bottom: 15px; letter-spacing: 1px;}
-        .management-info span { color: #64748b; font-size: 15px; line-height: 1.6; display: block;}
+        h1, h2, h3, h4, h5, h6 { font-weight: 700; color: var(--primary); }
+        .text-gold { color: var(--gold) !important; }
+        a { text-decoration: none; }
+        .premium-section { padding: 90px 0; position: relative; z-index: 1; will-change: transform; background-color: transparent !important; }
 
-        .btn-outline-gold { background: transparent; color: var(--primary); border: 2px solid var(--primary); font-weight: 600; padding: 14px 40px; border-radius: 8px; transition: all 0.3s; text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;}
-        .btn-outline-gold:hover { background-color: var(--primary); color: #fff; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(12, 35, 72, 0.2);}
+        /* =========================================
+           GLOBAL BACKGROUND WATERMARK (5% Opacity)
+           ========================================= */
+        .global-background-watermark {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('assets/background-watermark.png'); 
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 50%; 
+            opacity: 0.05;
+            z-index: 0; 
+            pointer-events: none; 
+            will-change: opacity; 
+        }
+        @media (max-width: 991px) { .global-background-watermark { background-size: 70%; } }
+        @media (max-width: 576px) { .global-background-watermark { background-size: 90%; } }
+
+        /* =========================================
+           3D PREMIUM NAVBAR (ALWAYS BLUE & FIXED)
+           ========================================= */
+        .premium-nav { 
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: var(--primary); 
+            height: 80px; display: flex; align-items: center; 
+            z-index: 1050; border-bottom: 2px solid var(--gold);
+            padding: 0; perspective: 1000px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            transform: translateZ(0);
+        }
         
-        /* Navbar Config */
-        .premium-nav { background: transparent; height: 90px; display: flex; align-items: center; transition: all 0.4s ease; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 0; }
-        .premium-nav.scrolled { background: rgba(255, 255, 255, 0.98); box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-bottom: none;}
-        .header-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;}
-        .school-brand-box { display: flex; flex-direction: row; align-items: center; text-decoration: none; gap: 15px; background: transparent !important;}
-        .nav-logo-img { width: 70px !important; height: 70px !important; object-fit: contain; background: transparent !important; }
+        .header-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: space-between;}
+        
+        /* Transparent Logo Fix */
+        .school-brand-box { display: flex; flex-direction: row; align-items: center; text-decoration: none; gap: 15px; background: transparent !important; z-index: 1060; padding: 5px;}
+        .nav-logo-img { width: 60px !important; height: 60px !important; object-fit: contain; background: transparent !important; border: none !important; box-shadow: none !important; transition: transform 0.4s ease;}
+        .school-brand-box:hover .nav-logo-img { transform: scale(1.1) rotate(5deg); }
+        
         .school-logo-text { text-align: left; display: flex; flex-direction: column; justify-content: center;}
-        .school-logo-text h4 { margin: 0; font-weight: 800; color: var(--primary); letter-spacing: 0px; line-height: 1.1; white-space: nowrap; font-size: 38px;}
-        .school-logo-text p { margin: 2px 0 0 0; font-weight: 500; color: #64748b; letter-spacing: 1px; text-transform: uppercase; font-size: 18px;}
+        .school-logo-text h4 { margin: 0; font-weight: 800; color: #fff !important; letter-spacing: 0px; line-height: 1.1; white-space: nowrap; transition: 0.4s; font-size: 28px;}
+        .school-logo-text p { margin: 2px 0 0 0; font-weight: 500; color: var(--gold) !important; letter-spacing: 1px; text-transform: uppercase; transition: 0.4s; font-size: 14px;}
+
+        .navbar-collapse { flex-grow: 1; display: flex; justify-content: center; align-items: center; }
+        .navbar-nav { gap: 5px; perspective: 1000px;}
         
-        /* Custom Cursor */
+        /* 3D NAVBAR BUTTONS FLIP */
+        .nav-item { white-space: nowrap; perspective: 800px; }
+        .nav-hover { 
+            position: relative; color: #fff !important; font-weight: 600; cursor: pointer; text-transform: uppercase; 
+            letter-spacing: 0.5px; transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s; 
+            display: flex; align-items: center; transform-style: preserve-3d; padding: 10px 15px;
+        }
+        .nav-hover::before { content: ''; position: absolute; width: 0; height: 2px; bottom: 0px; left: 0; background-color: var(--gold); transition: width 0.3s ease; }
+        .nav-hover:hover::before, .nav-hover.active-link::before { width: 100%; }
+        
+        @media (min-width: 992px) {
+            .nav-item:hover .nav-hover { transform: translateZ(20px) rotateX(15deg); color: var(--gold) !important; text-shadow: 0px 8px 15px rgba(0,0,0,0.5); }
+        }
+        
+        /* 3D DOOR DROPDOWN MENU */
+        .dropdown-toggle::after { display: none !important; } 
+        @media (min-width: 992px) {
+            .premium-nav .dropdown-menu { 
+                background-color: var(--primary); border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); border: 1px solid rgba(255, 255, 255, 0.1); 
+                padding: 15px 0; min-width: 260px; display: block; visibility: hidden; opacity: 0;
+                transform-origin: top center; transform: perspective(1200px) rotateX(-90deg);
+                transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease, visibility 0.4s; margin-top: 15px !important;
+            }
+            .nav-item.dropdown:hover .dropdown-menu { visibility: visible; opacity: 1; transform: perspective(1200px) rotateX(0deg); margin-top: 0px !important; }
+        }
+        .premium-nav .dropdown-item { padding: 12px 25px; font-weight: 500; color: #ffffff !important; font-size: 15px; transition: 0.3s; display: flex; align-items: center;}
+        .premium-nav .dropdown-item i { color: var(--gold); width: 25px; font-size: 16px; margin-right: 10px; text-align: center; transition: transform 0.3s;}
+        .premium-nav .dropdown-item:hover { background-color: rgba(244, 180, 0, 0.15); color: var(--gold) !important; padding-left: 30px;}
+        .premium-nav .dropdown-item:hover i { transform: scale(1.1); }
+
+        .navbar-toggler { border: none; padding: 8px 12px; outline: none; box-shadow: none !important;}
+        
+        @media (min-width: 1400px) { .school-logo-text h4 { font-size: 32px; } .school-logo-text p { font-size: 16px; } .nav-hover { margin: 0 12px; font-size: 14px; } }
+        @media (min-width: 992px) and (max-width: 1399px) { .school-logo-text h4 { font-size: 22px; } .school-logo-text p { font-size: 12px; } .nav-logo-img { width: 50px !important; height: 50px !important; } .nav-hover { margin: 0 6px; font-size: 12px; padding: 8px 4px !important; } .header-container { padding: 0 15px; } }
+
+        /* BUTTONS & RIPPLE */
+        .btn-ripple { position: relative; overflow: hidden; }
+        .btn-ripple .ripple { position: absolute; background: rgba(255, 255, 255, 0.5); border-radius: 50%; transform: scale(0); animation: ripple-anim 0.6s linear; pointer-events: none; }
+        @keyframes ripple-anim { to { transform: scale(4); opacity: 0; } }
+
+        /* =========================================
+           SOLID BLUE HERO BANNER (WITH PREMIUM ANIMATED TEXT)
+           ========================================= */
+        .team-hero { 
+            position: relative; 
+            width: 100%; 
+            padding: 180px 0 100px 0; 
+            background: var(--primary); 
+            text-align: center; 
+            color: white; 
+            z-index: 1;
+            margin-top: 0; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        /* The Premium Animated Cursive Subtitle */
+        .team-hero-script {
+            font-family: 'Great Vibes', cursive;
+            color: var(--gold);
+            font-size: 3rem;
+            margin-bottom: -15px;
+            font-weight: 400;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            display: inline-block;
+        }
+
+        /* The Premium Animated Main Title (Shiny Gold/White Gradient) */
+        .team-hero h1 { 
+            font-weight: 800; 
+            font-size: 5rem; 
+            margin-bottom: 15px; 
+            letter-spacing: -1px;
+            
+            /* Magic Gradient Animation */
+            background: linear-gradient(to right, #ffffff 20%, var(--gold) 50%, #ffffff 80%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: textShine 4s linear infinite;
+            
+            /* 3D Shadow Fallback */
+            filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.4)); 
+        }
+
+        @keyframes textShine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .team-hero p { 
+            font-size: 1.3rem; 
+            font-weight: 500; 
+            color: rgba(255,255,255,0.8); 
+            letter-spacing: 0.5px;
+            margin-top: 10px;
+        }
+
+        /* =========================================
+           MANAGEMENT TEAM CARDS (Premium 3D Design)
+           ========================================= */
+        .team-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 900px; margin: 0 auto 50px auto; }
+        .team-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1200px; margin: 0 auto; }
+        
+        .team-card {
+            background: #fff; 
+            border-radius: 16px; 
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.06); 
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d; 
+            position: relative; 
+            border: 1px solid rgba(0,0,0,0.03);
+            text-align: center; 
+            display: flex; 
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .team-card:hover { transform: translateY(-12px) rotateX(5deg); box-shadow: 0 25px 50px rgba(12, 35, 72, 0.15); }
+        
+        .team-img-placeholder {
+            width: 100%; 
+            height: 320px; 
+            background: #e9ecef; 
+            display: flex;
+            align-items: center; 
+            justify-content: center; 
+            font-size: 35px; 
+            color: #495057; 
+            transition: 0.5s ease;
+        }
+        .team-card:hover .team-img-placeholder { background: #dee2e6; color: var(--primary); transform: scale(1.05); }
+        
+        .team-content { padding: 35px 25px; flex-grow: 1; display: flex; flex-direction: column; background: #fff; position: relative; z-index: 2;}
+        .team-name { font-size: 26px; font-weight: 800; color: var(--primary); margin-bottom: 5px; transform: translateZ(15px); transition: 0.3s;}
+        .team-card:hover .team-name { color: var(--gold); }
+        .team-role { font-size: 15px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 15px; transform: translateZ(10px);}
+        .team-desc { font-size: 15px; color: var(--text-muted); line-height: 1.6; font-weight: 500; margin: 0; transform: translateZ(5px);}
+
+        /* =========================================
+           QUICK LINKS SECTION
+           ========================================= */
+        .quick-links-bar { background: rgba(12, 35, 72, 0.03); padding: 40px 0; border-top: 1px solid rgba(0,0,0,0.05); text-align: center; }
+        .quick-links-wrapper { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .quick-btn { background: #fff; color: var(--primary); font-weight: 700; padding: 12px 25px; border-radius: 50px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; font-size: 14px; border: 1px solid rgba(0,0,0,0.02);}
+        .quick-btn:hover { background: var(--primary); color: var(--gold); transform: translateY(-3px); }
+
+        /* Cursor & Loader */
         .custom-cursor { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; }
         .custom-cursor-follower { width: 40px; height: 40px; border: 2px solid var(--primary); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: transform 0.2s ease; }
-        
-        @media (max-width: 1399px) { .school-logo-text h4 { font-size: 24px; } .school-logo-text p { font-size: 13px; } .nav-logo-img{width: 55px !important; height: 55px !important;} .header-container { padding: 0 15px; } }
-        @media (max-width: 991px) { .school-logo-text h4 { font-size: 24px; } .school-logo-text p { font-size: 14px; } .custom-cursor, .custom-cursor-follower { display: none !important; } }
-        @media (max-width: 576px) { .school-logo-text h4 { font-size: 20px; } .nav-logo-img { width: 60px !important; height: 60px !important; } .header-container { padding: 0 15px; } }
-        
-        .premium-footer { background: var(--primary); color: white; padding-top: 70px; border-top: 4px solid var(--gold); margin-top: 40px;}
+        .page-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--primary); z-index: 10000; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        .loader-spinner { width: 60px; height: 60px; border: 4px solid rgba(255,255,255,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s infinite linear; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Footer */
+        .premium-footer { background: var(--primary); color: white; padding-top: 70px; border-top: 4px solid var(--gold); position: relative; z-index: 1;}
         .footer-links a { color: rgba(255,255,255,0.7); transition: all 0.3s; display: block; padding: 6px 0; text-decoration: none;}
-        .footer-links a:hover { color: var(--gold); padding-left: 8px; }
+        .footer-links a:hover { color: var(--gold); padding-left: 8px; transform: translateX(5px); }
+
+        /* =========================================
+           MOBILE RESPONSIVE OPTIMIZATION
+           ========================================= */
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background: rgba(12, 35, 72, 0.98); backdrop-filter: blur(10px); padding: 20px; border-radius: 0 0 15px 15px; box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+                position: absolute; width: 100%; top: 100%; left: 0; z-index: 1050; display: none;
+            }
+            .navbar-collapse.show { display: block; animation: slideDown 0.4s ease forwards; }
+            @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+            
+            .navbar-nav { gap: 0px; align-items: flex-start;}
+            .nav-item { width: 100%; white-space: normal; perspective: none;}
+            .nav-hover { color: #fff !important; padding: 14px 15px !important; display: block; border-bottom: 1px solid rgba(255,255,255,0.1); margin: 0; font-size: 15px; font-weight: 700; transform: none !important; text-shadow: none !important;}
+            
+            .premium-nav .dropdown-menu { border: none; box-shadow: none; background: rgba(255,255,255,0.05); padding-left: 15px; margin-top: 0px !important; display: none; opacity: 1; visibility: visible; transform: none !important;}
+            .premium-nav .dropdown-menu.show { display: block; animation: slideDown 0.3s ease forwards;}
+            .premium-nav .dropdown-item { color: #fff !important; padding: 10px 15px; font-weight: 600;}
+            
+            .team-grid-2, .team-grid-3 { grid-template-columns: 1fr; gap: 30px; }
+            .team-img-placeholder { height: 280px; }
+            
+            .custom-cursor, .custom-cursor-follower { display: none !important; }
+            .premium-section { padding: 60px 0; }
+        }
+
+        /* LOGO & HERO FIX FOR MOBILE */
+        @media (max-width: 576px) {
+            .header-container { padding: 0 15px; }
+            .school-brand-box { gap: 10px; max-width: 80%; }
+            .nav-logo-img { width: 48px !important; height: 48px !important; }
+            .school-logo-text h4 { font-size: 16px !important; white-space: normal; line-height: 1.2; letter-spacing: 0px;}
+            .school-logo-text p { font-size: 12px !important; }
+            
+            .team-hero { padding: 120px 15px 60px 15px; }
+            .team-hero-script { font-size: 2rem; margin-bottom: -5px; }
+            .team-hero h1 { font-size: 2.8rem; }
+            .team-hero p { font-size: 1.1rem; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- Loading Spinner & Cursor -->
+    <div class="page-loader" id="loader"><div class="loader-spinner"></div></div>
     <div class="custom-cursor"></div><div class="custom-cursor-follower"></div>
 
-    <!-- Header (Strictly Logo Only, Top Back Buttons Removed) -->
-    <nav class="navbar navbar-expand-lg premium-nav fixed-top scrolled" id="navbar">
-        <div class="header-container position-relative w-100 d-flex align-items-center justify-content-center">
+    <!-- GLOBAL BACKGROUND WATERMARK (5% Opacity, Centered) -->
+    <div id="global-watermark" class="global-background-watermark"></div>
+
+    <!-- 1. FULLY RESPONSIVE 3D PREMIUM NAVBAR -->
+    <nav class="navbar navbar-expand-lg premium-nav" id="navbar">
+        <div class="header-container position-relative">
+            <!-- Official BMS Logo (Transparent Background) -->
             <a class="navbar-brand school-brand-box" href="index.html">
                 <img src="assets/logo.png" alt="BMS SR. SEC. SCHOOL Logo" class="nav-logo-img">
                 <div class="school-logo-text">
                     <h4>BMS SR. SEC. SCHOOL</h4>
-                    <p>Bass, Hisar</p>
+                    <p class="d-none d-sm-block">Bass, Hisar</p>
                 </div>
             </a>
+            
+            <!-- Premium Hamburger Menu -->
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fa-solid fa-bars text-white fs-3" id="nav-toggle-icon"></i>
+            </button>
+            
+            <!-- Center/Right: Menus -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto nav-scrollspy">
+                    <li class="nav-item"><a class="nav-link nav-hover" href="index.html">HOME</a></li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link nav-hover dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">ABOUT US</a>
+                        <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                            <li><a class="dropdown-item" href="index.html#why-choose"><i class="fa-solid fa-star"></i> Why Choose BMS</a></li>
+                            <li><a class="dropdown-item" href="management.html"><i class="fa-solid fa-users"></i> Our Management</a></li>
+                            <li><a class="dropdown-item" href="index.html#principal"><i class="fa-solid fa-user-tie"></i> Principal Message</a></li>
+                            <li><a class="dropdown-item" href="index.html#history"><i class="fa-solid fa-book-open"></i> History</a></li>
+                            <li><a class="dropdown-item" href="index.html#campus"><i class="fa-solid fa-camera"></i> Our Campus</a></li>
+                            <li><a class="dropdown-item" href="index.html#facilities"><i class="fa-solid fa-building"></i> Facilities</a></li>
+                            <li><a class="dropdown-item" href="index.html#contact-map"><i class="fa-solid fa-phone"></i> Contact Us</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link nav-hover dropdown-toggle" href="#" id="academicsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">ACADEMICS</a>
+                        <ul class="dropdown-menu" aria-labelledby="academicsDropdown">
+                            <li><a class="dropdown-item" href="curriculum.html"><i class="fa-solid fa-book"></i> Curriculum</a></li>
+                            <li><a class="dropdown-item" href="examination.html"><i class="fa-solid fa-pen-nib"></i> Examination</a></li>
+                            <li><a class="dropdown-item" href="co-curricular.html"><i class="fa-solid fa-palette"></i> Co-Curricular Activities</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item"><a class="nav-link nav-hover active-link" href="management.html">OUR MANAGEMENT</a></li>
+                    <li class="nav-item"><a class="nav-link nav-hover" href="gallery.html">GALLERY</a></li>
+                    <li class="nav-item"><a class="nav-link nav-hover" href="admissions.html">ADMISSION PROCESS</a></li>
+                    <li class="nav-item"><a class="nav-link nav-hover" href="index.html#contact-map">CONTACT</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <!-- Page Header -->
-    <div class="page-header">
-        <div class="container">
-            <h1 data-aos="fade-down">Our Management Team</h1>
-            <p class="mt-3 text-light opacity-75 fs-5" data-aos="fade-up" data-aos-delay="100">The guiding force behind the success of BMS Sr. Sec. School.</p>
+    <!-- 2. SOLID BLUE HERO BANNER WITH PREMIUM ANIMATED TEXT -->
+    <div class="team-hero">
+        <div class="container" data-aos="fade-up">
+            <span class="team-hero-script">Meet The</span>
+            <h1>Our Management Team</h1>
+            <p>The guiding force behind the success of BMS Sr. Sec. School.</p>
         </div>
     </div>
 
-    <!-- Management Members -->
-    <section class="premium-section bg-color">
-        <div class="container" style="max-width: 1200px;">
-            <div class="row g-5 justify-content-center">
-                
-                <div class="col-lg-5 col-md-6" data-aos="fade-up" data-aos-delay="50">
-                    <div class="management-card">
-                        <div class="management-img-box">
-                            <i class="fa-solid fa-user-tie"></i>
-                        </div>
-                        <div class="management-info">
-                            <h4>Name of Chairman</h4>
-                            <p>Chairman</p>
-                            <span>Providing strategic direction and vision to make BMS an institute of excellence and strong moral values.</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-5 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="management-card">
-                        <div class="management-img-box">
-                            <i class="fa-solid fa-user-tie"></i>
-                        </div>
-                        <div class="management-info">
-                            <h4>Name of Director</h4>
-                            <p>Director</p>
-                            <span>Ensuring modern infrastructure, smooth administration and maintaining the highest educational standards.</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="150">
-                    <div class="management-card">
-                        <div class="management-img-box">
-                            <i class="fa-solid fa-user-tie"></i>
-                        </div>
-                        <div class="management-info">
-                            <h4>Name of Principal</h4>
-                            <p>Principal</p>
-                            <span>Leading the academic framework, fostering student development and guiding the faculty to perfection.</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="management-card">
-                        <div class="management-img-box">
-                            <i class="fa-solid fa-user-tie"></i>
-                        </div>
-                        <div class="management-info">
-                            <h4>Name of Vice Principal</h4>
-                            <p>Vice Principal</p>
-                            <span>Supporting academic operations, managing student discipline, and ensuring a healthy learning environment.</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="250">
-                    <div class="management-card">
-                        <div class="management-img-box">
-                            <i class="fa-solid fa-users"></i>
-                        </div>
-                        <div class="management-info">
-                            <h4>Management Team</h4>
-                            <p>Administration</p>
-                            <span>Working consistently to deliver a seamless educational experience for our students.</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+    <!-- 3. MANAGEMENT TEAM CARDS -->
+    <section class="premium-section" style="background-color: transparent;">
+        <div class="container">
             
-            <!-- ONLY ONE BACK BUTTON AT THE BOTTOM -->
-            <div class="text-center mt-5 pt-5" data-aos="fade-up">
-                <a href="index.html" class="btn-outline-gold" style="display: inline-block;">
-                    <i class="fa-solid fa-house me-2"></i> Back to Home
-                </a>
+            <!-- ROW 1: Chairman & Director (2 Cards Grid) -->
+            <div class="team-grid-2">
+                <!-- Chairman Card -->
+                <div class="team-card btn-ripple" data-aos="fade-up" data-aos-delay="50">
+                    <div class="team-img-placeholder">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div class="team-content">
+                        <div class="team-name">Name of Chairman</div>
+                        <div class="team-role">CHAIRMAN</div>
+                        <p class="team-desc">Providing strategic direction and vision to make BMS an institute of excellence and strong moral values.</p>
+                    </div>
+                </div>
+
+                <!-- Director Card -->
+                <div class="team-card btn-ripple" data-aos="fade-up" data-aos-delay="150">
+                    <div class="team-img-placeholder">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div class="team-content">
+                        <div class="team-name">Name of Director</div>
+                        <div class="team-role">DIRECTOR</div>
+                        <p class="team-desc">Ensuring modern infrastructure, smooth administration and maintaining the highest educational standards.</p>
+                    </div>
+                </div>
             </div>
+
+            <!-- ROW 2: Principal, Vice Principal & Admin (3 Cards Grid) -->
+            <div class="team-grid-3">
+                <!-- Principal Card -->
+                <div class="team-card btn-ripple" data-aos="fade-up" data-aos-delay="100">
+                    <div class="team-img-placeholder">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div class="team-content">
+                        <div class="team-name">Name of Principal</div>
+                        <div class="team-role">PRINCIPAL</div>
+                        <p class="team-desc">Leading the academic framework, fostering student development and guiding the faculty to perfection.</p>
+                    </div>
+                </div>
+
+                <!-- Vice Principal Card -->
+                <div class="team-card btn-ripple" data-aos="fade-up" data-aos-delay="200">
+                    <div class="team-img-placeholder">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div class="team-content">
+                        <div class="team-name">Name of Vice Principal</div>
+                        <div class="team-role">VICE PRINCIPAL</div>
+                        <p class="team-desc">Supporting academic operations, managing student discipline, and ensuring a healthy learning environment.</p>
+                    </div>
+                </div>
+
+                <!-- Management Team / Administration Card -->
+                <div class="team-card btn-ripple" data-aos="fade-up" data-aos-delay="300">
+                    <div class="team-img-placeholder">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="team-content">
+                        <div class="team-name">Management Team</div>
+                        <div class="team-role">ADMINISTRATION</div>
+                        <p class="team-desc">Working consistently to deliver a seamless educational experience for our students.</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
+
+    <!-- 4. QUICK LINKS BAR -->
+    <div class="quick-links-bar" data-aos="fade-up">
+        <div class="container">
+            <h5 class="fw-bold mb-4" style="color: var(--primary);">Explore More in Academics</h5>
+            <div class="quick-links-wrapper">
+                <a href="curriculum.html" class="quick-btn"><i class="fa-solid fa-book me-2"></i>Curriculum</a>
+                <a href="examination.html" class="quick-btn"><i class="fa-solid fa-pen-nib me-2"></i>Examination</a>
+                <a href="co-curricular.html" class="quick-btn"><i class="fa-solid fa-palette me-2"></i>Co-Curricular</a>
+                <a href="admissions.html" class="quick-btn"><i class="fa-solid fa-file-signature me-2"></i>Admissions</a>
+            </div>
+        </div>
+    </div>
 
     <!-- FOOTER -->
     <footer class="premium-footer pb-3">
@@ -214,22 +500,64 @@
             </div>
         </div>
     </footer>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+
+    <!-- Core Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.css"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Loader & AOS (Runs EVERY Time you scroll thanks to once: false)
+            const loader = document.getElementById('loader');
+            setTimeout(() => { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 500); }, 1000);
             AOS.init({ duration: 800, once: false, mirror: true, offset: 50 });
 
+            // Custom Cursor
             const cursor = document.querySelector('.custom-cursor');
             const follower = document.querySelector('.custom-cursor-follower');
             document.addEventListener('mousemove', (e) => {
                 cursor.style.transform = `translate3d(${e.clientX - 4}px, ${e.clientY - 4}px, 0)`;
                 setTimeout(() => { follower.style.transform = `translate3d(${e.clientX - 20}px, ${e.clientY - 20}px, 0)`; }, 50);
             });
-            document.querySelectorAll('a, button, .management-card').forEach(el => {
+            document.querySelectorAll('a, button, .team-card, .quick-btn').forEach(el => {
                 el.addEventListener('mouseenter', () => follower.style.transform += ' scale(1.5)');
                 el.addEventListener('mouseleave', () => follower.style.transform = follower.style.transform.replace(' scale(1.5)', ''));
+            });
+
+            // Ripple Effect
+            document.querySelectorAll('.btn-ripple').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    let x = e.clientX - e.target.getBoundingClientRect().left;
+                    let y = e.clientY - e.target.getBoundingClientRect().top;
+                    let ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+
+            // Mobile Navigation Logic (Auto-Close & Smooth Dropdowns)
+            const navbarCollapse = document.getElementById('navbarNav');
+            const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
+            
+            document.querySelectorAll('.navbar-collapse .scroll-link:not(.dropdown-toggle), .dropdown-item').forEach(link => {
+                link.addEventListener('click', () => {
+                    if(window.innerWidth < 992 && navbarCollapse.classList.contains('show')) {
+                        bsCollapse.hide();
+                    }
+                });
+            });
+
+            document.addEventListener('click', function(e) {
+                const toggleBtn = document.querySelector('.navbar-toggler');
+                if (window.innerWidth < 992 && navbarCollapse.classList.contains('show') && !navbarCollapse.contains(e.target) && !toggleBtn.contains(e.target)) {
+                    bsCollapse.hide();
+                }
             });
         });
     </script>
