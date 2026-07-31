@@ -5,229 +5,486 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Admission Process | BMS SR. SEC. SCHOOL</title>
     
+    <meta name="description" content="Admission process, steps, and required documents for BMS SR. SEC. SCHOOL, Bass (Hisar).">
+    
+    <!-- Libraries -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
     
     <style>
+        /* =========================================
+           GLOBAL VARIABLES & RESET
+           ========================================= */
         :root {
-            --primary: #0c2348;    
-            --gold: #F4B400;       
-            --bg-color: #F8FAFC;
+            --primary: #0c2348;
+            --gold: #f4b400;
+            --gold-glow: rgba(244, 180, 0, 0.4);
+            --bg-color: #f8f9fa;   
+            --bg-theme: #FFFFFF;
             --text-color: #333333;
+            --text-muted: #64748b;
         }
 
-        body { 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* WHITE SPACE FIX: No body padding top, hero section handles it perfectly */
+        html, body { 
+            scroll-behavior: smooth; 
             font-family: 'Inter', sans-serif; 
             background-color: var(--bg-color); 
-            color: var(--text-color);
+            color: var(--text-color); 
             overflow-x: hidden; 
-            scroll-behavior: smooth;
+            width: 100%; 
+            max-width: 100vw; 
+            -webkit-font-smoothing: antialiased;
         }
         
-        /* Premium Header Space */
-        .page-header { background: linear-gradient(135deg, #05162D, #0A2952, #0c2348); padding: 160px 0 80px 0; text-align: center; color: white;}
-        .page-header h1 { font-weight: 800; font-size: 45px; color: #fff; position: relative; z-index: 10;}
-        
-        .premium-section { padding: 80px 0; }
+        h1, h2, h3, h4, h5, h6 { font-weight: 700; color: var(--primary); }
+        .text-gold { color: var(--gold) !important; }
+        a { text-decoration: none; }
+        .premium-section { padding: 90px 0; position: relative; z-index: 1; will-change: transform; background-color: transparent !important; }
 
-        /* Premium Red Notice */
-        .premium-red-notice {
-            background: linear-gradient(135deg, #d93025, #a50e0e);
-            color: #ffffff;
-            padding: 18px 40px;
-            border-radius: 16px;
-            box-shadow: 0 15px 35px rgba(217, 48, 37, 0.25);
-            display: inline-block;
-            text-align: center;
-            margin-bottom: 35px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            position: relative;
-            z-index: 10;
+        /* =========================================
+           GLOBAL BACKGROUND WATERMARK (5% Opacity)
+           ========================================= */
+        .global-background-watermark {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('assets/background-watermark.png'); 
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 50%; 
+            opacity: 0.05;
+            z-index: 0; 
+            pointer-events: none; 
+            will-change: opacity; 
         }
-        .premium-red-notice h4 {
-            color: #fff;
-            font-weight: 800;
-            font-size: 20px;
-            margin-bottom: 8px;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+        @media (max-width: 991px) { .global-background-watermark { background-size: 70%; } }
+        @media (max-width: 576px) { .global-background-watermark { background-size: 90%; } }
+
+        /* =========================================
+           3D PREMIUM NAVBAR (ALWAYS BLUE & FIXED)
+           ========================================= */
+        .premium-nav { 
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: var(--primary); 
+            height: 80px; display: flex; align-items: center; 
+            z-index: 1050; border-bottom: 2px solid var(--gold);
+            padding: 0; perspective: 1000px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            transform: translateZ(0);
         }
-        .premium-red-notice p { font-size: 15px; font-weight: 500; margin: 0; opacity: 0.95; line-height: 1.6; }
         
-        /* Premium Step Cards */
-        .info-box-premium { 
-            background: #fff; 
-            border: 1px solid rgba(0,0,0,0.05); 
-            border-radius: 16px; 
-            display: flex; 
-            align-items: flex-start; 
-            gap: 25px; 
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s; 
+        .header-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: space-between;}
+        
+        /* Transparent Logo Fix */
+        .school-brand-box { display: flex; flex-direction: row; align-items: center; text-decoration: none; gap: 15px; background: transparent !important; z-index: 1060; padding: 5px;}
+        .nav-logo-img { width: 60px !important; height: 60px !important; object-fit: contain; background: transparent !important; border: none !important; box-shadow: none !important; transition: transform 0.4s ease;}
+        .school-brand-box:hover .nav-logo-img { transform: scale(1.1) rotate(5deg); }
+        
+        .school-logo-text { text-align: left; display: flex; flex-direction: column; justify-content: center;}
+        .school-logo-text h4 { margin: 0; font-weight: 800; color: #fff !important; letter-spacing: 0px; line-height: 1.1; white-space: nowrap; transition: 0.4s; font-size: 28px;}
+        .school-logo-text p { margin: 2px 0 0 0; font-weight: 500; color: var(--gold) !important; letter-spacing: 1px; text-transform: uppercase; transition: 0.4s; font-size: 14px;}
+
+        .navbar-collapse { flex-grow: 1; display: flex; justify-content: center; align-items: center; }
+        .navbar-nav { gap: 5px; perspective: 1000px;}
+        
+        /* 3D NAVBAR BUTTONS FLIP */
+        .nav-item { white-space: nowrap; perspective: 800px; }
+        .nav-hover { 
+            position: relative; color: #fff !important; font-weight: 600; cursor: pointer; text-transform: uppercase; 
+            letter-spacing: 0.5px; transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s; 
+            display: flex; align-items: center; transform-style: preserve-3d; padding: 10px 15px;
+        }
+        .nav-hover::before { content: ''; position: absolute; width: 0; height: 2px; bottom: 0px; left: 0; background-color: var(--gold); transition: width 0.3s ease; }
+        .nav-hover:hover::before, .nav-hover.active-link::before { width: 100%; }
+        
+        @media (min-width: 992px) {
+            .nav-item:hover .nav-hover { transform: translateZ(20px) rotateX(15deg); color: var(--gold) !important; text-shadow: 0px 8px 15px rgba(0,0,0,0.5); }
+        }
+        
+        /* 3D DOOR DROPDOWN MENU */
+        .dropdown-toggle::after { display: none !important; } 
+        @media (min-width: 992px) {
+            .premium-nav .dropdown-menu { 
+                background-color: var(--primary); border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); border: 1px solid rgba(255, 255, 255, 0.1); 
+                padding: 15px 0; min-width: 260px; display: block; visibility: hidden; opacity: 0;
+                transform-origin: top center; transform: perspective(1200px) rotateX(-90deg);
+                transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease, visibility 0.4s; margin-top: 15px !important;
+            }
+            .nav-item.dropdown:hover .dropdown-menu { visibility: visible; opacity: 1; transform: perspective(1200px) rotateX(0deg); margin-top: 0px !important; }
+        }
+        .premium-nav .dropdown-item { padding: 12px 25px; font-weight: 500; color: #ffffff !important; font-size: 15px; transition: 0.3s; display: flex; align-items: center;}
+        .premium-nav .dropdown-item i { color: var(--gold); width: 25px; font-size: 16px; margin-right: 10px; text-align: center; transition: transform 0.3s;}
+        .premium-nav .dropdown-item:hover { background-color: rgba(244, 180, 0, 0.15); color: var(--gold) !important; padding-left: 30px;}
+        .premium-nav .dropdown-item:hover i { transform: scale(1.1); }
+
+        .navbar-toggler { border: none; padding: 8px 12px; outline: none; box-shadow: none !important;}
+        
+        @media (min-width: 1400px) { .school-logo-text h4 { font-size: 32px; } .school-logo-text p { font-size: 16px; } .nav-hover { margin: 0 12px; font-size: 14px; } }
+        @media (min-width: 992px) and (max-width: 1399px) { .school-logo-text h4 { font-size: 22px; } .school-logo-text p { font-size: 12px; } .nav-logo-img { width: 50px !important; height: 50px !important; } .nav-hover { margin: 0 6px; font-size: 12px; padding: 8px 4px !important; } .header-container { padding: 0 15px; } }
+
+        /* BUTTONS & RIPPLE */
+        .btn-ripple { position: relative; overflow: hidden; }
+        .btn-ripple .ripple { position: absolute; background: rgba(255, 255, 255, 0.5); border-radius: 50%; transform: scale(0); animation: ripple-anim 0.6s linear; pointer-events: none; }
+        @keyframes ripple-anim { to { transform: scale(4); opacity: 0; } }
+
+        /* =========================================
+           SOLID BLUE HERO BANNER & CLOSED BANNER
+           ========================================= */
+        .admission-hero { 
+            position: relative; 
+            width: 100%; 
+            padding: 150px 0 80px 0; /* Clear fixed navbar */
+            background: var(--primary); 
+            text-align: center; 
+            color: white; 
+            z-index: 1;
+            margin-top: 0; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .admission-hero h1 { 
+            font-weight: 800; 
+            font-size: 4rem; 
+            color: #fff; 
+            margin-bottom: 0px; 
+            letter-spacing: -1px;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Premium Closed Banner */
+        .closed-banner {
+            background: linear-gradient(135deg, #d32f2f, #b71c1c);
+            max-width: 650px;
+            margin: 0 auto 40px auto;
+            padding: 25px 30px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(211, 47, 47, 0.4);
+            border: 1px solid rgba(255,255,255,0.2);
             position: relative;
             overflow: hidden;
-            border-left: 4px solid var(--gold);
+            transform-style: preserve-3d;
         }
-        .info-box-premium:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(12, 35, 72, 0.1); border-left-color: var(--primary);}
-        .info-box-icon { width: 65px; height: 65px; border-radius: 50%; background: rgba(244, 180, 0, 0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: 0.4s ease; }
-        .info-box-icon-inner { width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 22px; transition: 0.3s; }
-        .info-box-premium:hover .info-box-icon { background: var(--primary); }
-        .info-box-premium:hover .info-box-icon-inner { background: var(--gold); color: var(--primary); transform: scale(1.1); }
         
-        .btn-outline-gold { background: transparent; color: var(--primary); border: 2px solid var(--primary); font-weight: 600; transition: all 0.3s; text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;}
-        .btn-outline-gold:hover { background-color: var(--primary); color: #fff; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(12, 35, 72, 0.2);}
+        .closed-banner::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
+            animation: pulseLight 4s infinite linear;
+        }
         
-        /* Navbar Config */
-        .premium-nav { background: transparent; height: 90px; display: flex; align-items: center; transition: all 0.4s ease; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 0; }
-        .premium-nav.scrolled { background: rgba(255, 255, 255, 0.98); box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-bottom: none;}
-        .header-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;}
-        .school-brand-box { display: flex; flex-direction: row; align-items: center; text-decoration: none; gap: 15px; background: transparent !important;}
-        .nav-logo-img { width: 70px !important; height: 70px !important; object-fit: contain; background: transparent !important; }
-        .school-logo-text { text-align: left; display: flex; flex-direction: column; justify-content: center;}
-        .school-logo-text h4 { margin: 0; font-weight: 800; color: var(--primary); letter-spacing: 0px; line-height: 1.1; white-space: nowrap; font-size: 38px;}
-        .school-logo-text p { margin: 2px 0 0 0; font-weight: 500; color: #64748b; letter-spacing: 1px; text-transform: uppercase; font-size: 18px;}
+        @keyframes pulseLight { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .closed-banner-header { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 12px; transform: translateZ(10px);}
         
-        /* Custom Cursor */
+        /* Pulsing Red Dot */
+        .pulsing-dot { width: 15px; height: 15px; background-color: #ff5252; border-radius: 50%; box-shadow: 0 0 15px #ff5252; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(255, 82, 82, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 82, 82, 0); } }
+
+        .closed-banner-header h3 { color: #fff; font-weight: 800; font-size: 24px; margin: 0; letter-spacing: 1px;}
+        .closed-banner p { color: rgba(255,255,255,0.9); font-size: 16px; font-weight: 500; margin: 0; line-height: 1.5; transform: translateZ(5px);}
+
+        /* =========================================
+           ADMISSION STEPS CARDS (Premium 3D Lift)
+           ========================================= */
+        .steps-container { max-width: 900px; margin: 0 auto 60px auto; display: flex; flex-direction: column; gap: 30px;}
+        
+        .step-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 35px 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            border: 1px solid rgba(0,0,0,0.03);
+            border-left: 6px solid var(--gold);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            position: relative;
+        }
+        
+        .step-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 45px rgba(12, 35, 72, 0.12);
+            border-left-color: var(--primary);
+        }
+
+        .step-number {
+            width: 70px; height: 70px;
+            background: var(--primary);
+            color: var(--gold);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 30px; font-weight: 800;
+            flex-shrink: 0;
+            box-shadow: 0 8px 20px rgba(12, 35, 72, 0.2);
+            transform: translateZ(15px);
+            transition: 0.3s;
+        }
+        .step-card:hover .step-number { background: var(--gold); color: var(--primary); transform: translateZ(25px) rotateY(15deg); }
+
+        .step-content { flex-grow: 1; transform: translateZ(5px);}
+        .step-content h3 { font-size: 26px; font-weight: 800; color: var(--primary); margin-bottom: 8px;}
+        .step-content p { font-size: 16px; color: var(--text-muted); font-weight: 500; margin: 0; line-height: 1.6;}
+        
+        .step-docs-list { list-style: none; padding: 0; margin: 15px 0 0 0; }
+        .step-docs-list li { font-size: 15.5px; color: #555; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; font-weight: 500;}
+        .step-docs-list li i { color: #888; font-size: 18px; }
+
+        /* =========================================
+           BACK TO HOME BUTTON
+           ========================================= */
+        .back-home-wrapper { text-align: center; margin-top: 20px; }
+        .btn-back-home {
+            background: var(--primary);
+            color: #fff;
+            font-weight: 700;
+            padding: 16px 40px;
+            border-radius: 8px;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px rgba(12, 35, 72, 0.3);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+        .btn-back-home:hover { background: var(--gold); color: var(--primary); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(244, 180, 0, 0.4); }
+
+        /* Cursor & Loader */
         .custom-cursor { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; }
         .custom-cursor-follower { width: 40px; height: 40px; border: 2px solid var(--primary); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: transform 0.2s ease; }
-        
-        @media (max-width: 1399px) { .school-logo-text h4 { font-size: 24px; } .school-logo-text p { font-size: 13px; } .nav-logo-img{width: 55px !important; height: 55px !important;} .header-container { padding: 0 15px; } }
-        @media (max-width: 991px) { .school-logo-text h4 { font-size: 24px; } .school-logo-text p { font-size: 14px; } .custom-cursor, .custom-cursor-follower { display: none !important; } }
-        @media (max-width: 576px) { .school-logo-text h4 { font-size: 20px; } .nav-logo-img { width: 60px !important; height: 60px !important; } .header-container { padding: 0 15px; } .premium-red-notice{padding: 15px 20px; width: 100%;} .info-box-premium { flex-direction: column; align-items: center; text-align: center; gap: 15px; padding: 25px 20px !important;} }
-        
-        .premium-footer { background: var(--primary); color: white; padding-top: 70px; border-top: 4px solid var(--gold); margin-top: 20px;}
+        .page-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--primary); z-index: 10000; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        .loader-spinner { width: 60px; height: 60px; border: 4px solid rgba(255,255,255,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s infinite linear; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Footer */
+        .premium-footer { background: var(--primary); color: white; padding-top: 70px; border-top: 4px solid var(--gold); position: relative; z-index: 1;}
         .footer-links a { color: rgba(255,255,255,0.7); transition: all 0.3s; display: block; padding: 6px 0; text-decoration: none;}
-        .footer-links a:hover { color: var(--gold); padding-left: 8px; }
+        .footer-links a:hover { color: var(--gold); padding-left: 8px; transform: translateX(5px); }
+
+        /* =========================================
+           MOBILE RESPONSIVE OPTIMIZATION
+           ========================================= */
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background: rgba(12, 35, 72, 0.98); backdrop-filter: blur(10px); padding: 20px; border-radius: 0 0 15px 15px; box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+                position: absolute; width: 100%; top: 100%; left: 0; z-index: 1050; display: none;
+            }
+            .navbar-collapse.show { display: block; animation: slideDown 0.4s ease forwards; }
+            @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+            
+            .navbar-nav { gap: 0px; align-items: flex-start;}
+            .nav-item { width: 100%; white-space: normal; perspective: none;}
+            .nav-hover { color: #fff !important; padding: 14px 15px !important; display: block; border-bottom: 1px solid rgba(255,255,255,0.1); margin: 0; font-size: 15px; font-weight: 700; transform: none !important; text-shadow: none !important;}
+            
+            .premium-nav .dropdown-menu { border: none; box-shadow: none; background: rgba(255,255,255,0.05); padding-left: 15px; margin-top: 0px !important; display: none; opacity: 1; visibility: visible; transform: none !important;}
+            .premium-nav .dropdown-menu.show { display: block; animation: slideDown 0.3s ease forwards;}
+            .premium-nav .dropdown-item { color: #fff !important; padding: 10px 15px; font-weight: 600;}
+            
+            .step-card { padding: 30px 25px; gap: 20px;}
+            
+            .custom-cursor, .custom-cursor-follower { display: none !important; }
+            .premium-section { padding: 60px 0; }
+        }
+
+        /* LOGO & HERO FIX FOR MOBILE */
+        @media (max-width: 576px) {
+            .header-container { padding: 0 15px; }
+            .school-brand-box { gap: 10px; max-width: 80%; }
+            .nav-logo-img { width: 48px !important; height: 48px !important; }
+            .school-logo-text h4 { font-size: 16px !important; white-space: normal; line-height: 1.2; letter-spacing: 0px;}
+            .school-logo-text p { font-size: 12px !important; }
+            
+            .admission-hero { padding: 120px 15px 60px 15px; }
+            .closed-banner { padding: 20px 15px; }
+            .closed-banner-header h3 { font-size: 18px; }
+            .closed-banner p { font-size: 14px; }
+            .admission-hero h1 { font-size: 2.8rem; }
+            
+            .step-card { flex-direction: column; text-align: center; gap: 15px; padding: 30px 20px; border-left: none; border-top: 6px solid var(--gold);}
+            .step-card:hover { border-top-color: var(--primary); border-left-color: transparent;}
+            .step-docs-list li { justify-content: center; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- Loading Spinner & Cursor -->
+    <div class="page-loader" id="loader"><div class="loader-spinner"></div></div>
     <div class="custom-cursor"></div><div class="custom-cursor-follower"></div>
 
-    <!-- Header (Strictly Logo Only, Top Back Buttons Removed) -->
-    <nav class="navbar navbar-expand-lg premium-nav fixed-top scrolled" id="navbar">
-        <div class="header-container position-relative w-100 d-flex align-items-center justify-content-center">
+    <!-- GLOBAL BACKGROUND WATERMARK (5% Opacity, Centered) -->
+    <div id="global-watermark" class="global-background-watermark"></div>
+
+    <!-- 1. FULLY RESPONSIVE 3D PREMIUM NAVBAR -->
+    <nav class="navbar navbar-expand-lg premium-nav" id="navbar">
+        <div class="header-container position-relative">
+            <!-- Official BMS Logo (Transparent Background) -->
             <a class="navbar-brand school-brand-box" href="index.html">
                 <img src="assets/logo.png" alt="BMS SR. SEC. SCHOOL Logo" class="nav-logo-img">
                 <div class="school-logo-text">
                     <h4>BMS SR. SEC. SCHOOL</h4>
-                    <p>Bass, Hisar</p>
+                    <p class="d-none d-sm-block">Bass, Hisar</p>
                 </div>
             </a>
+            
+            <!-- Premium Hamburger Menu -->
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fa-solid fa-bars text-white fs-3" id="nav-toggle-icon"></i>
+            </button>
+            
+            <!-- Center/Right: Menus -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto nav-scrollspy">
+                    <li class="nav-item"><a class="nav-link nav-hover" href="index.html">HOME</a></li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link nav-hover dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">ABOUT US</a>
+                        <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                            <li><a class="dropdown-item" href="index.html#why-choose"><i class="fa-solid fa-star"></i> Why Choose BMS</a></li>
+                            <li><a class="dropdown-item" href="management.html"><i class="fa-solid fa-users"></i> Our Management</a></li>
+                            <li><a class="dropdown-item" href="index.html#principal"><i class="fa-solid fa-user-tie"></i> Principal Message</a></li>
+                            <li><a class="dropdown-item" href="index.html#history"><i class="fa-solid fa-book-open"></i> History</a></li>
+                            <li><a class="dropdown-item" href="index.html#campus"><i class="fa-solid fa-camera"></i> Our Campus</a></li>
+                            <li><a class="dropdown-item" href="index.html#facilities"><i class="fa-solid fa-building"></i> Facilities</a></li>
+                            <li><a class="dropdown-item" href="index.html#contact-map"><i class="fa-solid fa-phone"></i> Contact Us</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link nav-hover dropdown-toggle" href="#" id="academicsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">ACADEMICS</a>
+                        <ul class="dropdown-menu" aria-labelledby="academicsDropdown">
+                            <li><a class="dropdown-item" href="curriculum.html"><i class="fa-solid fa-book"></i> Curriculum</a></li>
+                            <li><a class="dropdown-item" href="examination.html"><i class="fa-solid fa-pen-nib"></i> Examination</a></li>
+                            <li><a class="dropdown-item" href="co-curricular.html"><i class="fa-solid fa-palette"></i> Co-Curricular Activities</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item"><a class="nav-link nav-hover" href="management.html">OUR MANAGEMENT</a></li>
+                    <li class="nav-item"><a class="nav-link nav-hover" href="gallery.html">GALLERY</a></li>
+                    <li class="nav-item"><a class="nav-link nav-hover active-link" href="admissions.html">ADMISSION PROCESS</a></li>
+                    <li class="nav-item"><a class="nav-link nav-hover" href="index.html#contact-map">CONTACT</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <!-- Page Header (With Premium Red Notice Above Heading) -->
-    <div class="page-header">
-        <div class="container px-3">
-            <div class="premium-red-notice" data-aos="fade-down">
-                <h4>🔴 ADMISSIONS CLOSED</h4>
+    <!-- 2. SOLID BLUE HERO & PREMIUM CLOSED BANNER -->
+    <div class="admission-hero">
+        <div class="container" data-aos="fade-down">
+            
+            <!-- Premium Animated Closed Banner -->
+            <div class="closed-banner">
+                <div class="closed-banner-header">
+                    <div class="pulsing-dot"></div>
+                    <h3>ADMISSIONS CLOSED</h3>
+                </div>
                 <p>Admissions for the current academic session are now closed.<br>Please visit again for future admission announcements.</p>
             </div>
-            <h1 class="mb-0" data-aos="fade-up" data-aos-delay="100">Admission Process</h1>
+
+            <h1>Admission Process</h1>
         </div>
     </div>
 
-    <!-- Complete Admission Process Steps -->
-    <section class="premium-section" style="background-color: #ffffff;">
-        <div class="container" style="max-width: 900px;">
-            <div class="row g-4">
+    <!-- 3. ADMISSION STEPS (Premium 3D Cards) -->
+    <section class="premium-section" style="background-color: transparent;">
+        <div class="container">
+            <div class="steps-container">
                 
-                <div class="col-12" data-aos="fade-up" data-aos-delay="50">
-                    <div class="info-box-premium" style="padding: 30px;">
-                        <div class="info-box-icon"><div class="info-box-icon-inner fw-bold">1</div></div>
-                        <div class="info-box-text">
-                            <h4 style="color: var(--primary); font-weight: 800; margin-bottom: 8px;">Step 1</h4>
-                            <p style="font-size: 16px; color: #555; margin: 0;">Collect the Admission Form from the School Office or download it if available.</p>
-                        </div>
+                <!-- STEP 1 -->
+                <div class="step-card btn-ripple" data-aos="fade-up" data-aos-delay="50">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Step 1</h3>
+                        <p>Collect the Admission Form from the School Office or download it if available.</p>
                     </div>
                 </div>
 
-                <div class="col-12" data-aos="fade-up" data-aos-delay="100">
-                    <div class="info-box-premium" style="padding: 30px;">
-                        <div class="info-box-icon"><div class="info-box-icon-inner fw-bold">2</div></div>
-                        <div class="info-box-text">
-                            <h4 style="color: var(--primary); font-weight: 800; margin-bottom: 8px;">Step 2</h4>
-                            <p style="font-size: 16px; color: #555; margin: 0;">Fill in all required student and parent details carefully.</p>
-                        </div>
+                <!-- STEP 2 -->
+                <div class="step-card btn-ripple" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Step 2</h3>
+                        <p>Fill in all required student and parent details carefully.</p>
                     </div>
                 </div>
 
-                <div class="col-12" data-aos="fade-up" data-aos-delay="150">
-                    <div class="info-box-premium" style="padding: 30px;">
-                        <div class="info-box-icon"><div class="info-box-icon-inner fw-bold">3</div></div>
-                        <div class="info-box-text">
-                            <h4 style="color: var(--primary); font-weight: 800; margin-bottom: 12px;">Step 3</h4>
-                            <p style="font-size: 16px; color: #333; margin-bottom: 12px; font-weight: 600;">Attach all required documents.</p>
-                            <ul class="list-unstyled mb-0" style="color: #555; font-size: 15.5px; line-height: 1.8;">
-                                <li><i class="fa-solid fa-circle-check text-gold me-2"></i> Birth Certificate</li>
-                                <li><i class="fa-solid fa-circle-check text-gold me-2"></i> Previous School Report Card</li>
-                                <li><i class="fa-solid fa-circle-check text-gold me-2"></i> Transfer Certificate (if applicable)</li>
-                                <li><i class="fa-solid fa-circle-check text-gold me-2"></i> Aadhaar Card Copy</li>
-                                <li><i class="fa-solid fa-circle-check text-gold me-2"></i> Passport Size Photographs</li>
-                            </ul>
-                        </div>
+                <!-- STEP 3 -->
+                <div class="step-card btn-ripple" data-aos="fade-up" data-aos-delay="150">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Step 3</h3>
+                        <p>Attach all required documents.</p>
+                        <ul class="step-docs-list">
+                            <li><i class="fa-solid fa-circle-check"></i> Birth Certificate</li>
+                            <li><i class="fa-solid fa-circle-check"></i> Previous School Report Card</li>
+                            <li><i class="fa-solid fa-circle-check"></i> Transfer Certificate (if applicable)</li>
+                            <li><i class="fa-solid fa-circle-check"></i> Aadhaar Card Copy</li>
+                            <li><i class="fa-solid fa-circle-check"></i> Passport Size Photographs</li>
+                        </ul>
                     </div>
                 </div>
 
-                <div class="col-12" data-aos="fade-up" data-aos-delay="200">
-                    <div class="info-box-premium" style="padding: 30px;">
-                        <div class="info-box-icon"><div class="info-box-icon-inner fw-bold">4</div></div>
-                        <div class="info-box-text">
-                            <h4 style="color: var(--primary); font-weight: 800; margin-bottom: 8px;">Step 4</h4>
-                            <p style="font-size: 16px; color: #555; margin: 0;">Submit the completed application form along with the required documents at the school office.</p>
-                        </div>
+                <!-- STEP 4 -->
+                <div class="step-card btn-ripple" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Step 4</h3>
+                        <p>Submit the completed application form along with the required documents at the school office.</p>
                     </div>
                 </div>
 
-                <div class="col-12" data-aos="fade-up" data-aos-delay="50">
-                    <div class="info-box-premium" style="padding: 30px;">
-                        <div class="info-box-icon"><div class="info-box-icon-inner fw-bold">5</div></div>
-                        <div class="info-box-text">
-                            <h4 style="color: var(--primary); font-weight: 800; margin-bottom: 8px;">Step 5</h4>
-                            <p style="font-size: 16px; color: #555; margin: 0;">The school will verify all submitted documents.</p>
-                        </div>
+                <!-- STEP 5 -->
+                <div class="step-card btn-ripple" data-aos="fade-up" data-aos-delay="250">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Step 5</h3>
+                        <p>The school will verify all submitted documents.</p>
                     </div>
                 </div>
 
-                <div class="col-12" data-aos="fade-up" data-aos-delay="100">
-                    <div class="info-box-premium" style="padding: 30px;">
-                        <div class="info-box-icon"><div class="info-box-icon-inner fw-bold">6</div></div>
-                        <div class="info-box-text">
-                            <h4 style="color: var(--primary); font-weight: 800; margin-bottom: 8px;">Step 6</h4>
-                            <p style="font-size: 16px; color: #555; margin: 0;">After successful verification, complete the admission fee payment.</p>
-                        </div>
+                <!-- STEP 6 -->
+                <div class="step-card btn-ripple" data-aos="fade-up" data-aos-delay="300">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h3>Step 6</h3>
+                        <p>After successful verification, complete the admission fee payment.</p>
                     </div>
                 </div>
 
-                <div class="col-12" data-aos="fade-up" data-aos-delay="150">
-                    <div class="info-box-premium" style="padding: 30px;">
-                        <div class="info-box-icon"><div class="info-box-icon-inner fw-bold">7</div></div>
-                        <div class="info-box-text">
-                            <h4 style="color: var(--primary); font-weight: 800; margin-bottom: 8px;">Step 7</h4>
-                            <p style="font-size: 16px; color: #555; margin: 0;">Receive the admission confirmation and welcome kit from the school.</p>
-                        </div>
+                <!-- STEP 7 -->
+                <div class="step-card btn-ripple" data-aos="fade-up" data-aos-delay="350">
+                    <div class="step-number">7</div>
+                    <div class="step-content">
+                        <h3>Step 7</h3>
+                        <p>Receive the admission confirmation and welcome kit from the school.</p>
                     </div>
                 </div>
 
             </div>
 
-            <!-- ONLY ONE BACK BUTTON AT THE BOTTOM -->
-            <div class="text-center mt-5 pt-5" data-aos="fade-up">
-                <a href="index.html" class="btn-outline-gold" style="padding: 14px 40px; border-radius: 8px; display: inline-block;">
-                    <i class="fa-solid fa-house me-2"></i> Back to Home
+            <!-- BACK TO HOME BUTTON -->
+            <div class="back-home-wrapper" data-aos="zoom-in" data-aos-delay="400">
+                <a href="index.html" class="btn-back-home btn-ripple">
+                    <i class="fa-solid fa-house"></i> BACK TO HOME
                 </a>
             </div>
-            
+
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="premium-footer pb-3">
+    <footer class="premium-footer pb-3 mt-5">
         <div class="container">
             <div class="row g-5 pb-4">
                 <div class="col-lg-4 col-md-12 col-12">
@@ -236,7 +493,6 @@
                     <p class="text-gold fw-bold mb-3" style="letter-spacing: 0.5px;">Knowledge • Discipline • Excellence</p>
                     <p class="text-light opacity-75 mb-4" style="line-height: 1.7;">We are committed to providing quality education, strong values and holistic development for every student.</p>
                 </div>
-                
                 <div class="col-lg-2 col-md-4 col-sm-6 col-6">
                     <h5 class="text-gold fw-bold mb-4">About Us</h5>
                     <ul class="footer-links list-unstyled">
@@ -248,7 +504,6 @@
                         <li><a href="index.html#facilities">Facilities</a></li>
                     </ul>
                 </div>
-                
                 <div class="col-lg-3 col-md-4 col-sm-6 col-6">
                     <h5 class="text-gold fw-bold mb-4">Academics & More</h5>
                     <ul class="footer-links list-unstyled">
@@ -261,7 +516,6 @@
                         <li><a href="index.html#contact-map">Google Map</a></li>
                     </ul>
                 </div>
-
                 <div class="col-lg-3 col-md-4 col-sm-12 col-12">
                     <h5 class="text-gold fw-bold mb-4">Contact Details</h5>
                     <ul class="list-unstyled text-light opacity-75">
@@ -277,22 +531,63 @@
             </div>
         </div>
     </footer>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+
+    <!-- Core Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.css"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Loader & AOS (Runs EVERY Time you scroll thanks to once: false)
+            const loader = document.getElementById('loader');
+            setTimeout(() => { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 500); }, 1000);
             AOS.init({ duration: 800, once: false, mirror: true, offset: 50 });
 
+            // Custom Cursor
             const cursor = document.querySelector('.custom-cursor');
             const follower = document.querySelector('.custom-cursor-follower');
             document.addEventListener('mousemove', (e) => {
                 cursor.style.transform = `translate3d(${e.clientX - 4}px, ${e.clientY - 4}px, 0)`;
                 setTimeout(() => { follower.style.transform = `translate3d(${e.clientX - 20}px, ${e.clientY - 20}px, 0)`; }, 50);
             });
-            document.querySelectorAll('a, button, .info-box-premium').forEach(el => {
+            document.querySelectorAll('a, button, .step-card').forEach(el => {
                 el.addEventListener('mouseenter', () => follower.style.transform += ' scale(1.5)');
                 el.addEventListener('mouseleave', () => follower.style.transform = follower.style.transform.replace(' scale(1.5)', ''));
+            });
+
+            // Ripple Effect
+            document.querySelectorAll('.btn-ripple').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    let x = e.clientX - e.target.getBoundingClientRect().left;
+                    let y = e.clientY - e.target.getBoundingClientRect().top;
+                    let ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+
+            // Mobile Navigation Logic (Auto-Close & Smooth Dropdowns)
+            const navbarCollapse = document.getElementById('navbarNav');
+            const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
+            
+            document.querySelectorAll('.navbar-collapse .scroll-link:not(.dropdown-toggle), .dropdown-item').forEach(link => {
+                link.addEventListener('click', () => {
+                    if(window.innerWidth < 992 && navbarCollapse.classList.contains('show')) {
+                        bsCollapse.hide();
+                    }
+                });
+            });
+
+            document.addEventListener('click', function(e) {
+                const toggleBtn = document.querySelector('.navbar-toggler');
+                if (window.innerWidth < 992 && navbarCollapse.classList.contains('show') && !navbarCollapse.contains(e.target) && !toggleBtn.contains(e.target)) {
+                    bsCollapse.hide();
+                }
             });
         });
     </script>
