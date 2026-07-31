@@ -29,7 +29,11 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        /* WHITE SPACE FIX: padding-top changed from 90px to 80px to match navbar height exactly */
+        /* 
+           WHITE SPACE FIX: 
+           Removed padding-top from body so the hero section goes all the way up. 
+           We will handle the navbar overlap using padding inside the hero section.
+        */
         html, body { 
             scroll-behavior: smooth; 
             font-family: 'Inter', sans-serif; 
@@ -38,14 +42,13 @@
             overflow-x: hidden; 
             width: 100%; 
             max-width: 100vw; 
-            padding-top: 80px; 
             -webkit-font-smoothing: antialiased;
         }
         
         h1, h2, h3, h4, h5, h6 { font-weight: 700; color: var(--primary); }
         .text-gold { color: var(--gold) !important; }
         a { text-decoration: none; }
-        .premium-section { padding: 80px 0; position: relative; z-index: 1; will-change: transform; }
+        .premium-section { padding: 80px 0; position: relative; z-index: 1; will-change: transform; background-color: transparent !important; }
 
         /* =========================================
            GLOBAL BACKGROUND WATERMARK (5% Opacity)
@@ -65,12 +68,12 @@
             pointer-events: none; 
             will-change: opacity; 
         }
-        @media (max-width: 991px) { .global-background-watermark { background-size: 80%; } }
+        @media (max-width: 991px) { .global-background-watermark { background-size: 70%; } }
+        @media (max-width: 576px) { .global-background-watermark { background-size: 90%; } }
 
         /* =========================================
            3D PREMIUM NAVBAR (ALWAYS BLUE & FIXED)
            ========================================= */
-        /* Changed height to 80px to reduce bulkiness and align better */
         .premium-nav { 
             position: fixed; top: 0; left: 0; width: 100%;
             background: var(--primary); 
@@ -83,7 +86,7 @@
         
         .header-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: space-between;}
         
-        /* Transparent Logo */
+        /* LOGO FIX: Transparent background, correct padding */
         .school-brand-box { display: flex; flex-direction: row; align-items: center; text-decoration: none; gap: 15px; background: transparent !important; z-index: 1060; padding: 5px;}
         .nav-logo-img { width: 60px !important; height: 60px !important; object-fit: contain; background: transparent !important; border: none !important; box-shadow: none !important; transition: transform 0.4s ease;}
         .school-brand-box:hover .nav-logo-img { transform: scale(1.1) rotate(5deg); }
@@ -100,9 +103,9 @@
         .nav-hover { 
             position: relative; color: #fff !important; font-weight: 600; cursor: pointer; text-transform: uppercase; 
             letter-spacing: 0.5px; transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s; 
-            display: flex; align-items: center; transform-style: preserve-3d;
+            display: flex; align-items: center; transform-style: preserve-3d; padding: 10px 15px;
         }
-        .nav-hover::before { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background-color: var(--gold); transition: width 0.3s ease; }
+        .nav-hover::before { content: ''; position: absolute; width: 0; height: 2px; bottom: 0px; left: 0; background-color: var(--gold); transition: width 0.3s ease; }
         .nav-hover:hover::before, .nav-hover.active-link::before { width: 100%; }
         
         @media (min-width: 992px) {
@@ -140,16 +143,17 @@
         /* =========================================
            PAGE HERO BANNER (WHITE GAP FIXED)
            ========================================= */
-        /* Padding top/bottom adjusted to remove white space above */
+        /* To remove the white gap, we add padding-top equal to the navbar height (80px),
+           and remove any margins so it touches the top of the viewport. */
         .page-hero { 
             position: relative; 
             width: 100%; 
-            padding: 80px 0; 
+            padding: 160px 0 80px 0; /* 80px extra padding-top to compensate for the fixed navbar */
             background: url('assets/home-bg.jpg.png') center/cover no-repeat; 
             text-align: center; 
             color: white; 
             z-index: 1;
-            margin-top: 0; /* Ensures it sticks right to the top padding */
+            margin-top: 0; 
         }
         .page-hero::before { 
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
@@ -173,17 +177,17 @@
             width: 200px;
             text-align: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.04);
-            border: 1px solid rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.05);
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transform-style: preserve-3d;
         }
         .class-card:hover {
             transform: translateY(-12px) rotateX(10deg);
             box-shadow: 0 20px 40px rgba(12, 35, 72, 0.1);
-            border-color: rgba(244, 180, 0, 0.3);
+            border-color: var(--gold);
         }
         .class-icon { font-size: 40px; color: var(--gold); margin-bottom: 15px; transform: translateZ(20px); transition: 0.3s;}
-        .class-card:hover .class-icon { transform: translateZ(30px) scale(1.1); }
+        .class-card:hover .class-icon { transform: translateZ(30px) scale(1.1); color: var(--primary);}
         .class-card h4 { font-size: 20px; font-weight: 800; color: var(--primary); margin-bottom: 8px; transform: translateZ(10px);}
         .class-card p { font-size: 14px; color: var(--text-muted); margin: 0; font-weight: 500; transform: translateZ(5px);}
 
@@ -209,8 +213,8 @@
 
         .stream-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; transform: translateZ(15px);}
         .stream-header i { font-size: 35px; }
-        .stream-main-card.science .stream-header i { color: #1a73e8; } /* Science Blue Icon */
-        .stream-main-card.arts .stream-header i { color: #333; } /* Arts Dark Icon */
+        .stream-main-card.science .stream-header i { color: #1a73e8; } 
+        .stream-main-card.arts .stream-header i { color: var(--primary); } 
         .stream-header h3 { font-size: 28px; font-weight: 800; color: var(--primary); margin: 0;}
         
         .stream-desc { font-size: 15px; color: var(--text-muted); line-height: 1.6; font-weight: 500; margin-bottom: 25px; transform: translateZ(10px);}
@@ -225,8 +229,9 @@
             gap: 15px;
             transition: 0.3s;
             border: 1px solid rgba(0,0,0,0.03);
+            border-left: 3px solid transparent;
         }
-        .sub-stream-card:hover { background: #fff; transform: translateX(10px); box-shadow: 0 8px 25px rgba(0,0,0,0.06); border-left: 3px solid var(--gold);}
+        .sub-stream-card:hover { background: #fff; transform: translateX(10px); box-shadow: 0 8px 25px rgba(0,0,0,0.06); border-left-color: var(--gold);}
         .sub-stream-icon { font-size: 24px; color: var(--primary); margin-top: 2px;}
         .sub-stream-info h5 { font-size: 18px; font-weight: 800; color: var(--primary); margin-bottom: 5px;}
         .sub-stream-info p { font-size: 14px; color: #555; margin: 0; line-height: 1.5;}
@@ -275,14 +280,15 @@
             .premium-section { padding: 60px 0; }
         }
 
+        /* LOGO FIX FOR MOBILE */
         @media (max-width: 576px) {
             .header-container { padding: 0 15px; }
             .school-brand-box { gap: 10px; max-width: 80%; }
             .nav-logo-img { width: 48px !important; height: 48px !important; }
             .school-logo-text h4 { font-size: 16px !important; white-space: normal; line-height: 1.2; letter-spacing: 0px;}
+            .school-logo-text p { font-size: 12px !important; }
             
-            .hero-main-title { font-size: 2.8rem; }
-            .hero-welcome-script { font-size: 2.2rem; }
+            .page-hero { padding: 120px 0 60px 0; } /* Adjusted padding for mobile */
             .class-card { width: 100%; }
             .stream-main-card { padding: 25px; }
             .sub-stream-card { flex-direction: column; gap: 10px; }
@@ -298,7 +304,7 @@
     <!-- GLOBAL BACKGROUND WATERMARK (5% Opacity, Centered) -->
     <div id="global-watermark" class="global-background-watermark"></div>
 
-    <!-- 1. FULLY RESPONSIVE 3D PREMIUM NAVBAR (FIXED TOP, ALWAYS BLUE) -->
+    <!-- 1. FULLY RESPONSIVE 3D PREMIUM NAVBAR (ALWAYS BLUE & FIXED) -->
     <nav class="navbar navbar-expand-lg premium-nav" id="navbar">
         <div class="header-container position-relative">
             <!-- Left Side: Official BMS Logo (Transparent Background) -->
@@ -534,7 +540,7 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Loader & AOS (Runs EVERY Time)
+            // Loader & AOS (Runs EVERY Time you scroll thanks to once: false)
             const loader = document.getElementById('loader');
             setTimeout(() => { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 500); }, 1000);
             AOS.init({ duration: 800, once: false, mirror: true, offset: 50 });
@@ -565,7 +571,7 @@
                 });
             });
 
-            // Mobile Navigation Logic (Auto-Close)
+            // Mobile Navigation Logic (Auto-Close & Smooth Dropdowns)
             const navbarCollapse = document.getElementById('navbarNav');
             const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
             
