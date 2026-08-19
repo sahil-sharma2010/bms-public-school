@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
     
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         :root {
             --primary: #0c2348;
@@ -27,109 +30,70 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        html, body { scroll-behavior: smooth; font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; width: 100%; max-width: 100vw;}
+        html, body { scroll-behavior: smooth; font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; width: 100%; max-width: 100vw; -webkit-font-smoothing: antialiased; }
         h1, h2, h3, h4, h5, h6 { font-weight: 700; color: var(--primary); }
         .text-gold { color: var(--gold) !important; }
         .bg-theme { background-color: var(--bg-theme); }
-        .premium-section { padding: 90px 0; }
+        .premium-section { padding: 90px 0; position: relative; z-index: 1;}
         a { text-decoration: none; }
 
-        /* =========================================
-           PREMIUM NAVBAR (3D & BLUE SCROLL FIX)
-           ========================================= */
-        .premium-nav { background: transparent; height: 90px; display: flex; align-items: center; transition: all 0.5s ease; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 0; perspective: 1000px;}
-        
-        /* SCROLLED BLUE BACKGROUND FIX */
-        .premium-nav.scrolled { 
-            background: rgba(12, 35, 72, 0.98); /* Navy Blue Background */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4); 
-            border-bottom: 2px solid var(--gold);
-        }
-        
-        .header-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: space-between;}
-        
-        /* LOGO FIX */
-        .school-brand-box { display: flex; flex-direction: row; align-items: center; text-decoration: none; gap: 15px; background: transparent !important; z-index: 1050;}
+        /* Independent Red Line */
+        .independent-red-line { position: fixed; top: 0; left: 0; width: 100%; height: 4px; background-color: #ff0000; z-index: 9999; }
+
+        /* GLOBAL BACKGROUND WATERMARK */
+        .global-background-watermark { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-image: url('assets/background-watermark.png'); background-repeat: no-repeat; background-position: center center; background-size: 50%; opacity: 0.05; z-index: 0; pointer-events: none; }
+        @media (max-width: 991px) { .global-background-watermark { background-size: 80%; } }
+
+        /* PREMIUM NAVBAR (FIXED POSITION & LOGO FIX) */
+        .premium-nav { position: fixed; top: 4px; left: 0; width: 100%; background: var(--primary); height: 90px; display: flex; align-items: center; z-index: 1050; border-bottom: 2px solid var(--gold); padding: 0; perspective: 1000px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); transform: translateZ(0); }
+        .header-container { max-width: 1400px; margin: 0 auto; padding: 0 30px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: space-between;}
+        .school-brand-box { display: flex; flex-direction: row; align-items: center; text-decoration: none; gap: 15px; background: transparent !important; z-index: 1060; padding: 5px;}
         .nav-logo-img { width: 70px !important; height: 70px !important; object-fit: contain; background: transparent !important; border: none !important; box-shadow: none !important; padding: 0 !important; transition: transform 0.4s ease;}
         .school-brand-box:hover .nav-logo-img { transform: scale(1.1) rotate(5deg); }
-        
         .school-logo-text { text-align: left; display: flex; flex-direction: column; justify-content: center;}
         .school-logo-text h4 { margin: 0; font-weight: 800; color: #fff !important; letter-spacing: 0px; line-height: 1.1; white-space: nowrap; transition: 0.4s; }
-        .school-logo-text p { margin: 2px 0 0 0; font-weight: 500; color: var(--gold) !important; letter-spacing: 1px; text-transform: uppercase; transition: 0.4s; }
-        .premium-nav.scrolled .school-logo-text p { color: rgba(255,255,255,0.7) !important; }
+        .school-logo-text p { margin: 2px 0 0 0; font-weight: 500; color: rgba(255,255,255,0.7) !important; letter-spacing: 1px; text-transform: uppercase; transition: 0.4s; }
 
-        .navbar-collapse { flex-grow: 1; display: flex; justify-content: center; align-items: center; }
-        .navbar-nav { gap: 5px; perspective: 1000px;}
+        .navbar-collapse { flex-grow: 1; display: flex; justify-content: flex-end; align-items: center; }
+        .navbar-nav { gap: 0; perspective: 1000px;}
         
-        /* 3D NAVBAR BUTTONS FLIP */
         .nav-item { white-space: nowrap; perspective: 800px; }
-        .nav-hover { 
-            position: relative; color: #fff !important; font-weight: 600; cursor: pointer; text-transform: uppercase; 
-            letter-spacing: 0.5px; transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s; 
-            display: flex; align-items: center; transform-style: preserve-3d;
-        }
+        .nav-hover { position: relative; color: #fff !important; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s; display: flex; align-items: center; transform-style: preserve-3d; margin: 0 12px; font-size: 14px;}
         .nav-hover::before { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background-color: var(--gold); transition: width 0.3s ease; }
         .nav-hover:hover::before, .nav-hover.active-link::before { width: 100%; }
         
-        @media (min-width: 992px) {
-            .nav-item:hover .nav-hover { 
-                transform: translateZ(20px) rotateX(15deg); 
-                color: var(--gold) !important; 
-                text-shadow: 0px 8px 15px rgba(0,0,0,0.5);
-            }
-        }
+        @media (min-width: 992px) { .nav-item:hover .nav-hover { transform: translateZ(20px) rotateX(15deg); color: var(--gold) !important; text-shadow: 0px 8px 15px rgba(0,0,0,0.5); } }
         
-        /* 3D DOOR DROPDOWN MENU */
         .dropdown-toggle::after { display: none !important; } 
         @media (min-width: 992px) {
-            .premium-nav .dropdown-menu { 
-                background-color: var(--primary); border-radius: 12px; 
-                box-shadow: 0 20px 50px rgba(0,0,0,0.4); border: 1px solid rgba(255, 255, 255, 0.1); 
-                padding: 15px 0; min-width: 260px; 
-                display: block; visibility: hidden; opacity: 0;
-                transform-origin: top center;
-                transform: perspective(1200px) rotateX(-90deg);
-                transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease, visibility 0.4s;
-                margin-top: 15px !important;
-            }
-            .nav-item.dropdown:hover .dropdown-menu {
-                visibility: visible; opacity: 1;
-                transform: perspective(1200px) rotateX(0deg);
-                margin-top: 0px !important;
-            }
+            .premium-nav .dropdown-menu { background-color: var(--primary); border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); border: 1px solid rgba(255, 255, 255, 0.1); padding: 15px 0; min-width: 260px; display: block; visibility: hidden; opacity: 0; transform-origin: top center; transform: perspective(1200px) rotateX(-90deg); transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease, visibility 0.4s; margin-top: 15px !important;}
+            .nav-item.dropdown:hover .dropdown-menu { visibility: visible; opacity: 1; transform: perspective(1200px) rotateX(0deg); margin-top: 0px !important;}
         }
-        
         .premium-nav .dropdown-item { padding: 12px 25px; font-weight: 500; color: #ffffff !important; font-size: 15px; transition: 0.3s; display: flex; align-items: center;}
         .premium-nav .dropdown-item i { color: var(--gold); width: 25px; font-size: 16px; margin-right: 10px; text-align: center; transition: transform 0.3s;}
         .premium-nav .dropdown-item:hover { background-color: rgba(244, 180, 0, 0.15); color: var(--gold) !important; padding-left: 30px;}
         .premium-nav .dropdown-item:hover i { transform: scale(1.1); }
-
         .navbar-toggler { border: none; padding: 8px 12px; outline: none; box-shadow: none !important;}
         
-        @media (min-width: 1400px) {
-            .school-logo-text h4 { font-size: 38px !important; }
-            .school-logo-text p { font-size: 18px !important; }
-            .nav-hover { margin: 0 12px; font-size: 14px; }
-            .navbar-nav { gap: 10px; }
-        }
-        @media (min-width: 992px) and (max-width: 1399px) {
-            .school-logo-text h4 { font-size: 24px !important; }
-            .school-logo-text p { font-size: 13px !important; }
-            .nav-logo-img { width: 55px !important; height: 55px !important; }
-            .nav-hover { margin: 0 6px; font-size: 12px; padding: 8px 4px !important; }
-            .header-container { padding: 0 15px; }
-            .navbar-nav { gap: 0px; }
+        /* ADMISSION PROCESS CUT-OFF FIX FOR LAPTOPS */
+        @media (min-width: 1400px) { .school-logo-text h4 { font-size: 38px !important; } .school-logo-text p { font-size: 18px !important; } .nav-hover { margin: 0 15px; font-size: 14px; } }
+        @media (min-width: 992px) and (max-width: 1399px) { 
+            .school-logo-text h4 { font-size: 22px !important; } 
+            .school-logo-text p { font-size: 12px !important; } 
+            .nav-logo-img { width: 55px !important; height: 55px !important; } 
+            .nav-hover { margin: 0 6px !important; font-size: 11.5px !important; letter-spacing: 0px; } 
+            .header-container { padding: 0 10px; } 
         }
 
         /* BUTTONS */
-        .btn-gold { background-color: var(--gold); color: #000; font-weight: 700; border: none; padding: 14px 35px; border-radius: 6px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; box-shadow: 0 5px 15px rgba(244, 180, 0, 0.2); transform-style: preserve-3d;}
+        .btn-gold { background-color: var(--gold); color: #000; font-weight: 700; border: none; padding: 14px 35px; border-radius: 6px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; box-shadow: 0 5px 15px rgba(244, 180, 0, 0.2); transform-style: preserve-3d; }
         .btn-gold:hover { background-color: #fff; color: var(--gold); transform: translateY(-5px) scale(1.05); box-shadow: 0 15px 30px rgba(255,255,255,0.3); }
         .btn-ripple { position: relative; overflow: hidden; }
         .btn-ripple .ripple { position: absolute; background: rgba(255, 255, 255, 0.5); border-radius: 50%; transform: scale(0); animation: ripple-anim 0.6s linear; pointer-events: none; }
         @keyframes ripple-anim { to { transform: scale(4); opacity: 0; } }
 
         /* HERO SECTION */
-        .hero-premium { position: relative; width: 100%; min-height: 100vh; background: linear-gradient(135deg, #05162D, #0A2952, #0c2348); display: flex; align-items: center; padding-top: 90px; overflow: hidden;}
+        .hero-premium { position: relative; width: 100%; min-height: 100vh; background: linear-gradient(135deg, #05162D, #0A2952, #0c2348); display: flex; align-items: center; padding-top: 94px; overflow: hidden; z-index: 1;}
         .hero-content-wrapper { z-index: 3; position: relative; width: 100%; perspective: 1000px;}
         .hero-welcome-script { font-family: 'Great Vibes', cursive; color: var(--gold); font-size: 3rem; margin-bottom: -5px; font-weight: 400; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
         .hero-main-title { font-size: 4.5rem; font-weight: 800; letter-spacing: -1px; line-height: 1.1; color: #fff; margin-bottom: 25px;}
@@ -139,19 +103,23 @@
         .hero-building-img { width: 100%; max-width: 900px; height: auto; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); object-fit: cover; border: 2px solid rgba(255,255,255,0.05); }
 
         /* LATEST UPDATES */
-        .updates-container { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 20px; padding-bottom: 20px; scrollbar-width: none; }
+        .updates-container { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 20px; padding-bottom: 20px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
         .updates-container::-webkit-scrollbar { display: none; } 
-        .update-card { min-width: 320px; max-width: 320px; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.05); border: 1px solid rgba(12, 35, 72, 0.05); border-left: 4px solid var(--gold); display: flex; flex-direction: column; justify-content: space-between; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); flex-shrink: 0; transform-style: preserve-3d;}
+        .update-card { min-width: 330px; max-width: 330px; background: #fff; border-radius: 12px; padding: 25px 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.05); border: 1px solid rgba(12, 35, 72, 0.05); border-left: 4px solid var(--gold); display: flex; flex-direction: column; justify-content: space-between; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); flex-shrink: 0; transform-style: preserve-3d; }
         .update-card:hover { transform: translateY(-10px) rotateX(5deg); box-shadow: 0 15px 35px rgba(12, 35, 72, 0.15); border-left-color: var(--primary); }
-        .update-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-        .update-icon { width: 40px; height: 40px; background: rgba(244, 180, 0, 0.15); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-        .update-header h5 { margin: 0; font-size: 16px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px;}
-        .update-body p { font-size: 14.5px; color: var(--text-muted); margin: 0; font-weight: 500;}
-        .update-footer { margin-top: 15px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 12px; color: #888; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 10px;}
-        .update-badge { font-weight: 600; color: var(--gold); background: rgba(244, 180, 0, 0.1); padding: 4px 10px; border-radius: 50px; margin-bottom: 5px; display: inline-block;}
+        .update-header { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
+        .update-icon { font-size: 20px; color: var(--primary); display: flex; align-items: center;}
+        .update-header h5 { margin: 0; font-size: 15px; font-weight: 800; color: #555; text-transform: uppercase; letter-spacing: 0.5px;}
+        .blue-dot { display: inline-block; width: 8px; height: 8px; background-color: var(--primary); border-radius: 50%; margin-right: 8px; margin-top: 5px; flex-shrink:0;}
+        .update-title-box { display: flex; align-items: flex-start; margin-bottom: 8px;}
+        .update-title-box h4 { font-size: 16px; font-weight: 800; color: var(--primary); margin: 0; line-height: 1.4;}
+        .update-desc { font-size: 14.5px; color: var(--text-muted); margin: 0; font-weight: 500; line-height: 1.6;}
+        .update-footer { margin-top: 20px; font-size: 12.5px; color: #888; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 15px;}
+        .btn-result-link { background: transparent; color: var(--primary); border: 2px solid var(--primary); padding: 8px 20px; font-size: 13px; font-weight: 800; text-transform: uppercase; border-radius: 50px; display: inline-block; margin-top: 15px; transition: 0.3s;}
+        .btn-result-link:hover { background: var(--primary); color: var(--gold); }
 
         /* PREMIUM GRID CARDS (3D Hover Effect) */
-        .premium-grid-card, .premium-facility-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(15, 76, 129, 0.08); border-radius: 16px; padding: 35px 25px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.04); height: 100%; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; z-index: 1; overflow: hidden; display: flex; flex-direction: column; align-items: center; border-bottom: 4px solid var(--gold); transform-style: preserve-3d; perspective: 1000px;}
+        .premium-grid-card, .premium-facility-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(15, 76, 129, 0.08); border-radius: 16px; padding: 35px 25px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.04); height: 100%; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; z-index: 1; overflow: hidden; display: flex; flex-direction: column; align-items: center; border-bottom: 4px solid var(--gold); transform-style: preserve-3d; perspective: 1000px; }
         .premium-grid-card:hover, .premium-facility-card:hover { transform: translateY(-12px) rotateX(8deg); box-shadow: 0 20px 40px var(--gold-glow); border-bottom-color: var(--primary);}
         .grid-icon-wrapper, .fac-icon-wrapper { width: 75px; height: 75px; background: rgba(244, 180, 0, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; transition: all 0.4s ease; border: 2px solid transparent; flex-shrink: 0; transform: translateZ(20px);}
         .grid-icon, .fac-icon { font-size: 30px; color: var(--primary); transition: all 0.4s ease; margin: 0;}
@@ -166,22 +134,14 @@
         .about-image-wrapper:hover { transform: scale(1.03) rotateY(-5deg); animation: none; box-shadow: 0 20px 40px rgba(0,0,0,0.2);}
         @keyframes floatAnim { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(1deg); } 100% { transform: translateY(0px) rotate(0deg); } }
         
-        /* NEW SECTION: OUR CAMPUS (3D Image Cards) */
+        /* OUR CAMPUS */
         .campus-card { border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); perspective: 1000px; transform-style: preserve-3d; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); background: #fff;}
         .campus-card img { width: 100%; height: 260px; object-fit: cover; transition: all 0.6s ease; }
         .campus-card:hover { transform: translateY(-15px) rotateX(8deg) rotateY(-5deg); box-shadow: 15px 25px 45px rgba(12, 35, 72, 0.25); border: 2px solid var(--gold);}
         .campus-card:hover img { transform: scale(1.15) translateZ(10px); }
 
-        .management-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align: center; border-bottom: 4px solid var(--primary); height: 100%; transform-style: preserve-3d;}
-        .management-card:hover { transform: translateY(-15px) rotateY(5deg); border-bottom-color: var(--gold); box-shadow: 0 20px 40px rgba(12, 35, 72, 0.15);}
-        .management-img-box { width: 100%; height: 250px; background: #e9ecef; display: flex; align-items: center; justify-content: center; overflow: hidden;}
-        .management-img-box i { font-size: 60px; color: #adb5bd; transition: 0.4s; } 
-        .management-card:hover .management-img-box i { transform: scale(1.2); color: var(--primary);}
-        .management-info { padding: 25px 20px; }
-        .management-info h4 { font-weight: 700; color: var(--primary); margin-bottom: 5px; font-size: 20px;}
-        
         /* Contact Section */
-        .contact-premium-section { background-color: var(--bg-color); padding: 80px 0; width: 100%; }
+        .contact-premium-section { background-color: transparent; padding: 80px 0; width: 100%; position: relative; z-index: 1;}
         .contact-container { max-width: 1400px; margin: 0 auto; padding: 0 15px; }
         .contact-grid { display: grid; grid-template-columns: 55fr 45fr; gap: 30px; align-items: stretch; }
 
@@ -190,8 +150,6 @@
         .map-header i { color: var(--gold); margin-right: 12px; font-size: 20px; }
         .map-body { flex-grow: 1; min-height: 450px; position: relative;}
         .map-body iframe { width: 100%; height: 100%; position: absolute; top:0; left:0; border: none; }
-        .map-nav-btn { position: absolute; bottom: 20px; right: 20px; width: 50px; height: 50px; background: var(--primary); color: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); cursor: pointer; transition: 0.4s; }
-        .map-nav-btn:hover { transform: scale(1.1) rotate(180deg); background: var(--gold); color: var(--primary); }
 
         .contact-info-card { background: #fff; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.06); padding: 40px; position: relative; overflow: hidden; transition: 0.4s; transform-style: preserve-3d;}
         .contact-info-card:hover { transform: translateY(-10px); box-shadow: 0 25px 50px rgba(0,0,0,0.1); }
@@ -213,64 +171,43 @@
         .info-box-premium:hover .info-box-icon-inner { transform: scale(1.1) rotate(10deg); }
         .info-box-text h5 { color: var(--primary); font-size: 15px; font-weight: 800; letter-spacing: 1px; margin-bottom: 5px; text-transform: uppercase;}
         .info-box-text p { color: #555; font-size: 14.5px; margin: 0; line-height: 1.5; font-weight: 500;}
-        .text-red { color: #d93025 !important; font-weight: 700;}
 
-        /* Cursor & Loader */
-        .custom-cursor { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; }
-        .custom-cursor-follower { width: 40px; height: 40px; border: 2px solid var(--primary); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: transform 0.2s ease; }
+        /* PERFORMANCE OPTIMIZED CURSOR */
+        .custom-cursor { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; will-change: transform; }
+        .custom-cursor-follower { width: 40px; height: 40px; border: 2px solid var(--primary); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; will-change: transform; }
+        
         .page-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--primary); z-index: 10000; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
         .loader-spinner { width: 60px; height: 60px; border: 4px solid rgba(255,255,255,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s infinite linear; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        .premium-footer { background: var(--primary); color: white; padding-top: 70px; border-top: 4px solid var(--gold);}
+        .premium-footer { background: var(--primary); color: white; padding-top: 70px; border-top: 4px solid var(--gold); position: relative; z-index: 1;}
         .footer-links a { color: rgba(255,255,255,0.7); transition: all 0.3s; display: block; padding: 6px 0; text-decoration: none;}
         .footer-links a:hover { color: var(--gold); padding-left: 8px; transform: translateX(5px); }
 
-        /* =========================================
-           MOBILE RESPONSIVE OPTIMIZATION (LOGO VISIBILITY)
-           ========================================= */
+        /* MOBILE RESPONSIVE OPTIMIZATION */
         @media (max-width: 991px) {
-            .navbar-collapse {
-                background: rgba(12, 35, 72, 0.98);
-                backdrop-filter: blur(10px);
-                padding: 20px;
-                border-radius: 0 0 15px 15px;
-                box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-                position: absolute;
-                width: 100%;
-                top: 100%;
-                left: 0;
-                z-index: 1050;
-                display: none;
-            }
+            .navbar-collapse { background: rgba(12, 35, 72, 0.98); backdrop-filter: blur(10px); padding: 20px; border-radius: 0 0 15px 15px; box-shadow: 0 15px 40px rgba(0,0,0,0.5); position: absolute; width: 100%; top: 100%; left: 0; z-index: 1050; display: none; }
             .navbar-collapse.show { display: block; animation: slideDown 0.4s ease forwards; }
             @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-            
             .navbar-nav { gap: 0px; align-items: flex-start;}
-            .nav-item { width: 100%; white-space: normal; }
-            .nav-hover { color: #fff !important; padding: 14px 15px !important; display: block; border-bottom: 1px solid rgba(255,255,255,0.1); margin: 0; font-size: 15px; font-weight: 700;}
-            
-            .premium-nav .dropdown-menu { border: none; box-shadow: none; background: rgba(255,255,255,0.05); padding-left: 15px; margin-top: 0px !important; display: none; opacity: 1; visibility: visible;}
+            .nav-item { width: 100%; white-space: normal; perspective: none;}
+            .nav-hover { color: #fff !important; padding: 14px 15px !important; display: block; border-bottom: 1px solid rgba(255,255,255,0.1); margin: 0; font-size: 15px; font-weight: 700; transform: none !important; text-shadow: none !important;}
+            .premium-nav .dropdown-menu { border: none; box-shadow: none; background: rgba(255,255,255,0.05); padding-left: 15px; margin-top: 0px !important; display: none; opacity: 1; visibility: visible; transform: none !important;}
             .premium-nav .dropdown-menu.show { display: block; animation: slideDown 0.3s ease forwards;}
             .premium-nav .dropdown-item { color: #fff !important; padding: 10px 15px; font-weight: 600;}
-            
-            .hero-premium { flex-direction: column; text-align: center; padding-top: 130px; padding-bottom: 50px; min-height: auto;}
+            .hero-premium { flex-direction: column; text-align: center; padding-top: 50px; padding-bottom: 50px; min-height: auto;}
             .hero-building-container { margin-top: 40px; justify-content: center; }
-            
             .contact-grid { grid-template-columns: 1fr; gap: 40px; }
             .map-body { min-height: 400px; }
-
             .custom-cursor, .custom-cursor-follower { display: none !important; }
             .premium-section { padding: 60px 0; }
         }
 
-        /* STRICT MOBILE LOGO FIX */
         @media (max-width: 576px) {
             .header-container { padding: 0 15px; }
             .school-brand-box { gap: 10px; max-width: 80%; }
             .nav-logo-img { width: 48px !important; height: 48px !important; }
             .school-logo-text h4 { font-size: 16px !important; white-space: normal; line-height: 1.2; letter-spacing: 0px;}
-            
             .hero-main-title { font-size: 2.8rem; }
             .hero-welcome-script { font-size: 2.2rem; }
             .hero-content-wrapper .d-flex { flex-direction: column; width: 100%; gap: 15px !important; margin-top: 20px;}
@@ -284,12 +221,17 @@
 
     <!-- Loading Spinner & Cursor -->
     <div class="page-loader" id="loader"><div class="loader-spinner"></div></div>
-    <div class="custom-cursor"></div><div class="custom-cursor-follower"></div>
+    <div class="custom-cursor" id="custom-cursor"></div><div class="custom-cursor-follower" id="custom-cursor-follower"></div>
 
-    <!-- 1. FULLY RESPONSIVE 3D PREMIUM NAVBAR (BLUE FIX) -->
-    <nav class="navbar navbar-expand-lg premium-nav fixed-top" id="navbar">
+    <!-- INDEPENDENT RED LINE -->
+    <div class="independent-red-line"></div>
+
+    <!-- GLOBAL BACKGROUND WATERMARK -->
+    <div id="global-watermark" class="global-background-watermark"></div>
+
+    <!-- 1. FULLY RESPONSIVE 3D PREMIUM NAVBAR -->
+    <nav class="navbar navbar-expand-lg premium-nav" id="navbar">
         <div class="header-container position-relative">
-            <!-- Left Side: Official BMS Logo (Visible Mobile & PC) -->
             <a class="navbar-brand school-brand-box scroll-link" href="#home">
                 <img src="assets/logo.png" alt="BMS SR. SEC. SCHOOL Logo" class="nav-logo-img">
                 <div class="school-logo-text">
@@ -298,20 +240,16 @@
                 </div>
             </a>
             
-            <!-- Premium Hamburger Menu -->
             <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <i class="fa-solid fa-bars text-white fs-3" id="nav-toggle-icon"></i>
             </button>
             
-            <!-- Center/Right: Menus with 3D Flip -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto nav-scrollspy">
                     <li class="nav-item"><a class="nav-link nav-hover active-link scroll-link" href="#home">HOME</a></li>
                     
                     <li class="nav-item dropdown">
-                        <a class="nav-link nav-hover dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            ABOUT US
-                        </a>
+                        <a class="nav-link nav-hover dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">ABOUT US</a>
                         <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
                             <li><a class="dropdown-item scroll-link" href="#why-choose"><i class="fa-solid fa-star"></i> Why Choose BMS</a></li>
                             <li><a class="dropdown-item scroll-link" href="management.html"><i class="fa-solid fa-users"></i> Our Management</a></li>
@@ -324,9 +262,7 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link nav-hover dropdown-toggle" href="#" id="academicsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            ACADEMICS
-                        </a>
+                        <a class="nav-link nav-hover dropdown-toggle" href="#" id="academicsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">ACADEMICS</a>
                         <ul class="dropdown-menu" aria-labelledby="academicsDropdown">
                             <li><a class="dropdown-item" href="curriculum.html"><i class="fa-solid fa-book"></i> Curriculum</a></li>
                             <li><a class="dropdown-item" href="examination.html"><i class="fa-solid fa-pen-nib"></i> Examination</a></li>
@@ -368,7 +304,7 @@
         </div>
     </section>
 
-    <!-- 3. LATEST UPDATES (Dynamic) -->
+    <!-- 3. LATEST UPDATES (Dynamic linked with Admin Panel) -->
     <section id="latest-updates" class="premium-section bg-color scroll-section" style="padding: 60px 0;">
         <div class="container" style="max-width: 1400px;">
             <div class="d-flex align-items-center mb-4" data-aos="fade-right">
@@ -447,7 +383,7 @@
         </div>
     </section>
 
-    <!-- 6.5. NEW: OUR CAMPUS (3D Image Grid) -->
+    <!-- 6.5. OUR CAMPUS (3D Image Grid) -->
     <section id="campus" class="premium-section bg-color scroll-section">
         <div class="container" style="max-width: 1400px;">
             <div class="text-center mb-5" data-aos="fade-up">
@@ -555,7 +491,7 @@
                         </div>
                         <div class="info-box-premium">
                             <div class="info-box-icon"><div class="info-box-icon-inner"><i class="fa-regular fa-calendar-xmark"></i></div></div>
-                            <div class="info-box-text"><h5>SUNDAY</h5><p class="text-red">Holiday</p></div>
+                            <div class="info-box-text"><h5>SUNDAY</h5><p class="text-danger fw-bold">Holiday</p></div>
                         </div>
                     </div>
                 </div>
@@ -620,20 +556,44 @@
     <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
     
     <script>
+        // ==========================================
+        // SUPABASE SETUP (PASTE YOUR KEYS HERE)
+        // ==========================================
+        const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         document.addEventListener('DOMContentLoaded', () => {
-            // Loader & AOS (Runs EVERY Time you scroll thanks to once: false)
+            // Loader & AOS 
             const loader = document.getElementById('loader');
             setTimeout(() => { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 500); }, 1000);
             AOS.init({ duration: 800, once: false, mirror: true, offset: 50 });
 
-            // Custom Cursor
-            const cursor = document.querySelector('.custom-cursor');
-            const follower = document.querySelector('.custom-cursor-follower');
+            // Smooth Custom Cursor using requestAnimationFrame (No Lag)
+            const cursor = document.getElementById('custom-cursor');
+            const follower = document.getElementById('custom-cursor-follower');
+            let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, followerX = 0, followerY = 0;
+
             document.addEventListener('mousemove', (e) => {
-                cursor.style.transform = `translate3d(${e.clientX - 4}px, ${e.clientY - 4}px, 0)`;
-                setTimeout(() => { follower.style.transform = `translate3d(${e.clientX - 20}px, ${e.clientY - 20}px, 0)`; }, 50);
+                mouseX = e.clientX;
+                mouseY = e.clientY;
             });
-            document.querySelectorAll('a, button, .premium-grid-card, .premium-facility-card, .update-card, .info-box-premium, .map-nav-btn, .campus-card').forEach(el => {
+
+            function animateCursor() {
+                cursorX += (mouseX - cursorX) * 0.5;
+                cursorY += (mouseY - cursorY) * 0.5;
+                followerX += (mouseX - followerX) * 0.15;
+                followerY += (mouseY - followerY) * 0.15;
+                
+                if(cursor && follower) {
+                    cursor.style.transform = `translate3d(${cursorX - 4}px, ${cursorY - 4}px, 0)`;
+                    follower.style.transform = `translate3d(${followerX - 20}px, ${followerY - 20}px, 0)`;
+                }
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            document.querySelectorAll('a, button, .premium-grid-card, .premium-facility-card, .update-card, .info-box-premium, .campus-card').forEach(el => {
                 el.addEventListener('mouseenter', () => follower.style.transform += ' scale(1.5)');
                 el.addEventListener('mouseleave', () => follower.style.transform = follower.style.transform.replace(' scale(1.5)', ''));
             });
@@ -652,7 +612,7 @@
                 });
             });
 
-            // Mobile Navigation Logic (Auto-Close & Smooth Dropdowns)
+            // Mobile Navigation Logic
             const navbarCollapse = document.getElementById('navbarNav');
             const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
             
@@ -671,18 +631,11 @@
                 }
             });
 
-            // Scroll Logic (Deep Blue Background fixed)
-            const navbar = document.getElementById('navbar');
+            // Scroll Logic & Active Link Highlighting
             const sections = document.querySelectorAll('section[id]');
             const navLinks = document.querySelectorAll('.nav-scrollspy .nav-link:not(.dropdown-toggle)');
             
             window.addEventListener('scroll', () => {
-                if (window.scrollY > 40) { 
-                    navbar.classList.add('scrolled'); 
-                } else { 
-                    navbar.classList.remove('scrolled'); 
-                }
-                
                 let current = '';
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop;
@@ -710,86 +663,92 @@
                 });
             });
 
-            document.addEventListener("mousemove", function(e) {
-                if(window.innerWidth > 991) { 
-                    document.querySelectorAll(".float-element").forEach(function(move) {
-                        var x = (e.clientX * 0.5) / 100;
-                        var y = (e.clientY * 0.5) / 100;
-                        move.style.transform = "translateX(" + x + "px) translateY(" + y + "px)";
+            // 3D Parallax Effect (Optimized with requestAnimationFrame)
+            let parallaxElements = document.querySelectorAll(".float-element");
+            function animateParallax() {
+                if(window.innerWidth > 991) {
+                    parallaxElements.forEach(move => {
+                        let x = (mouseX * 0.5) / 100;
+                        let y = (mouseY * 0.5) / 100;
+                        move.style.transform = `translate3d(${x}px, ${y}px, 0)`;
                     });
                 }
-            });
+                requestAnimationFrame(animateParallax);
+            }
+            animateParallax();
 
-            // LATEST UPDATES (DYNAMIC EXPIRATION LOGIC)
-            function renderUpdates() {
+            // LATEST UPDATES (SUPABASE INTEGRATION + AUTO DELETE)
+            async function fetchAndRenderUpdates() {
                 const container = document.getElementById('updates-container');
-                let updates = JSON.parse(localStorage.getItem('bms_updates')) || [];
-                let now = new Date(); 
+                const nowIso = new Date().toISOString();
                 
-                let activeUpdates = updates.filter(up => {
-                    let pub = new Date(up.pubDate);
-                    let diffDays = (now - pub) / (1000 * 60 * 60 * 24);
-                    
-                    if(up.type === 'Notice') return diffDays <= 30;
-                    if(up.type === 'Festival') return diffDays <= 15;
-                    if(up.type === 'Result') return diffDays <= 90;
-                    if(up.type === 'Holiday') {
-                        let target = new Date(up.targetDate);
-                        return now <= new Date(target.getTime() + 86400000);
+                try {
+                    // Step 1: SILENTLY DELETE EXPIRED UPDATES AUTOMATICALLY FROM DATABASE
+                    await supabase.from('school_updates').delete().lt('expires_at', nowIso);
+
+                    // Step 2: FETCH ONLY ACTIVE ONES
+                    const { data, error } = await supabase.from('school_updates')
+                        .select('*')
+                        .gte('expires_at', nowIso)
+                        .order('published_at', { ascending: false });
+
+                    if (error) throw error;
+
+                    if (!data || data.length === 0) {
+                        container.innerHTML = `<div class="col-12 text-center py-4 w-100"><p class="text-muted fs-5 m-0 fw-bold">No latest updates available at the moment.</p></div>`;
+                        return;
                     }
-                    return false;
-                });
-                
-                if(activeUpdates.length === 0) {
-                    container.innerHTML = `<div class="col-12 text-center py-4 w-100"><p class="text-muted fs-5 m-0">No latest updates available at the moment. Please check back later.</p></div>`;
-                    return;
+
+                    let html = '';
+                    
+                    data.forEach(up => {
+                        let icon = 'fa-bell';
+                        if(up.category === 'notice') icon = 'fa-bullhorn';
+                        if(up.category === 'festival') icon = 'fa-gift';
+                        if(up.category === 'holiday') icon = 'fa-calendar-day';
+                        if(up.category === 'result') icon = 'fa-trophy';
+                        
+                        let displayTag = up.category.charAt(0).toUpperCase() + up.category.slice(1);
+                        
+                        let pDate = new Date(up.published_at);
+                        let dateStr = pDate.toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'});
+                        let timeStr = pDate.toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit', hour12:true});
+                        
+                        let linkButtonHtml = '';
+                        if(up.category === 'result' && up.result_link) {
+                            linkButtonHtml = `<a href="${up.result_link}" target="_blank" class="btn-result-link"><i class="fa-solid fa-link"></i> View Result</a>`;
+                        }
+
+                        html += `
+                        <div class="update-card">
+                            <div>
+                                <div class="update-header">
+                                    <div class="update-icon"><i class="fa-solid ${icon}"></i></div>
+                                    <h5>${displayTag.toUpperCase()}</h5>
+                                </div>
+                                <div class="update-title-box">
+                                    <span class="blue-dot"></span>
+                                    <h4>${up.title}</h4>
+                                </div>
+                                <p class="update-desc">${up.description}</p>
+                                ${linkButtonHtml}
+                            </div>
+                            <div class="update-footer">
+                                <span class="fw-bold d-block mb-1 text-dark">Published:</span>
+                                ${dateStr} • ${timeStr}
+                            </div>
+                        </div>`;
+                    });
+                    
+                    container.innerHTML = html;
+
+                } catch (err) {
+                    console.error("Error fetching updates:", err);
+                    container.innerHTML = `<div class="col-12 text-center py-4 w-100"><p class="text-danger fs-5 m-0 fw-bold">Failed to load updates. Check connection.</p></div>`;
                 }
-                
-                activeUpdates.sort((a,b) => new Date(b.pubDate) - new Date(a.pubDate));
-                let html = '';
-                
-                activeUpdates.forEach(up => {
-                   let icon = 'fa-bell';
-                   if(up.type === 'Notice') icon = 'fa-bullhorn';
-                   if(up.type === 'Festival') icon = 'fa-gift';
-                   if(up.type === 'Holiday') icon = 'fa-calendar-star';
-                   if(up.type === 'Result') icon = 'fa-medal';
-                   
-                   let pDate = new Date(up.pubDate);
-                   let dateStr = pDate.toLocaleDateString('en-GB', {day:'2-digit', month:'long', year:'numeric'});
-                   let timeStr = pDate.toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit', hour12:true});
-                   
-                   let diffDays = Math.floor((now - pDate) / (1000 * 60 * 60 * 24));
-                   let diffHours = Math.floor((now - pDate) / (1000 * 60 * 60));
-                   let badgeText = "Published";
-                   if(diffHours < 24 && diffDays === 0) {
-                       if(diffHours === 0) badgeText = "Just now";
-                       else badgeText = `${diffHours} Hour${diffHours > 1 ? 's' : ''} Ago`;
-                   } else if(diffDays === 1) { badgeText = "Yesterday"; }
-                   else { badgeText = `Published`; }
-                   
-                   html += `
-                   <div class="update-card">
-                        <div>
-                            <div class="update-header">
-                                <div class="update-icon"><i class="fa-solid ${icon}"></i></div>
-                                <h5>${up.type.toUpperCase()}</h5>
-                            </div>
-                            <div class="update-body">
-                                <p class="fw-bold text-dark mb-1">${up.title}</p>
-                                <p>${up.desc}</p>
-                            </div>
-                        </div>
-                        <div class="update-footer">
-                            <span class="update-badge">${badgeText}</span>
-                            <div class="text-end" style="line-height:1.2;">${dateStr}<br>${timeStr}</div>
-                        </div>
-                    </div>`;
-                });
-                container.innerHTML = html;
             }
 
-            renderUpdates();
+            fetchAndRenderUpdates();
         });
     </script>
 </body>
