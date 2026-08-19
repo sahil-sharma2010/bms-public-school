@@ -1,370 +1,435 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BMS School — Update Management</title>
+    <title>School Control Panel | BMS SR. SEC. SCHOOL</title>
     
-    <!-- Libraries -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
     <style>
         :root {
             --primary: #0c2348;
+            --primary-light: #163666;
             --gold: #f4b400;
-            --bg-color: #f4f6f9;
-            --text-color: #333333;
-            --text-muted: #64748b;
+            --gold-glow: rgba(244, 180, 0, 0.3);
+            --bg-color: #f4f7f6;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-dark: #333333;
+            --text-muted: #6c757d;
         }
 
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding-top: 90px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-dark); overflow-x: hidden; }
+        a { text-decoration: none; }
         
-        /* Premium Admin Navbar */
-        .admin-nav { position: fixed; top: 0; left: 0; width: 100%; background: var(--primary); height: 80px; display: flex; align-items: center; z-index: 1050; border-bottom: 3px solid var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .admin-nav .navbar-brand { color: #fff; font-weight: 800; font-size: 24px; display: flex; align-items: center; gap: 15px;}
-        .admin-nav .navbar-brand i { color: var(--gold); font-size: 28px;}
-        .btn-outline-gold { background: transparent; color: var(--gold); border: 2px solid var(--gold); font-weight: 600; border-radius: 8px; padding: 8px 20px; transition: 0.3s;}
-        .btn-outline-gold:hover { background: var(--gold); color: var(--primary); }
-        .btn-gold { background: var(--gold); color: var(--primary); font-weight: 800; border-radius: 8px; padding: 14px 20px; text-transform: uppercase; transition: 0.3s; border: none;}
-        .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(244, 180, 0, 0.3); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 
-        /* Premium Cards */
-        .admin-card { background: #fff; border-radius: 16px; padding: 35px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.05); margin-bottom: 30px;}
-        .admin-card-title { font-weight: 800; color: var(--primary); font-size: 22px; margin-bottom: 5px; display: flex; align-items: center; gap: 10px;}
-        .admin-card-subtitle { font-weight: 500; color: var(--text-muted); font-size: 14px; margin-bottom: 25px;}
+        #wrapper { display: flex; width: 100%; align-items: stretch; }
         
-        /* Form Inputs */
-        .form-label { font-weight: 700; color: var(--primary); font-size: 14px; margin-bottom: 8px;}
-        .form-control, .form-select { border-radius: 8px; border: 1px solid #dee2e6; padding: 12px 15px; font-weight: 500; color: #495057; transition: 0.3s; box-shadow: none !important;}
-        .form-control:focus, .form-select:focus { border-color: var(--primary); }
+        #sidebar-wrapper { min-width: 280px; max-width: 280px; background: linear-gradient(180deg, var(--primary) 0%, #061226 100%); color: white; min-height: 100vh; transition: all 0.3s ease; position: fixed; z-index: 1000; box-shadow: 4px 0 20px rgba(0,0,0,0.1); }
+        .sidebar-brand { padding: 25px 20px; display: flex; align-items: center; gap: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .sidebar-brand i { font-size: 32px; color: var(--gold); }
+        .sidebar-brand h4 { font-weight: 800; font-size: 18px; color: #fff; margin: 0; line-height: 1.2; letter-spacing: 0.5px;}
+        .sidebar-brand span { font-size: 12px; color: var(--gold); text-transform: uppercase; font-weight: 600; letter-spacing: 1px;}
+        .sidebar-menu { padding: 20px 0; list-style: none; margin: 0; }
+        .sidebar-link { padding: 14px 25px; display: flex; align-items: center; color: rgba(255,255,255,0.7); font-size: 15px; font-weight: 500; transition: all 0.3s ease; cursor: pointer; }
+        .sidebar-link i { width: 25px; font-size: 18px; margin-right: 15px; text-align: center; transition: 0.3s;}
+        .sidebar-link:hover, .sidebar-link.active { background: rgba(255,255,255,0.05); color: var(--gold); border-left: 4px solid var(--gold); }
+        .sidebar-link:hover i, .sidebar-link.active i { transform: scale(1.1); color: var(--gold); }
+
+        #page-content-wrapper { width: calc(100% - 280px); margin-left: 280px; transition: all 0.3s ease; min-height: 100vh; display: flex; flex-direction: column; }
+
+        .admin-header { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.03); position: sticky; top: 0; z-index: 999; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .header-left h3 { font-weight: 800; color: var(--primary); margin: 0; font-size: 22px; }
+        .header-left p { margin: 0; color: var(--text-muted); font-size: 13px; font-weight: 500; }
+        .header-right { display: flex; align-items: center; gap: 20px; }
+        .clock-badge { background: rgba(12, 35, 72, 0.05); padding: 8px 15px; border-radius: 50px; color: var(--primary); font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 10px; border: 1px solid rgba(12, 35, 72, 0.1); }
+        .icon-btn { background: #fff; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.3s; cursor: pointer; position: relative; }
+        .icon-btn:hover { background: var(--primary); color: var(--gold); transform: translateY(-3px); }
+        .admin-profile { display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 5px 10px; border-radius: 50px; transition: 0.3s; }
+        .admin-avatar { width: 45px; height: 45px; border-radius: 50%; background: var(--primary); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 20px; border: 2px solid var(--gold); }
+        .admin-info h6 { margin: 0; font-weight: 700; color: var(--primary); font-size: 15px;}
+        .admin-info span { font-size: 12px; color: var(--text-muted); font-weight: 500;}
+        #menu-toggle { display: none; background: transparent; border: none; font-size: 24px; color: var(--primary); margin-right: 15px; }
+
+        .content-area { padding: 30px; flex-grow: 1; }
+
+        .module-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 16px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid rgba(12, 35, 72, 0.05); border-top: 4px solid var(--primary); margin-bottom: 30px; transition: all 0.4s ease; }
+        .module-card:hover { box-shadow: 0 15px 35px rgba(12, 35, 72, 0.08); border-top-color: var(--gold); transform: translateY(-3px);}
+        .module-header { display: flex; align-items: center; gap: 12px; margin-bottom: 25px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 15px;}
+        .module-header i { font-size: 24px; color: var(--gold); background: var(--primary); width: 45px; height: 45px; border-radius: 10px; display: flex; align-items: center; justify-content: center;}
+        .module-header h4 { margin: 0; font-weight: 800; color: var(--primary); font-size: 20px;}
         
-        /* Preview Box */
-        .preview-box { background: rgba(12, 35, 72, 0.05); border-left: 4px solid var(--primary); padding: 15px 20px; border-radius: 8px; font-weight: 500; color: var(--primary); display: flex; align-items: center; gap: 10px; margin-top: 10px;}
-        .preview-box i { color: var(--gold); font-size: 20px;}
+        .form-label { font-weight: 600; color: var(--primary); font-size: 14px; margin-bottom: 8px;}
+        .form-control, .form-select { border-radius: 8px; border: 1px solid #ced4da; padding: 12px 15px; font-size: 15px; transition: 0.3s; background: #f8f9fa;}
+        .form-control:focus, .form-select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(244, 180, 0, 0.2); background: #fff;}
+        
+        .btn-module-primary { background: var(--primary); color: #fff; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 600; transition: 0.3s; }
+        .btn-module-primary:hover { background: var(--gold); color: var(--primary); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1);}
+        .btn-module-outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); padding: 10px 25px; border-radius: 8px; font-weight: 600; transition: 0.3s; }
+        .btn-module-outline:hover { background: var(--primary); color: #fff; transform: translateY(-2px);}
+        .btn-module-cancel { background: #e9ecef; color: #495057; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 600; transition: 0.3s; }
+        .btn-module-cancel:hover { background: #dee2e6; color: #212529; }
 
-        /* Update List Item */
-        .update-list-item { background: #fff; border: 1px solid rgba(0,0,0,0.05); border-radius: 12px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.02); transition: 0.3s; position: relative;}
-        .update-list-item:hover { border-color: var(--gold); box-shadow: 0 10px 25px rgba(0,0,0,0.08); transform: translateX(5px);}
-        .status-badge { position: absolute; top: 20px; right: 20px; font-size: 12px; font-weight: 800; padding: 5px 12px; border-radius: 50px;}
-        .status-active { background: rgba(40, 167, 69, 0.1); color: #28a745; border: 1px solid #28a745;}
-        .status-expiring { background: rgba(255, 193, 7, 0.1); color: #d39e00; border: 1px solid #ffc107; animation: blink 2s infinite;}
-        .status-expired { background: rgba(220, 53, 69, 0.1); color: #dc3545; border: 1px solid #dc3545;}
-        @keyframes blink { 50% { opacity: 0.6; } }
+        .last-updated-badge { margin-top: 25px; padding-top: 15px; border-top: 1px dashed rgba(0,0,0,0.08); display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--text-muted); }
+        .last-updated-badge i { color: #198754; }
 
-        .up-title { font-weight: 800; color: var(--primary); font-size: 18px; margin-bottom: 5px;}
-        .up-meta { font-size: 13.5px; color: var(--text-muted); font-weight: 500; margin-bottom: 15px;}
-        .up-actions { display: flex; gap: 10px; }
-        .btn-action { font-size: 13px; font-weight: 700; padding: 6px 15px; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px; transition: 0.3s;}
+        .file-upload-wrapper { border: 2px dashed #ced4da; border-radius: 12px; padding: 30px; text-align: center; background: #f8f9fa; cursor: pointer; transition: 0.3s; }
+        .file-upload-wrapper:hover { border-color: var(--primary); background: rgba(12, 35, 72, 0.02); }
+        .file-upload-wrapper i { font-size: 35px; color: var(--gold); margin-bottom: 15px; }
+
+        .admin-footer { background: #fff; padding: 20px 30px; text-align: center; border-top: 1px solid rgba(0,0,0,0.05); color: var(--text-muted); font-size: 14px; font-weight: 500; margin-top: auto;}
+        .admin-footer span { color: var(--primary); font-weight: 700; }
 
         @media (max-width: 991px) {
-            .admin-nav { padding: 0 15px; }
-            .admin-nav .navbar-brand { font-size: 18px; }
-            .admin-card { padding: 25px 20px; }
-            .status-badge { position: relative; top: 0; right: 0; display: inline-block; margin-bottom: 10px;}
-            .up-actions { flex-wrap: wrap; }
-            .btn-action { width: 100%; justify-content: center; }
+            #sidebar-wrapper { margin-left: -280px; }
+            #sidebar-wrapper.toggled { margin-left: 0; }
+            #page-content-wrapper { width: 100%; margin-left: 0; }
+            #menu-toggle { display: block; }
+            .clock-badge { display: none; }
+            .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; backdrop-filter: blur(3px); }
+            .sidebar-overlay.active { display: block; }
+        }
+        @media (max-width: 767px) {
+            .content-area { padding: 20px 15px; }
+            .admin-header { padding: 15px; }
+            .header-left h3 { font-size: 18px; }
+            .admin-info { display: none; }
+            .module-card { padding: 20px; }
+            .btn-module-primary, .btn-module-outline, .btn-module-cancel { width: 100%; margin-bottom: 10px;}
         }
     </style>
 </head>
 <body>
 
-    <!-- Admin Navbar -->
-    <nav class="navbar admin-nav">
-        <div class="container-fluid px-4">
-            <a class="navbar-brand" href="#"><i class="fa-solid fa-school"></i> BMS School — Update Management</a>
-            <a href="index.html" class="btn btn-outline-gold d-none d-sm-block"><i class="fa-solid fa-arrow-left"></i> Back to Website</a>
-            <a href="index.html" class="btn btn-outline-gold d-block d-sm-none px-2"><i class="fa-solid fa-house"></i></a>
-        </div>
-    </nav>
+    <div id="wrapper">
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
-    <div class="container mt-4 mb-5">
-        <div class="row g-4">
-            <!-- Left Column: Create Form -->
-            <div class="col-lg-5">
-                <div class="admin-card">
-                    <h2 class="admin-card-title"><i class="fa-solid fa-pen-to-square"></i> Create New Update</h2>
-                    <p class="admin-card-subtitle">Publish important school announcements immediately.</p>
-                    
-                    <form id="updateForm" onsubmit="event.preventDefault(); publishUpdate();">
-                        <input type="hidden" id="edit-id">
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Update Type</label>
-                            <select class="form-select" id="up-type" required>
-                                <option value="Notice">📢 Notice</option>
-                                <option value="Holiday">📅 Holiday</option>
-                                <option value="Festival">🎉 Festival</option>
-                                <option value="Result">🏆 Result</option>
-                                <option value="Important Announcement" selected>🔔 Important Announcement</option>
-                            </select>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Update Title</label>
-                            <input type="text" class="form-control" id="up-title" placeholder="e.g., Summer Vacation Notice" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Update Message</label>
-                            <textarea class="form-control" id="up-desc" rows="3" placeholder="e.g., Summer vacation will begin from 1 June 2026." required></textarea>
-                        </div>
-
-                        <div class="row g-2 mb-3">
-                            <div class="col-6">
-                                <label class="form-label">Published Date</label>
-                                <input type="date" class="form-control" id="up-pub-date" required onchange="calculateExpiry()">
-                            </div>
-                            <div class="col-6">
-                                <label class="form-label">Published Time</label>
-                                <input type="time" class="form-control" id="up-pub-time" required onchange="calculateExpiry()">
-                            </div>
-                        </div>
-
-                        <label class="form-label mt-2">Display Duration</label>
-                        <div class="row g-2 mb-3">
-                            <div class="col-6">
-                                <input type="number" class="form-control" id="up-dur-val" value="30" min="1" required oninput="calculateExpiry()">
-                            </div>
-                            <div class="col-6">
-                                <select class="form-select" id="up-dur-unit" onchange="calculateExpiry()">
-                                    <option value="Hours">Hours</option>
-                                    <option value="Days" selected>Days</option>
-                                    <option value="Weeks">Weeks</option>
-                                    <option value="Months">Months</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="preview-box">
-                            <i class="fa-solid fa-clock-rotate-left"></i>
-                            <div>
-                                <span class="text-muted d-block" style="font-size:12px;">Update will automatically hide on:</span>
-                                <strong id="preview-time">Calculating...</strong>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-gold w-100 mt-4" id="submit-btn"><i class="fa-solid fa-paper-plane"></i> Publish Update</button>
-                        <button type="button" class="btn btn-outline-secondary w-100 mt-2 d-none" id="cancel-edit-btn" onclick="cancelEdit()">Cancel Edit</button>
-                    </form>
+        <div id="sidebar-wrapper">
+            <div class="sidebar-brand">
+                <i class="fa-solid fa-shield-halved"></i>
+                <div>
+                    <h4>BMS SR. SEC.</h4>
+                    <span>Control Panel</span>
                 </div>
             </div>
+            
+            <ul class="sidebar-menu">
+                <li><a class="sidebar-link"><i class="fa-solid fa-border-all"></i> Dashboard</a></li>
+                <li><a class="sidebar-link active"><i class="fa-solid fa-bullhorn"></i> Updates Manager</a></li>
+                <li><a class="sidebar-link"><i class="fa-solid fa-images"></i> Gallery</a></li>
+                <li><a class="sidebar-link"><i class="fa-solid fa-chalkboard-user"></i> Teachers</a></li>
+                <li><a class="sidebar-link"><i class="fa-solid fa-file-signature"></i> Admissions</a></li>
+                <li><a class="sidebar-link"><i class="fa-solid fa-laptop-code"></i> Website Settings</a></li>
+                <li style="margin-top: 30px;"><a class="sidebar-link text-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </div>
 
-            <!-- Right Column: Active Updates -->
-            <div class="col-lg-7">
-                <div class="admin-card h-100">
-                    <h2 class="admin-card-title"><i class="fa-solid fa-list-check"></i> Active Updates</h2>
-                    <p class="admin-card-subtitle">Manage and monitor live updates.</p>
-                    
-                    <div id="admin-updates-list">
-                        <!-- Rendered by JS -->
+        <div id="page-content-wrapper">
+            
+            <nav class="admin-header">
+                <div class="d-flex align-items-center">
+                    <button id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+                    <div class="header-left">
+                        <h3>School Control Panel</h3>
+                        <p>Phase 1 - Content Management Modules</p>
                     </div>
                 </div>
+                
+                <div class="header-right">
+                    <div class="clock-badge">
+                        <i class="fa-regular fa-clock text-gold"></i>
+                        <span id="live-time">--:-- --</span> | <span id="live-date">-- --- ----</span>
+                    </div>
+                    <div class="admin-profile">
+                        <div class="admin-info text-end">
+                            <h6>Admin Profile</h6>
+                            <span>Authorized Access</span>
+                        </div>
+                        <div class="admin-avatar"><i class="fa-solid fa-user-shield"></i></div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="content-area">
+                <div class="row">
+                    <div class="col-12">
+                        <h5 class="fw-bold mb-4" style="color: var(--primary);">Home Page Updates Manager (Phase 1)</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!-- 1. NOTICE MANAGEMENT -->
+                        <div class="module-card">
+                            <div class="module-header">
+                                <i class="fa-solid fa-bullhorn"></i>
+                                <h4>Notice Management</h4>
+                            </div>
+                            <form class="dummy-form">
+                                <div class="mb-3">
+                                    <label class="form-label">Notice Title</label>
+                                    <input type="text" class="form-control" id="notice-title" placeholder="e.g. School will remain closed on Monday.">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Notice Description (Optional)</label>
+                                    <textarea class="form-control" rows="2" id="notice-desc" placeholder="Details..."></textarea>
+                                </div>
+                                <div class="d-flex gap-2 flex-wrap">
+                                    <button type="button" class="btn-module-primary btn-publish" data-type="Notice">Publish Notice</button>
+                                </div>
+                                <div class="last-updated-badge">
+                                    <i class="fa-solid fa-check-circle"></i> <span class="update-text">Ready to Publish</span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <!-- 2. HOLIDAY MANAGEMENT -->
+                        <div class="module-card">
+                            <div class="module-header">
+                                <i class="fa-solid fa-calendar-star"></i>
+                                <h4>Holiday Management</h4>
+                            </div>
+                            <form class="dummy-form">
+                                <div class="mb-3">
+                                    <label class="form-label">Holiday Name</label>
+                                    <input type="text" class="form-control" id="holiday-name" placeholder="e.g. Independence Day Holiday">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Holiday Date</label>
+                                    <input type="date" class="form-control" id="holiday-date">
+                                </div>
+                                <div class="d-flex gap-2 flex-wrap">
+                                    <button type="button" class="btn-module-primary btn-publish" data-type="Holiday">Publish Holiday</button>
+                                </div>
+                                <div class="last-updated-badge">
+                                    <i class="fa-solid fa-check-circle"></i> <span class="update-text">Ready to Publish</span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!-- 3. FESTIVAL MANAGEMENT -->
+                        <div class="module-card">
+                            <div class="module-header">
+                                <i class="fa-solid fa-gift"></i>
+                                <h4>Festival Management</h4>
+                            </div>
+                            <form class="dummy-form">
+                                <div class="mb-3">
+                                    <label class="form-label">Festival Name</label>
+                                    <select class="form-select" id="festival-name">
+                                        <option>Diwali</option>
+                                        <option>Holi</option>
+                                        <option>Republic Day</option>
+                                        <option>Independence Day</option>
+                                        <option>Janmashtami</option>
+                                        <option>Teacher's Day</option>
+                                        <option>Children's Day</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Festival Message</label>
+                                    <textarea class="form-control" rows="2" id="festival-msg" placeholder="Happy Diwali to all Students and Parents."></textarea>
+                                </div>
+                                <div class="d-flex gap-2 flex-wrap">
+                                    <button type="button" class="btn-module-primary btn-publish" data-type="Festival">Publish Festival</button>
+                                </div>
+                                <div class="last-updated-badge">
+                                    <i class="fa-solid fa-check-circle"></i> <span class="update-text">Ready to Publish</span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <!-- 4. RESULT MANAGEMENT -->
+                        <div class="module-card">
+                            <div class="module-header">
+                                <i class="fa-solid fa-medal"></i>
+                                <h4>Result Management</h4>
+                            </div>
+                            <form class="dummy-form">
+                                <div class="mb-3">
+                                    <label class="form-label">Select Class</label>
+                                    <select class="form-select" id="result-class">
+                                        <option>Class 10th</option>
+                                        <option>Class 12th</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Result Title</label>
+                                    <input type="text" class="form-control" id="result-title" placeholder="e.g. Board Result Published">
+                                </div>
+                                <div class="d-flex gap-2 flex-wrap">
+                                    <button type="button" class="btn-module-primary btn-publish" data-type="Result">Publish Result</button>
+                                </div>
+                                <div class="last-updated-badge">
+                                    <i class="fa-solid fa-check-circle"></i> <span class="update-text">Ready to Publish</span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-primary shadow-sm" style="border-radius: 12px; border-left: 4px solid var(--gold);">
+                            <i class="fa-solid fa-circle-info me-2"></i> Note: Publishing from this panel will securely sync with the Home Page `Latest Updates` section (Currently powered by local browser storage for Phase 1 Preview).
+                        </div>
+                    </div>
+                </div>
+
             </div>
+            
+            <footer class="admin-footer">
+                <span>BMS SR. SEC. SCHOOL</span> Control Panel &copy; 2026. <br class="d-sm-none"> For Authorized School Administration Only.
+            </footer>
+
         </div>
     </div>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.css"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
     <script>
-        let updates = JSON.parse(localStorage.getItem('bms_updates')) || [];
+        document.addEventListener("DOMContentLoaded", function() {
+            // Mobile Sidebar Toggle
+            const menuToggle = document.getElementById("menu-toggle");
+            const sidebarWrapper = document.getElementById("sidebar-wrapper");
+            const sidebarOverlay = document.getElementById("sidebar-overlay");
 
-        // Set default Date/Time
-        function setDefaults() {
-            let now = new Date();
-            let year = now.getFullYear();
-            let month = String(now.getMonth() + 1).padStart(2, '0');
-            let day = String(now.getDate()).padStart(2, '0');
-            document.getElementById('up-pub-date').value = `${year}-${month}-${day}`;
-            
-            let hours = String(now.getHours()).padStart(2, '0');
-            let mins = String(now.getMinutes()).padStart(2, '0');
-            document.getElementById('up-pub-time').value = `${hours}:${mins}`;
-            
-            calculateExpiry();
-        }
-
-        // Calculate Expiry Date automatically
-        function calculateExpiry() {
-            let dateVal = document.getElementById('up-pub-date').value;
-            let timeVal = document.getElementById('up-pub-time').value;
-            let durVal = parseInt(document.getElementById('up-dur-val').value) || 0;
-            let durUnit = document.getElementById('up-dur-unit').value;
-
-            if(!dateVal || !timeVal) return null;
-
-            let d = new Date(`${dateVal}T${timeVal}`);
-            if (durUnit === 'Hours') d.setHours(d.getHours() + durVal);
-            else if (durUnit === 'Days') d.setDate(d.getDate() + durVal);
-            else if (durUnit === 'Weeks') d.setDate(d.getDate() + durVal * 7);
-            else if (durUnit === 'Months') d.setMonth(d.getMonth() + durVal);
-
-            let options = { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
-            document.getElementById('preview-time').innerText = `Visible until: ${d.toLocaleString('en-GB', options)}`;
-            
-            return d.toISOString();
-        }
-
-        // Save / Publish Update
-        function publishUpdate() {
-            let id = document.getElementById('edit-id').value;
-            let type = document.getElementById('up-type').value;
-            let title = document.getElementById('up-title').value.trim();
-            let desc = document.getElementById('up-desc').value.trim();
-            let pubDate = document.getElementById('up-pub-date').value;
-            let pubTime = document.getElementById('up-pub-time').value;
-            let expiryDateISO = calculateExpiry();
-
-            if(id) {
-                let index = updates.findIndex(u => u.id == id);
-                if(index > -1) {
-                    updates[index] = { id, type, title, desc, pubDateStr: `${pubDate}T${pubTime}`, expiryDate: expiryDateISO };
-                }
-            } else {
-                let newUpdate = { id: Date.now().toString(), type, title, desc, pubDateStr: `${pubDate}T${pubTime}`, expiryDate: expiryDateISO };
-                updates.push(newUpdate);
-            }
-
-            localStorage.setItem('bms_updates', JSON.stringify(updates));
-            
-            Swal.fire({
-                title: 'Update Published Successfully',
-                text: 'Your update is now live on the website.',
-                icon: 'success',
-                confirmButtonColor: '#0c2348'
+            menuToggle.addEventListener("click", function(e) {
+                e.preventDefault();
+                sidebarWrapper.classList.toggle("toggled");
+                sidebarOverlay.classList.toggle("active");
             });
 
-            cancelEdit();
-            renderAdminUpdates();
-        }
+            sidebarOverlay.addEventListener("click", function() {
+                sidebarWrapper.classList.remove("toggled");
+                sidebarOverlay.classList.remove("active");
+            });
 
-        function cancelEdit() {
-            document.getElementById('updateForm').reset();
-            document.getElementById('edit-id').value = '';
-            document.getElementById('submit-btn').innerHTML = '<i class="fa-solid fa-paper-plane"></i> Publish Update';
-            document.getElementById('cancel-edit-btn').classList.add('d-none');
-            setDefaults();
-        }
+            // Live Time Logic
+            function updateClock() {
+                const now = new Date();
+                let hours = now.getHours();
+                let minutes = now.getMinutes();
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12; 
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                const strTime = hours + ':' + minutes + ' ' + ampm;
+                
+                const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                const strDate = now.toLocaleDateString('en-GB', options);
+                
+                const timeEl = document.getElementById('live-time');
+                const dateEl = document.getElementById('live-date');
+                
+                if(timeEl) timeEl.innerText = strTime;
+                if(dateEl) dateEl.innerText = strDate;
+            }
+            setInterval(updateClock, 1000);
+            updateClock();
 
-        function editUpdate(id) {
-            let up = updates.find(u => u.id == id);
-            if(!up) return;
-            
-            document.getElementById('edit-id').value = up.id;
-            
-            let select = document.getElementById('up-type');
-            for(let i=0; i<select.options.length; i++) {
-                if(select.options[i].value === up.type) select.selectedIndex = i;
+            function getFormattedDateTime() {
+                const now = new Date();
+                let hours = now.getHours();
+                let minutes = now.getMinutes();
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12; 
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                const strTime = hours + ':' + minutes + ' ' + ampm;
+                const options = { day: '2-digit', month: 'long', year: 'numeric' };
+                const strDate = now.toLocaleDateString('en-GB', options);
+                return `${strDate} | ${strTime}`;
             }
 
-            document.getElementById('up-title').value = up.title;
-            document.getElementById('up-desc').value = up.desc;
-            
-            let pDate = new Date(up.pubDateStr);
-            document.getElementById('up-pub-date').value = `${pDate.getFullYear()}-${String(pDate.getMonth()+1).padStart(2,'0')}-${String(pDate.getDate()).padStart(2,'0')}`;
-            document.getElementById('up-pub-time').value = `${String(pDate.getHours()).padStart(2,'0')}:${String(pDate.getMinutes()).padStart(2,'0')}`;
-            
-            document.getElementById('submit-btn').innerHTML = '<i class="fa-solid fa-save"></i> Save Changes';
-            document.getElementById('cancel-edit-btn').classList.remove('d-none');
-            calculateExpiry();
-        }
-
-        function expireNow(id) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "This will immediately hide the update from the website.",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, expire it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    let index = updates.findIndex(u => u.id == id);
-                    if(index > -1) {
-                        updates[index].expiryDate = new Date().toISOString();
-                        localStorage.setItem('bms_updates', JSON.stringify(updates));
-                        renderAdminUpdates();
-                        Swal.fire('Expired!', 'Update has been removed from Home Page.', 'success');
+            // Publish Update to LocalStorage for Home Page Sync
+            document.querySelectorAll('.btn-publish').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    let type = this.getAttribute('data-type');
+                    let badge = this.closest('form').querySelector('.update-text');
+                    
+                    let title = "";
+                    let desc = "";
+                    let targetDate = null;
+                    
+                    // Fetch inputs based on type
+                    if(type === 'Notice') {
+                        title = document.getElementById('notice-title').value || "Important Notice";
+                        desc = document.getElementById('notice-desc').value || "";
+                    } else if(type === 'Holiday') {
+                        title = document.getElementById('holiday-name').value || "School Holiday";
+                        let rawDate = document.getElementById('holiday-date').value;
+                        if(rawDate) {
+                            targetDate = new Date(rawDate).toISOString();
+                            desc = new Date(rawDate).toLocaleDateString('en-GB', {day:'2-digit', month:'long', year:'numeric'});
+                        } else {
+                            desc = "Date not specified";
+                        }
+                    } else if(type === 'Festival') {
+                        title = document.getElementById('festival-name').value;
+                        desc = document.getElementById('festival-msg').value || `Wishing everyone a Happy ${title}.`;
+                    } else if(type === 'Result') {
+                        let cls = document.getElementById('result-class').value;
+                        let t = document.getElementById('result-title').value || "Result Published";
+                        title = t;
+                        desc = `${cls} Result has been officially published.`;
                     }
-                }
-            });
-        }
 
-        function deleteUpdate(id) {
-            Swal.fire({
-                title: 'Delete Update?',
-                text: "You won't be able to revert this!",
-                icon: 'error',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    updates = updates.filter(u => u.id != id);
-                    localStorage.setItem('bms_updates', JSON.stringify(updates));
-                    renderAdminUpdates();
-                }
-            });
-        }
+                    Swal.fire({
+                        title: `Publish ${type}?`,
+                        text: "This update will be visible on the Home Page immediately.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#0c2348',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Yes, Publish',
+                        cancelButtonText: 'Cancel'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Save to local storage array
+                            let updates = JSON.parse(localStorage.getItem('bms_updates')) || [];
+                            updates.push({
+                                id: Date.now(),
+                                type: type,
+                                title: title,
+                                desc: desc,
+                                pubDate: new Date().toISOString(),
+                                targetDate: targetDate
+                            });
+                            localStorage.setItem('bms_updates', JSON.stringify(updates));
 
-        function renderAdminUpdates() {
-            let container = document.getElementById('admin-updates-list');
-            let now = new Date();
+                            Swal.fire({ icon: 'success', title: 'Published Successfully', showConfirmButton: false, timer: 2000 });
+                            if(badge) badge.innerText = `Last Updated: ${getFormattedDateTime()}`;
+                            
+                            // Reset inputs
+                            this.closest('form').reset();
+                        }
+                    });
+                });
+            });
             
-            if(updates.length === 0) {
-                container.innerHTML = `<div class="text-center py-5"><i class="fa-regular fa-folder-open fs-1 text-muted mb-3"></i><p class="text-muted fw-bold">No updates found.</p></div>`;
-                return;
-            }
-
-            // Sort newest first based on pubDate
-            let sorted = [...updates].sort((a,b) => new Date(b.pubDateStr) - new Date(a.pubDateStr));
-            let html = '';
-
-            sorted.forEach(up => {
-                let expDate = new Date(up.expiryDate);
-                let pubDate = new Date(up.pubDateStr);
-                
-                let diffHours = (expDate - now) / (1000 * 60 * 60);
-                
-                let statusClass = '';
-                let statusText = '';
-                
-                if (now >= expDate) {
-                    statusClass = 'status-expired';
-                    statusText = 'EXPIRED';
-                } else if (diffHours <= 24) {
-                    statusClass = 'status-expiring';
-                    statusText = 'EXPIRING SOON';
-                } else {
-                    statusClass = 'status-active';
-                    statusText = 'ACTIVE';
-                }
-
-                let opt = { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
-
-                html += `
-                <div class="update-list-item">
-                    <span class="status-badge ${statusClass}">${statusText}</span>
-                    <div class="up-title">${up.type} - ${up.title}</div>
-                    <div class="up-meta">
-                        <i class="fa-solid fa-clock text-gold"></i> Published: ${pubDate.toLocaleString('en-GB', opt)}<br>
-                        <i class="fa-solid fa-hourglass-end text-danger mt-1"></i> Expires: ${expDate.toLocaleString('en-GB', opt)}
-                    </div>
-                    <div class="up-actions">
-                        <button class="btn btn-outline-primary btn-action" onclick="editUpdate('${up.id}')"><i class="fa-solid fa-pen"></i> Edit</button>
-                        ${now < expDate ? `<button class="btn btn-outline-warning btn-action" onclick="expireNow('${up.id}')"><i class="fa-solid fa-eye-slash"></i> Expire Now</button>` : ''}
-                        <button class="btn btn-outline-danger btn-action" onclick="deleteUpdate('${up.id}')"><i class="fa-solid fa-trash"></i> Delete</button>
-                    </div>
-                </div>`;
+            // Prevent form submit refresh
+            document.querySelectorAll('.dummy-form').forEach(form => {
+                form.addEventListener('submit', e => e.preventDefault());
             });
-            container.innerHTML = html;
-        }
-
-        window.onload = () => {
-            setDefaults()
+        });
+    </script>
+</body>
+</html>
