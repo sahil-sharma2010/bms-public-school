@@ -1,435 +1,453 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>School Control Panel | BMS SR. SEC. SCHOOL</title>
+    <title>BMS School — Principal Dashboard</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
         :root {
             --primary: #0c2348;
-            --primary-light: #163666;
             --gold: #f4b400;
-            --gold-glow: rgba(244, 180, 0, 0.3);
             --bg-color: #f4f7f6;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --text-dark: #333333;
-            --text-muted: #6c757d;
+            --sidebar-width: 280px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-dark); overflow-x: hidden; }
-        a { text-decoration: none; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); margin: 0; padding: 0; overflow-x: hidden; }
+
+        /* 5 SEC WELCOME SCREEN */
+        #welcome-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(135deg, #0c2348, #05162D); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 99999; color: white; text-align: center; transition: opacity 0.8s ease, visibility 0.8s ease; }
+        .welcome-icon { font-size: 80px; color: var(--gold); margin-bottom: 20px; animation: bounceIn 1.5s infinite; }
+        .welcome-title { font-size: 40px; font-weight: 800; letter-spacing: 1px; margin-bottom: 10px; }
+        .welcome-subtitle { font-size: 18px; color: rgba(255,255,255,0.7); font-weight: 500; }
+        .spinner { width: 50px; height: 50px; border: 4px solid rgba(255,255,255,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s infinite linear; margin-top: 30px; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes bounceIn { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        /* SIDEBAR */
+        .sidebar { width: var(--sidebar-width); height: 100vh; position: fixed; top: 0; left: 0; background: var(--primary); color: white; padding-top: 20px; box-shadow: 5px 0 25px rgba(0,0,0,0.1); z-index: 1040; transition: 0.4s; }
+        .sidebar-brand { text-align: center; margin-bottom: 40px; padding: 0 20px;}
+        .sidebar-brand i { font-size: 40px; color: var(--gold); margin-bottom: 10px; }
+        .sidebar-brand h3 { font-size: 20px; font-weight: 800; margin: 0; letter-spacing: 1px;}
+        .sidebar-brand p { font-size: 12px; color: rgba(255,255,255,0.6); margin: 0; text-transform: uppercase;}
+        .sidebar-nav { list-style: none; padding: 0; margin: 0; }
+        .sidebar-nav li a { display: flex; align-items: center; padding: 16px 25px; color: rgba(255,255,255,0.7); font-size: 16px; font-weight: 600; text-decoration: none; border-left: 4px solid transparent; transition: 0.3s; }
+        .sidebar-nav li a i { font-size: 20px; margin-right: 15px; width: 25px; text-align: center; }
+        .sidebar-nav li a:hover, .sidebar-nav li a.active { color: #fff; background: rgba(255,255,255,0.05); border-left-color: var(--gold); }
+        .sidebar-nav li a.active i { color: var(--gold); }
+        .back-home-link { position: absolute; bottom: 30px; left: 0; width: 100%; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;}
+
+        /* MAIN CONTENT */
+        .main-content { margin-left: var(--sidebar-width); padding: 40px; transition: 0.4s; }
+        .dashboard-header { margin-bottom: 40px; }
+        .dashboard-header h2 { font-weight: 800; color: var(--primary); font-size: 32px; margin-bottom: 5px;}
+        .dashboard-header p { font-size: 15px; color: var(--text-muted); font-weight: 500; margin: 0;}
+        .admin-card { background: #fff; border-radius: 16px; padding: 35px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.03); margin-bottom: 30px;}
+        .form-label { font-weight: 700; color: var(--primary); font-size: 14px; margin-bottom: 8px;}
+        .form-control, .form-select { border-radius: 8px; border: 1px solid #dee2e6; padding: 14px 15px; font-weight: 500; color: #495057; box-shadow: none !important; background: #fcfcfc;}
+        .form-control:focus, .form-select:focus { border-color: var(--primary); background: #fff; }
+        .btn-gold { background: var(--gold); color: var(--primary); font-weight: 800; border-radius: 8px; padding: 14px 20px; text-transform: uppercase; transition: 0.3s; border: none; letter-spacing: 0.5px;}
+        .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(244, 180, 0, 0.3); }
+
+        /* Manage List */
+        .update-list-item { background: #fff; border: 1px solid rgba(0,0,0,0.05); border-radius: 12px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.02); transition: 0.3s;}
+        .update-list-item:hover { border-color: var(--gold); transform: translateX(5px);}
+        .up-title { font-weight: 800; color: var(--primary); font-size: 18px; margin-bottom: 5px;}
+        .up-meta { font-size: 13.5px; color: var(--text-muted); font-weight: 500; margin-bottom: 15px;}
+
+        /* Sections Toggle */
+        .dashboard-section { display: none; animation: fadeIn 0.5s; }
+        .dashboard-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Mobile Adjustments */
+        .mobile-toggle { display: none; background: var(--primary); color: #fff; border: none; padding: 10px 15px; font-size: 24px; position: fixed; top: 15px; left: 15px; border-radius: 8px; z-index: 1050; box-shadow: 0 5px 15px rgba(0,0,0,0.2);}
         
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
-
-        #wrapper { display: flex; width: 100%; align-items: stretch; }
-        
-        #sidebar-wrapper { min-width: 280px; max-width: 280px; background: linear-gradient(180deg, var(--primary) 0%, #061226 100%); color: white; min-height: 100vh; transition: all 0.3s ease; position: fixed; z-index: 1000; box-shadow: 4px 0 20px rgba(0,0,0,0.1); }
-        .sidebar-brand { padding: 25px 20px; display: flex; align-items: center; gap: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .sidebar-brand i { font-size: 32px; color: var(--gold); }
-        .sidebar-brand h4 { font-weight: 800; font-size: 18px; color: #fff; margin: 0; line-height: 1.2; letter-spacing: 0.5px;}
-        .sidebar-brand span { font-size: 12px; color: var(--gold); text-transform: uppercase; font-weight: 600; letter-spacing: 1px;}
-        .sidebar-menu { padding: 20px 0; list-style: none; margin: 0; }
-        .sidebar-link { padding: 14px 25px; display: flex; align-items: center; color: rgba(255,255,255,0.7); font-size: 15px; font-weight: 500; transition: all 0.3s ease; cursor: pointer; }
-        .sidebar-link i { width: 25px; font-size: 18px; margin-right: 15px; text-align: center; transition: 0.3s;}
-        .sidebar-link:hover, .sidebar-link.active { background: rgba(255,255,255,0.05); color: var(--gold); border-left: 4px solid var(--gold); }
-        .sidebar-link:hover i, .sidebar-link.active i { transform: scale(1.1); color: var(--gold); }
-
-        #page-content-wrapper { width: calc(100% - 280px); margin-left: 280px; transition: all 0.3s ease; min-height: 100vh; display: flex; flex-direction: column; }
-
-        .admin-header { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.03); position: sticky; top: 0; z-index: 999; border-bottom: 1px solid rgba(0,0,0,0.05); }
-        .header-left h3 { font-weight: 800; color: var(--primary); margin: 0; font-size: 22px; }
-        .header-left p { margin: 0; color: var(--text-muted); font-size: 13px; font-weight: 500; }
-        .header-right { display: flex; align-items: center; gap: 20px; }
-        .clock-badge { background: rgba(12, 35, 72, 0.05); padding: 8px 15px; border-radius: 50px; color: var(--primary); font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 10px; border: 1px solid rgba(12, 35, 72, 0.1); }
-        .icon-btn { background: #fff; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.3s; cursor: pointer; position: relative; }
-        .icon-btn:hover { background: var(--primary); color: var(--gold); transform: translateY(-3px); }
-        .admin-profile { display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 5px 10px; border-radius: 50px; transition: 0.3s; }
-        .admin-avatar { width: 45px; height: 45px; border-radius: 50%; background: var(--primary); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 20px; border: 2px solid var(--gold); }
-        .admin-info h6 { margin: 0; font-weight: 700; color: var(--primary); font-size: 15px;}
-        .admin-info span { font-size: 12px; color: var(--text-muted); font-weight: 500;}
-        #menu-toggle { display: none; background: transparent; border: none; font-size: 24px; color: var(--primary); margin-right: 15px; }
-
-        .content-area { padding: 30px; flex-grow: 1; }
-
-        .module-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 16px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid rgba(12, 35, 72, 0.05); border-top: 4px solid var(--primary); margin-bottom: 30px; transition: all 0.4s ease; }
-        .module-card:hover { box-shadow: 0 15px 35px rgba(12, 35, 72, 0.08); border-top-color: var(--gold); transform: translateY(-3px);}
-        .module-header { display: flex; align-items: center; gap: 12px; margin-bottom: 25px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 15px;}
-        .module-header i { font-size: 24px; color: var(--gold); background: var(--primary); width: 45px; height: 45px; border-radius: 10px; display: flex; align-items: center; justify-content: center;}
-        .module-header h4 { margin: 0; font-weight: 800; color: var(--primary); font-size: 20px;}
-        
-        .form-label { font-weight: 600; color: var(--primary); font-size: 14px; margin-bottom: 8px;}
-        .form-control, .form-select { border-radius: 8px; border: 1px solid #ced4da; padding: 12px 15px; font-size: 15px; transition: 0.3s; background: #f8f9fa;}
-        .form-control:focus, .form-select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(244, 180, 0, 0.2); background: #fff;}
-        
-        .btn-module-primary { background: var(--primary); color: #fff; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 600; transition: 0.3s; }
-        .btn-module-primary:hover { background: var(--gold); color: var(--primary); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1);}
-        .btn-module-outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); padding: 10px 25px; border-radius: 8px; font-weight: 600; transition: 0.3s; }
-        .btn-module-outline:hover { background: var(--primary); color: #fff; transform: translateY(-2px);}
-        .btn-module-cancel { background: #e9ecef; color: #495057; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 600; transition: 0.3s; }
-        .btn-module-cancel:hover { background: #dee2e6; color: #212529; }
-
-        .last-updated-badge { margin-top: 25px; padding-top: 15px; border-top: 1px dashed rgba(0,0,0,0.08); display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--text-muted); }
-        .last-updated-badge i { color: #198754; }
-
-        .file-upload-wrapper { border: 2px dashed #ced4da; border-radius: 12px; padding: 30px; text-align: center; background: #f8f9fa; cursor: pointer; transition: 0.3s; }
-        .file-upload-wrapper:hover { border-color: var(--primary); background: rgba(12, 35, 72, 0.02); }
-        .file-upload-wrapper i { font-size: 35px; color: var(--gold); margin-bottom: 15px; }
-
-        .admin-footer { background: #fff; padding: 20px 30px; text-align: center; border-top: 1px solid rgba(0,0,0,0.05); color: var(--text-muted); font-size: 14px; font-weight: 500; margin-top: auto;}
-        .admin-footer span { color: var(--primary); font-weight: 700; }
-
         @media (max-width: 991px) {
-            #sidebar-wrapper { margin-left: -280px; }
-            #sidebar-wrapper.toggled { margin-left: 0; }
-            #page-content-wrapper { width: 100%; margin-left: 0; }
-            #menu-toggle { display: block; }
-            .clock-badge { display: none; }
-            .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; backdrop-filter: blur(3px); }
-            .sidebar-overlay.active { display: block; }
-        }
-        @media (max-width: 767px) {
-            .content-area { padding: 20px 15px; }
-            .admin-header { padding: 15px; }
-            .header-left h3 { font-size: 18px; }
-            .admin-info { display: none; }
-            .module-card { padding: 20px; }
-            .btn-module-primary, .btn-module-outline, .btn-module-cancel { width: 100%; margin-bottom: 10px;}
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.show { transform: translateX(0); }
+            .main-content { margin-left: 0; padding: 80px 20px 30px 20px; }
+            .mobile-toggle { display: block; }
+            .welcome-title { font-size: 28px; }
         }
     </style>
 </head>
 <body>
 
-    <div id="wrapper">
-        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <!-- 1. WELCOME SCREEN (5 SECONDS) -->
+    <div id="welcome-screen">
+        <i class="fa-solid fa-user-tie welcome-icon"></i>
+        <div class="welcome-title">Welcome, Principal Sir</div>
+        <div class="welcome-subtitle">Loading Premium Dashboard...</div>
+        <div class="spinner"></div>
+    </div>
 
-        <div id="sidebar-wrapper">
-            <div class="sidebar-brand">
-                <i class="fa-solid fa-shield-halved"></i>
-                <div>
-                    <h4>BMS SR. SEC.</h4>
-                    <span>Control Panel</span>
-                </div>
-            </div>
-            
-            <ul class="sidebar-menu">
-                <li><a class="sidebar-link"><i class="fa-solid fa-border-all"></i> Dashboard</a></li>
-                <li><a class="sidebar-link active"><i class="fa-solid fa-bullhorn"></i> Updates Manager</a></li>
-                <li><a class="sidebar-link"><i class="fa-solid fa-images"></i> Gallery</a></li>
-                <li><a class="sidebar-link"><i class="fa-solid fa-chalkboard-user"></i> Teachers</a></li>
-                <li><a class="sidebar-link"><i class="fa-solid fa-file-signature"></i> Admissions</a></li>
-                <li><a class="sidebar-link"><i class="fa-solid fa-laptop-code"></i> Website Settings</a></li>
-                <li style="margin-top: 30px;"><a class="sidebar-link text-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+    <!-- MOBILE TOGGLE -->
+    <button class="mobile-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+
+    <!-- 2. SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <i class="fa-solid fa-school-flag"></i>
+            <h3>BMS SCHOOL</h3>
+            <p>Admin Control Panel</p>
+        </div>
+        <ul class="sidebar-nav">
+            <li><a href="#" class="active" onclick="switchSection('latest-update', this)"><i class="fa-solid fa-bullhorn"></i> Latest Update</a></li>
+            <li><a href="#" onclick="switchSection('results-update', this)"><i class="fa-solid fa-trophy"></i> Results Link</a></li>
+            <li><a href="#" onclick="switchSection('manage-updates', this)"><i class="fa-solid fa-list-check"></i> Manage Updates</a></li>
+        </ul>
+        <div class="back-home-link">
+            <ul class="sidebar-nav">
+                <li><a href="index.html"><i class="fa-solid fa-house"></i> Back to Home Page</a></li>
             </ul>
         </div>
+    </div>
 
-        <div id="page-content-wrapper">
-            
-            <nav class="admin-header">
-                <div class="d-flex align-items-center">
-                    <button id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
-                    <div class="header-left">
-                        <h3>School Control Panel</h3>
-                        <p>Phase 1 - Content Management Modules</p>
-                    </div>
-                </div>
-                
-                <div class="header-right">
-                    <div class="clock-badge">
-                        <i class="fa-regular fa-clock text-gold"></i>
-                        <span id="live-time">--:-- --</span> | <span id="live-date">-- --- ----</span>
-                    </div>
-                    <div class="admin-profile">
-                        <div class="admin-info text-end">
-                            <h6>Admin Profile</h6>
-                            <span>Authorized Access</span>
-                        </div>
-                        <div class="admin-avatar"><i class="fa-solid fa-user-shield"></i></div>
-                    </div>
-                </div>
-            </nav>
-
-            <div class="content-area">
-                <div class="row">
-                    <div class="col-12">
-                        <h5 class="fw-bold mb-4" style="color: var(--primary);">Home Page Updates Manager (Phase 1)</h5>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-6">
-                        <!-- 1. NOTICE MANAGEMENT -->
-                        <div class="module-card">
-                            <div class="module-header">
-                                <i class="fa-solid fa-bullhorn"></i>
-                                <h4>Notice Management</h4>
-                            </div>
-                            <form class="dummy-form">
-                                <div class="mb-3">
-                                    <label class="form-label">Notice Title</label>
-                                    <input type="text" class="form-control" id="notice-title" placeholder="e.g. School will remain closed on Monday.">
-                                </div>
-                                <div class="mb-4">
-                                    <label class="form-label">Notice Description (Optional)</label>
-                                    <textarea class="form-control" rows="2" id="notice-desc" placeholder="Details..."></textarea>
-                                </div>
-                                <div class="d-flex gap-2 flex-wrap">
-                                    <button type="button" class="btn-module-primary btn-publish" data-type="Notice">Publish Notice</button>
-                                </div>
-                                <div class="last-updated-badge">
-                                    <i class="fa-solid fa-check-circle"></i> <span class="update-text">Ready to Publish</span>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <!-- 2. HOLIDAY MANAGEMENT -->
-                        <div class="module-card">
-                            <div class="module-header">
-                                <i class="fa-solid fa-calendar-star"></i>
-                                <h4>Holiday Management</h4>
-                            </div>
-                            <form class="dummy-form">
-                                <div class="mb-3">
-                                    <label class="form-label">Holiday Name</label>
-                                    <input type="text" class="form-control" id="holiday-name" placeholder="e.g. Independence Day Holiday">
-                                </div>
-                                <div class="mb-4">
-                                    <label class="form-label">Holiday Date</label>
-                                    <input type="date" class="form-control" id="holiday-date">
-                                </div>
-                                <div class="d-flex gap-2 flex-wrap">
-                                    <button type="button" class="btn-module-primary btn-publish" data-type="Holiday">Publish Holiday</button>
-                                </div>
-                                <div class="last-updated-badge">
-                                    <i class="fa-solid fa-check-circle"></i> <span class="update-text">Ready to Publish</span>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-6">
-                        <!-- 3. FESTIVAL MANAGEMENT -->
-                        <div class="module-card">
-                            <div class="module-header">
-                                <i class="fa-solid fa-gift"></i>
-                                <h4>Festival Management</h4>
-                            </div>
-                            <form class="dummy-form">
-                                <div class="mb-3">
-                                    <label class="form-label">Festival Name</label>
-                                    <select class="form-select" id="festival-name">
-                                        <option>Diwali</option>
-                                        <option>Holi</option>
-                                        <option>Republic Day</option>
-                                        <option>Independence Day</option>
-                                        <option>Janmashtami</option>
-                                        <option>Teacher's Day</option>
-                                        <option>Children's Day</option>
-                                    </select>
-                                </div>
-                                <div class="mb-4">
-                                    <label class="form-label">Festival Message</label>
-                                    <textarea class="form-control" rows="2" id="festival-msg" placeholder="Happy Diwali to all Students and Parents."></textarea>
-                                </div>
-                                <div class="d-flex gap-2 flex-wrap">
-                                    <button type="button" class="btn-module-primary btn-publish" data-type="Festival">Publish Festival</button>
-                                </div>
-                                <div class="last-updated-badge">
-                                    <i class="fa-solid fa-check-circle"></i> <span class="update-text">Ready to Publish</span>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <!-- 4. RESULT MANAGEMENT -->
-                        <div class="module-card">
-                            <div class="module-header">
-                                <i class="fa-solid fa-medal"></i>
-                                <h4>Result Management</h4>
-                            </div>
-                            <form class="dummy-form">
-                                <div class="mb-3">
-                                    <label class="form-label">Select Class</label>
-                                    <select class="form-select" id="result-class">
-                                        <option>Class 10th</option>
-                                        <option>Class 12th</option>
-                                    </select>
-                                </div>
-                                <div class="mb-4">
-                                    <label class="form-label">Result Title</label>
-                                    <input type="text" class="form-control" id="result-title" placeholder="e.g. Board Result Published">
-                                </div>
-                                <div class="d-flex gap-2 flex-wrap">
-                                    <button type="button" class="btn-module-primary btn-publish" data-type="Result">Publish Result</button>
-                                </div>
-                                <div class="last-updated-badge">
-                                    <i class="fa-solid fa-check-circle"></i> <span class="update-text">Ready to Publish</span>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <div class="alert alert-primary shadow-sm" style="border-radius: 12px; border-left: 4px solid var(--gold);">
-                            <i class="fa-solid fa-circle-info me-2"></i> Note: Publishing from this panel will securely sync with the Home Page `Latest Updates` section (Currently powered by local browser storage for Phase 1 Preview).
-                        </div>
-                    </div>
-                </div>
-
+    <!-- 3. MAIN CONTENT -->
+    <div class="main-content">
+        
+        <!-- SECTION 1: LATEST UPDATE -->
+        <div id="latest-update" class="dashboard-section active">
+            <div class="dashboard-header">
+                <h2>Publish Latest Update</h2>
+                <p>Add normal notices, holidays, or festival details.</p>
             </div>
             
-            <footer class="admin-footer">
-                <span>BMS SR. SEC. SCHOOL</span> Control Panel &copy; 2026. <br class="d-sm-none"> For Authorized School Administration Only.
-            </footer>
-
+            <div class="admin-card">
+                <form id="gen-form" onsubmit="event.preventDefault(); saveUpdate('general');">
+                    <input type="hidden" id="gen-edit-id">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label class="form-label">Update Title / Name</label>
+                            <input type="text" class="form-control" id="gen-title" placeholder="e.g. Holi Holiday, Summer Vacation..." required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Select Tag</label>
+                            <!-- ONLY ALLOWED CATEGORIES BASED ON SQL SCHEMA -->
+                            <select class="form-select" id="gen-tag" required>
+                                <option value="notice">📢 Notice</option>
+                                <option value="holiday">📅 Holiday</option>
+                                <option value="festival">🎉 Festival</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Description / Detail</label>
+                            <textarea class="form-control" id="gen-desc" rows="3" placeholder="Enter details like dates, timings, or message..." required></textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">How long to show this? (Number)</label>
+                            <input type="number" class="form-control" id="gen-dur-num" value="7" min="1" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Duration Type</label>
+                            <select class="form-select" id="gen-dur-unit">
+                                <option value="Days" selected>Days</option>
+                                <option value="Weeks">Weeks</option>
+                                <option value="Months">Months</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn btn-gold w-100" id="gen-submit-btn"><i class="fa-solid fa-paper-plane me-2"></i> Publish Update Now</button>
+                            <button type="button" class="btn btn-outline-secondary w-100 mt-2 d-none" id="gen-cancel-btn" onclick="cancelEdit('general')">Cancel Edit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
+
+        <!-- SECTION 2: RESULTS LINK -->
+        <div id="results-update" class="dashboard-section">
+            <div class="dashboard-header">
+                <h2>Publish Result Link</h2>
+                <p>Provide direct links for 10th or 12th board results.</p>
+            </div>
+
+            <div class="admin-card">
+                <form id="res-form" onsubmit="event.preventDefault(); saveUpdate('result');">
+                    <input type="hidden" id="res-edit-id">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label class="form-label">Select Class</label>
+                            <select class="form-select" id="res-class" required>
+                                <option value="Class 10th Result">Class 10th Result</option>
+                                <option value="Class 12th Result">Class 12th Result</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Result Link (URL)</label>
+                            <input type="url" class="form-control" id="res-link" placeholder="e.g. https://bseh.org.in" required>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Description / Message</label>
+                            <textarea class="form-control" id="res-desc" rows="3" placeholder="e.g. Congratulations to all students! Click the link to view your result..." required></textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">How long to show this? (Number)</label>
+                            <input type="number" class="form-control" id="res-dur-num" value="1" min="1" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Duration Type</label>
+                            <select class="form-select" id="res-dur-unit">
+                                <option value="Days">Days</option>
+                                <option value="Weeks">Weeks</option>
+                                <option value="Months" selected>Months</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn btn-gold w-100" id="res-submit-btn"><i class="fa-solid fa-trophy me-2"></i> Publish Result Now</button>
+                            <button type="button" class="btn btn-outline-secondary w-100 mt-2 d-none" id="res-cancel-btn" onclick="cancelEdit('result')">Cancel Edit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- SECTION 3: MANAGE UPDATES -->
+        <div id="manage-updates" class="dashboard-section">
+            <div class="dashboard-header">
+                <h2>Manage Active Updates</h2>
+                <p>Edit or Delete your published updates here. Expired updates are automatically deleted from Database.</p>
+            </div>
+            <div class="admin-card">
+                <div id="active-updates-list">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.css"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Mobile Sidebar Toggle
-            const menuToggle = document.getElementById("menu-toggle");
-            const sidebarWrapper = document.getElementById("sidebar-wrapper");
-            const sidebarOverlay = document.getElementById("sidebar-overlay");
+        // ==========================================
+        // SUPABASE SETUP (PASTE YOUR KEYS HERE)
+        // ==========================================
+        const SUPABASE_URL = 'https://wrerhhaiemhohgxacjqh.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndyZXJoaGFpZW1ob2hneGFjanFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxMDI5NTgsImV4cCI6MjEwMjY3ODk1OH0.64vYByQ1zrSzkWFKYh2af4u7FXEoD6zYW7aXene5_U8';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-            menuToggle.addEventListener("click", function(e) {
-                e.preventDefault();
-                sidebarWrapper.classList.toggle("toggled");
-                sidebarOverlay.classList.toggle("active");
-            });
+        let globalUpdatesList = []; 
 
-            sidebarOverlay.addEventListener("click", function() {
-                sidebarWrapper.classList.remove("toggled");
-                sidebarOverlay.classList.remove("active");
-            });
-
-            // Live Time Logic
-            function updateClock() {
-                const now = new Date();
-                let hours = now.getHours();
-                let minutes = now.getMinutes();
-                const ampm = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12;
-                hours = hours ? hours : 12; 
-                minutes = minutes < 10 ? '0' + minutes : minutes;
-                const strTime = hours + ':' + minutes + ' ' + ampm;
-                
-                const options = { day: '2-digit', month: 'short', year: 'numeric' };
-                const strDate = now.toLocaleDateString('en-GB', options);
-                
-                const timeEl = document.getElementById('live-time');
-                const dateEl = document.getElementById('live-date');
-                
-                if(timeEl) timeEl.innerText = strTime;
-                if(dateEl) dateEl.innerText = strDate;
-            }
-            setInterval(updateClock, 1000);
-            updateClock();
-
-            function getFormattedDateTime() {
-                const now = new Date();
-                let hours = now.getHours();
-                let minutes = now.getMinutes();
-                const ampm = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12;
-                hours = hours ? hours : 12; 
-                minutes = minutes < 10 ? '0' + minutes : minutes;
-                const strTime = hours + ':' + minutes + ' ' + ampm;
-                const options = { day: '2-digit', month: 'long', year: 'numeric' };
-                const strDate = now.toLocaleDateString('en-GB', options);
-                return `${strDate} | ${strTime}`;
-            }
-
-            // Publish Update to LocalStorage for Home Page Sync
-            document.querySelectorAll('.btn-publish').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    let type = this.getAttribute('data-type');
-                    let badge = this.closest('form').querySelector('.update-text');
-                    
-                    let title = "";
-                    let desc = "";
-                    let targetDate = null;
-                    
-                    // Fetch inputs based on type
-                    if(type === 'Notice') {
-                        title = document.getElementById('notice-title').value || "Important Notice";
-                        desc = document.getElementById('notice-desc').value || "";
-                    } else if(type === 'Holiday') {
-                        title = document.getElementById('holiday-name').value || "School Holiday";
-                        let rawDate = document.getElementById('holiday-date').value;
-                        if(rawDate) {
-                            targetDate = new Date(rawDate).toISOString();
-                            desc = new Date(rawDate).toLocaleDateString('en-GB', {day:'2-digit', month:'long', year:'numeric'});
-                        } else {
-                            desc = "Date not specified";
-                        }
-                    } else if(type === 'Festival') {
-                        title = document.getElementById('festival-name').value;
-                        desc = document.getElementById('festival-msg').value || `Wishing everyone a Happy ${title}.`;
-                    } else if(type === 'Result') {
-                        let cls = document.getElementById('result-class').value;
-                        let t = document.getElementById('result-title').value || "Result Published";
-                        title = t;
-                        desc = `${cls} Result has been officially published.`;
-                    }
-
-                    Swal.fire({
-                        title: `Publish ${type}?`,
-                        text: "This update will be visible on the Home Page immediately.",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#0c2348',
-                        cancelButtonColor: '#6c757d',
-                        confirmButtonText: 'Yes, Publish',
-                        cancelButtonText: 'Cancel'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // Save to local storage array
-                            let updates = JSON.parse(localStorage.getItem('bms_updates')) || [];
-                            updates.push({
-                                id: Date.now(),
-                                type: type,
-                                title: title,
-                                desc: desc,
-                                pubDate: new Date().toISOString(),
-                                targetDate: targetDate
-                            });
-                            localStorage.setItem('bms_updates', JSON.stringify(updates));
-
-                            Swal.fire({ icon: 'success', title: 'Published Successfully', showConfirmButton: false, timer: 2000 });
-                            if(badge) badge.innerText = `Last Updated: ${getFormattedDateTime()}`;
-                            
-                            // Reset inputs
-                            this.closest('form').reset();
-                        }
-                    });
-                });
-            });
-            
-            // Prevent form submit refresh
-            document.querySelectorAll('.dummy-form').forEach(form => {
-                form.addEventListener('submit', e => e.preventDefault());
-            });
+        // WELCOME SCREEN TIMEOUT
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const screen = document.getElementById('welcome-screen');
+                screen.style.opacity = '0';
+                setTimeout(() => screen.style.display = 'none', 800);
+            }, 5000); 
+            renderManageList();
         });
+
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('show'); }
+
+        function switchSection(sectionId, element) {
+            document.querySelectorAll('.dashboard-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.sidebar-nav a').forEach(nav => nav.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            element.classList.add('active');
+            if(window.innerWidth < 991) toggleSidebar();
+            if(sectionId === 'manage-updates') renderManageList();
+        }
+
+        // AUTO-DELETE EXPIRED UPDATES (From Database directly)
+        async function autoDeleteExpiredFromDB() {
+            try {
+                const nowIso = new Date().toISOString();
+                await supabase.from('school_updates').delete().lt('expires_at', nowIso);
+            } catch (error) {
+                console.error("Auto delete failed:", error);
+            }
+        }
+
+        // SAVE / UPDATE LOGIC (WITH SUPABASE)
+        async function saveUpdate(formType) {
+            Swal.fire({ title: 'Saving...', text: 'Please wait...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
+
+            try {
+                let dbData = {};
+                let id = null;
+
+                if (formType === 'general') {
+                    id = document.getElementById('gen-edit-id').value;
+                    let title = document.getElementById('gen-title').value.trim();
+                    let category = document.getElementById('gen-tag').value;
+                    let desc = document.getElementById('gen-desc').value.trim();
+                    let num = parseInt(document.getElementById('gen-dur-num').value);
+                    let unit = document.getElementById('gen-dur-unit').value;
+                    
+                    let expiry = new Date();
+                    if(unit === 'Days') expiry.setDate(expiry.getDate() + num);
+                    if(unit === 'Weeks') expiry.setDate(expiry.getDate() + (num * 7));
+                    if(unit === 'Months') expiry.setMonth(expiry.getMonth() + num);
+
+                    dbData = {
+                        category: category,
+                        title: title,
+                        description: desc,
+                        expires_at: expiry.toISOString()
+                    };
+                } 
+                else if (formType === 'result') {
+                    id = document.getElementById('res-edit-id').value;
+                    let cls = document.getElementById('res-class').value;
+                    let link = document.getElementById('res-link').value.trim();
+                    let desc = document.getElementById('res-desc').value.trim();
+                    let num = parseInt(document.getElementById('res-dur-num').value);
+                    let unit = document.getElementById('res-dur-unit').value;
+                    
+                    let expiry = new Date();
+                    if(unit === 'Days') expiry.setDate(expiry.getDate() + num);
+                    if(unit === 'Weeks') expiry.setDate(expiry.getDate() + (num * 7));
+                    if(unit === 'Months') expiry.setMonth(expiry.getMonth() + num);
+
+                    dbData = {
+                        category: 'result',
+                        title: cls,
+                        description: desc,
+                        result_class: cls,
+                        result_link: link,
+                        expires_at: expiry.toISOString()
+                    };
+                }
+
+                if(id && id !== "") {
+                    // Update existing row (uses the same ID)
+                    dbData.updated_at = new Date().toISOString();
+                    const { error } = await supabase.from('school_updates').update(dbData).eq('id', id);
+                    if(error) throw error;
+                } else {
+                    // Insert new row (Supabase automatically generates the BigInt ID)
+                    dbData.published_at = new Date().toISOString();
+                    const { error } = await supabase.from('school_updates').insert([dbData]);
+                    if(error) throw error;
+                }
+
+                cancelEdit(formType);
+                Swal.fire('Published Successfully!', 'The update is now live on the Home Page.', 'success');
+                
+            } catch(error) {
+                Swal.fire('Error!', error.message, 'error');
+            }
+        }
+
+        // CANCEL EDIT
+        function cancelEdit(type) {
+            if(type === 'general') {
+                document.getElementById('gen-form').reset();
+                document.getElementById('gen-edit-id').value = '';
+                document.getElementById('gen-submit-btn').innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Publish Update Now';
+                document.getElementById('gen-cancel-btn').classList.add('d-none');
+            } else {
+                document.getElementById('res-form').reset();
+                document.getElementById('res-edit-id').value = '';
+                document.getElementById('res-submit-btn').innerHTML = '<i class="fa-solid fa-trophy me-2"></i> Publish Result Now';
+                document.getElementById('res-cancel-btn').classList.add('d-none');
+            }
+        }
+
+        // EDIT LOGIC
+        function editUpdate(id) {
+            let up = globalUpdatesList.find(u => u.id == id);
+            if(!up) return;
+
+            if(up.category === 'result') {
+                switchSection('results-update', document.querySelectorAll('.sidebar-nav a')[1]);
+                document.getElementById('res-edit-id').value = up.id;
+                document.getElementById('res-class').value = up.title;
+                document.getElementById('res-link').value = up.result_link || '';
+                document.getElementById('res-desc').value = up.description;
+                document.getElementById('res-submit-btn').innerHTML = '<i class="fa-solid fa-save me-2"></i> Save Changes';
+                document.getElementById('res-cancel-btn').classList.remove('d-none');
+            } else {
+                switchSection('latest-update', document.querySelectorAll('.sidebar-nav a')[0]);
+                document.getElementById('gen-edit-id').value = up.id;
+                document.getElementById('gen-title').value = up.title;
+                document.getElementById('gen-desc').value = up.description;
+                document.getElementById('gen-tag').value = up.category;
+                document.getElementById('gen-submit-btn').innerHTML = '<i class="fa-solid fa-save me-2"></i> Save Changes';
+                document.getElementById('gen-cancel-btn').classList.remove('d-none');
+            }
+        }
+
+        // DELETE LOGIC (From Supabase Database)
+        function deleteUpdate(id) {
+            Swal.fire({
+                title: 'Delete this update?',
+                text: "It will be hamesha ke liye deleted.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#0c2348',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({ title: 'Deleting...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
+                    try {
+                        const { error } = await supabase.from('school_updates').delete().eq('id', id);
+                        if(error) throw error;
+                        
+                        Swal.fire('Deleted!', 'Update has been removed from Database.', 'success');
+                        renderManageList();
+                    } catch (error) {
+                        Swal.fire('Error!', error.message, 'error');
+                    }
+                }
+            });
+        }
+
+        // RENDER LIST
+        async function renderManageList() {
+            let container = document.getElementById('active-updates-list');
+            container.innerHTML = '<p class="text-center fw-bold"><i class="fa-solid fa-spinner fa-spin"></i> Loading Database...</p>';
+            
+            await autoDeleteExpiredFromDB(); 
+            
+            try {
+                const { data, error } = await supabase.from('school_updates').select('*').order('published_at', { ascending: false });
+                if (error) throw error;
+
+                globalUpdatesList = data; 
+
+                if(data.length === 0) {
+                    container.innerHTML = `<p class="text-muted fw-bold m-0 text-center py-4"><i class="fa-solid fa-circle-check text-success fs-1 mb-3"></i><br>No active updates running. Website is clean.</p>`;
+                    return;
+                }
+
+                let html = '';
+                data.forEach(up => {
+                    let expDate = new Date(up.expires_at);
+                    let opt = { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+                    let displayTag = up.category.charAt(0).toUpperCase() + up.category.slice(1);
+                    
+                    html += `
+                    <div class="update-list-item d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+                        <div class="mb-3 mb-md-0">
+                            <div class="up-title">${up.title} <span class="badge bg-secondary ms-2">${displayTag}</span></div>
+                            <div class="up-meta mb-0">Expires on: ${expDate.toLocaleDateString('en-GB', opt)}</div>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-outline-primary me-2" onclick="editUpdate('${up.id}')"><i class="fa-solid fa-pen"></i> Edit</button>
+                            <button class="btn btn-sm btn-outline-danger" onclick="deleteUpdate('${up.id}')"><i class="fa-solid fa-trash"></i> Delete</button>
+                        </div>
+                    </div>`;
+                });
+                container.innerHTML = html;
+            } catch(error) {
+                container.innerHTML = `<p class="text-danger fw-bold text-center">Failed to load data. Ensure Supabase Keys are correct.</p>`;
+            }
+        }
     </script>
 </body>
 </html>
