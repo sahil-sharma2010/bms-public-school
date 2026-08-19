@@ -41,10 +41,10 @@
         .independent-red-line { position: fixed; top: 0; left: 0; width: 100%; height: 4px; background-color: #ff0000; z-index: 9999; }
 
         /* GLOBAL BACKGROUND WATERMARK */
-        .global-background-watermark { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-image: url('assets/background-watermark.png'); background-repeat: no-repeat; background-position: center center; background-size: 50%; opacity: 0.05; z-index: 0; pointer-events: none; }
+        .global-background-watermark { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-image: url('assets/background-watermark.png'); background-repeat: no-repeat; background-position: center center; background-size: 50%; opacity: 0.05; z-index: 0; pointer-events: none;}
         @media (max-width: 991px) { .global-background-watermark { background-size: 80%; } }
 
-        /* PREMIUM NAVBAR (FIXED POSITION & LOGO FIX) */
+        /* PREMIUM NAVBAR */
         .premium-nav { position: fixed; top: 4px; left: 0; width: 100%; background: var(--primary); height: 90px; display: flex; align-items: center; z-index: 1050; border-bottom: 2px solid var(--gold); padding: 0; perspective: 1000px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); transform: translateZ(0); }
         .header-container { max-width: 1400px; margin: 0 auto; padding: 0 30px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: space-between;}
         .school-brand-box { display: flex; flex-direction: row; align-items: center; text-decoration: none; gap: 15px; background: transparent !important; z-index: 1060; padding: 5px;}
@@ -75,7 +75,6 @@
         .premium-nav .dropdown-item:hover i { transform: scale(1.1); }
         .navbar-toggler { border: none; padding: 8px 12px; outline: none; box-shadow: none !important;}
         
-        /* ADMISSION PROCESS CUT-OFF FIX FOR LAPTOPS */
         @media (min-width: 1400px) { .school-logo-text h4 { font-size: 38px !important; } .school-logo-text p { font-size: 18px !important; } .nav-hover { margin: 0 15px; font-size: 14px; } }
         @media (min-width: 992px) and (max-width: 1399px) { 
             .school-logo-text h4 { font-size: 22px !important; } 
@@ -105,11 +104,11 @@
         /* LATEST UPDATES */
         .updates-container { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 20px; padding-bottom: 20px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
         .updates-container::-webkit-scrollbar { display: none; } 
-        .update-card { min-width: 330px; max-width: 330px; background: #fff; border-radius: 12px; padding: 25px 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.05); border: 1px solid rgba(12, 35, 72, 0.05); border-left: 4px solid var(--gold); display: flex; flex-direction: column; justify-content: space-between; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); flex-shrink: 0; transform-style: preserve-3d; }
+        .update-card { min-width: 330px; max-width: 330px; background: #fff; border-radius: 12px; padding: 25px 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.05); border: 1px solid rgba(12, 35, 72, 0.05); border-left: 4px solid var(--gold); display: flex; flex-direction: column; justify-content: space-between; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); flex-shrink: 0; transform-style: preserve-3d;}
         .update-card:hover { transform: translateY(-10px) rotateX(5deg); box-shadow: 0 15px 35px rgba(12, 35, 72, 0.15); border-left-color: var(--primary); }
         .update-header { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
         .update-icon { font-size: 20px; color: var(--primary); display: flex; align-items: center;}
-        .update-header h5 { margin: 0; font-size: 15px; font-weight: 800; color: #555; text-transform: uppercase; letter-spacing: 0.5px;}
+        .update-header h5 { margin: 0; font-size: 14px; font-weight: 800; color: #555; text-transform: uppercase; letter-spacing: 0.5px;}
         .blue-dot { display: inline-block; width: 8px; height: 8px; background-color: var(--primary); border-radius: 50%; margin-right: 8px; margin-top: 5px; flex-shrink:0;}
         .update-title-box { display: flex; align-items: flex-start; margin-bottom: 8px;}
         .update-title-box h4 { font-size: 16px; font-weight: 800; color: var(--primary); margin: 0; line-height: 1.4;}
@@ -119,7 +118,7 @@
         .btn-result-link:hover { background: var(--primary); color: var(--gold); }
 
         /* PREMIUM GRID CARDS (3D Hover Effect) */
-        .premium-grid-card, .premium-facility-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(15, 76, 129, 0.08); border-radius: 16px; padding: 35px 25px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.04); height: 100%; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; z-index: 1; overflow: hidden; display: flex; flex-direction: column; align-items: center; border-bottom: 4px solid var(--gold); transform-style: preserve-3d; perspective: 1000px; }
+        .premium-grid-card, .premium-facility-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(15, 76, 129, 0.08); border-radius: 16px; padding: 35px 25px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.04); height: 100%; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; z-index: 1; overflow: hidden; display: flex; flex-direction: column; align-items: center; border-bottom: 4px solid var(--gold); transform-style: preserve-3d; perspective: 1000px;}
         .premium-grid-card:hover, .premium-facility-card:hover { transform: translateY(-12px) rotateX(8deg); box-shadow: 0 20px 40px var(--gold-glow); border-bottom-color: var(--primary);}
         .grid-icon-wrapper, .fac-icon-wrapper { width: 75px; height: 75px; background: rgba(244, 180, 0, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; transition: all 0.4s ease; border: 2px solid transparent; flex-shrink: 0; transform: translateZ(20px);}
         .grid-icon, .fac-icon { font-size: 30px; color: var(--primary); transition: all 0.4s ease; margin: 0;}
@@ -304,7 +303,7 @@
         </div>
     </section>
 
-    <!-- 3. LATEST UPDATES (Dynamic linked with Admin Panel) -->
+    <!-- 3. LATEST UPDATES (SUPABASE AUTO DELETE) -->
     <section id="latest-updates" class="premium-section bg-color scroll-section" style="padding: 60px 0;">
         <div class="container" style="max-width: 1400px;">
             <div class="d-flex align-items-center mb-4" data-aos="fade-right">
@@ -383,7 +382,7 @@
         </div>
     </section>
 
-    <!-- 6.5. OUR CAMPUS (3D Image Grid) -->
+    <!-- 6.5. OUR CAMPUS -->
     <section id="campus" class="premium-section bg-color scroll-section">
         <div class="container" style="max-width: 1400px;">
             <div class="text-center mb-5" data-aos="fade-up">
@@ -564,7 +563,7 @@
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Loader & AOS 
+            // Loader & AOS
             const loader = document.getElementById('loader');
             setTimeout(() => { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 500); }, 1000);
             AOS.init({ duration: 800, once: false, mirror: true, offset: 50 });
@@ -677,16 +676,16 @@
             }
             animateParallax();
 
-            // LATEST UPDATES (SUPABASE INTEGRATION + AUTO DELETE)
+            // LATEST UPDATES (SUPABASE DB FETCH & AUTO-DELETE)
             async function fetchAndRenderUpdates() {
                 const container = document.getElementById('updates-container');
                 const nowIso = new Date().toISOString();
                 
                 try {
-                    // Step 1: SILENTLY DELETE EXPIRED UPDATES AUTOMATICALLY FROM DATABASE
+                    // SILENTLY DELETE EXPIRED UPDATES AUTOMATICALLY FROM DATABASE
                     await supabase.from('school_updates').delete().lt('expires_at', nowIso);
 
-                    // Step 2: FETCH ONLY ACTIVE ONES
+                    // FETCH ONLY ACTIVE ONES
                     const { data, error } = await supabase.from('school_updates')
                         .select('*')
                         .gte('expires_at', nowIso)
@@ -730,7 +729,7 @@
                                     <span class="blue-dot"></span>
                                     <h4>${up.title}</h4>
                                 </div>
-                                <p class="update-desc">${up.description}</p>
+                                <p class="update-desc">${up.description || ''}</p>
                                 ${linkButtonHtml}
                             </div>
                             <div class="update-footer">
